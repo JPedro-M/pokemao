@@ -6,4 +6,10 @@ public class PokemaoCatalogoRepository {
     
     // o método de exclusão também deve excluir os pokémaos de treinadores
 
+    private ConexaoMySQL conexao;
+
+    public PokemaoCatalogoRepository() {
+        this.conexao = new ConexaoMySQL("localhost", "3306" "root", "root", "pokemao");
+    }
+
 }

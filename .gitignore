@@ -1,0 +1,9 @@
+# Arquivos gerados automaticamente
+*.class
+*.jar
+
+# Diretório de dependências
+/lib/
+
+# Arquivos de configuração local
+config.properties
