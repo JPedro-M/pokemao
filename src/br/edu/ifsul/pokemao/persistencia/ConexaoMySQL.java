@@ -1,37 +1,46 @@
 package br.edu.ifsul.pokemao.persistencia;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class ConexaoMySQL {
-    private String host;
+
+    private String ip;
     private String porta;
     private String usuario;
     private String senha;
-    private String banco;
+    private String nomeBD;
 
-    public ConexaoMySQL(String host, String porta, String usuario, String senha, String banco) {
-        this.host = host;
+    private Connection conexao;
+
+    public ConexaoMySQL(String ip, String porta, String usuario, String senha, String nomeBD) {
+        this.ip = ip;
         this.porta = porta;
         this.usuario = usuario;
         this.senha = senha;
-        this.banco = banco;
+        this.nomeBD = nomeBD;
     }
 
-    public String getHost() {
-        return host;
+    public void abrirConexao(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://" + this.ip + ":" + this.porta + "/" + this.nomeBD;
+            this.conexao = DriverManager.getConnection(url, this.usuario, this.senha);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getPorta() {
-        return porta;
+    public void fecharConexao(){
+        try {
+            this.conexao.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getBanco() {
-        return banco;
+    public Connection getConexao() {
+        return conexao;
     }
 }

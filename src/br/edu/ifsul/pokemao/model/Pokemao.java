@@ -1,6 +1,7 @@
 package br.edu.ifsul.pokemao.model;
 
 public class Pokemao {
+    private long id;
 
     private String emoji;
     private String nome;
@@ -11,7 +12,8 @@ public class Pokemao {
 
     private int raridade;
 
-    public Pokemao(String emoji, String nome, int ataque, int defesa, int hp, int raridade) {
+    public Pokemao(long id, String emoji, String nome, int ataque, int defesa, int hp, int raridade) {
+        this.id = id;
         this.emoji = emoji;
         this.nome = nome;
         this.ataque = ataque;
@@ -78,5 +80,14 @@ public class Pokemao {
 
     public void setRaridade(int raridade) {
         this.raridade = raridade;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
