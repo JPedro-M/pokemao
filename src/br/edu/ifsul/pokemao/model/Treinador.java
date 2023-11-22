@@ -1,7 +1,9 @@
 package br.edu.ifsul.pokemao.model;
 
+import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
+
 public class Treinador {
-    // nome, user, senha idade, moedas
+    private long id;
 
     private String nome;
     private String user;
@@ -10,6 +12,16 @@ public class Treinador {
     private int moedas;
 
     public Treinador(String user, String senha, String nome, int idade) {
+        this.id = new TreinadorRepository().getLenTreinadores() + 1;
+        this.user = user;
+        this.senha = senha;
+        this.nome = nome;
+        this.idade = idade;
+        this.moedas = 500;
+    }
+
+    public Treinador(long id, String user, String senha, String nome, int idade) {
+        this.id = id;
         this.user = user;
         this.senha = senha;
         this.nome = nome;
@@ -59,6 +71,14 @@ public class Treinador {
 
     public void addMoedas(int moedas) {
         this.moedas += moedas;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 }

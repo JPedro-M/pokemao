@@ -1,23 +1,25 @@
 package br.edu.ifsul.pokemao.model;
+
+import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import java.util.Random;
 import java.time.LocalDateTime;
 
 public class PokemaoTreinador {
-    Pokemao pokemao;
-    Treinador treinador;
-    int velocidadeAtaque;
-    
-    int ataque;
-    int defesa;
-    int hp;
-    boolean disponivelParaTroca;
+    public Pokemao pokemao;
+    public long id;
 
-    double xp;
-
-    LocalDateTime dataCaptura;
+    public Treinador treinador;
+    public int velocidadeAtaque;
+    public int ataque;
+    public int defesa;
+    public int hp;
+    public boolean disponivelParaTroca;
+    public double xp;
+    public LocalDateTime dataCaptura;
     
 
     public PokemaoTreinador(Pokemao pokemao, Treinador treinador) {
+        this.id = new PokemaoTreinadorRepository().getLenPokemaoTreinador() + 1;
         this.pokemao = pokemao;
         this.treinador = treinador;
         this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(0, 15);
@@ -27,6 +29,19 @@ public class PokemaoTreinador {
         this.xp = 100;
         this.dataCaptura = LocalDateTime.now();
         this.disponivelParaTroca = false;
+    }
+
+    public PokemaoTreinador(long id, Pokemao pokemao, Treinador treinador, int velocidadeAtaque, int ataque, int defesa, int hp, boolean disponivelParaTroca, double xp, LocalDateTime dataCaptura) {
+        this.id = id;
+        this.pokemao = pokemao;
+        this.treinador = treinador;
+        this.velocidadeAtaque = velocidadeAtaque;
+        this.ataque = ataque;
+        this.defesa = defesa;
+        this.hp = hp;
+        this.disponivelParaTroca = disponivelParaTroca;
+        this.xp = xp;
+        this.dataCaptura = dataCaptura;
     }
 
     public Pokemao getPokemao() {
@@ -109,4 +124,11 @@ public class PokemaoTreinador {
         this.disponivelParaTroca = disponivelParaTroca;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

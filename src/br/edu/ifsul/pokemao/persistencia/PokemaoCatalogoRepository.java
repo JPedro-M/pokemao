@@ -56,13 +56,13 @@ public class PokemaoCatalogoRepository {
         return lista;
     }
 
-    public Pokemao buscarPorId(int id) {
+    public Pokemao buscarPorId(long l) {
         Pokemao pokemaoCatalogo = null;
         try {
             this.conexao.abrirConexao();
             String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setInt(1, id);
+            statement.setLong(1, l);
             ResultSet rs = statement.executeQuery();
             try {
                 if (rs.next()) {
