@@ -23,7 +23,6 @@ public class Pokemao {
         this.raridade = raridade;
     }
 
-    
     public String getEmoji() {
         return emoji;
     }

@@ -9,7 +9,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class PokemaoTreinadorRepository {
-    // métodos para listar, listardotreinador, cadastrar, libertar (excluir), trocar,
+    // métodos para listar, listardotreinador, cadastrar, libertar (excluir),
+    // trocar,
     // batalhar, curar, encontrarnanatureza, marcarcomodisponivel
     // conexao com o banco de dados
 
@@ -22,18 +23,18 @@ public class PokemaoTreinadorRepository {
     private ArrayList<PokemaoTreinador> ResultSettoList(ResultSet rs) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
-            while (rs.next()) {PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
-                    rs.getLong("id"),
-                    new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                    new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
-                    rs.getInt("velocidade_ataque"),
-                    rs.getInt("ataque"),
-                    rs.getInt("defesa"),
-                    rs.getInt("hp"),
-                    rs.getBoolean("disponivel_para_troca"),
-                    rs.getDouble("xp"),
-                    rs.getTimestamp("data_captura").toLocalDateTime()
-                );
+            while (rs.next()) {
+                PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
+                        rs.getLong("id"),
+                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
+                        new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
+                        rs.getInt("velocidade_ataque"),
+                        rs.getInt("ataque"),
+                        rs.getInt("defesa"),
+                        rs.getInt("hp"),
+                        rs.getBoolean("disponivel_para_troca"),
+                        rs.getDouble("xp"),
+                        rs.getTimestamp("data_captura").toLocalDateTime());
                 lista.add(pokemaoTreinador);
             }
         } catch (Exception e) {
@@ -41,7 +42,6 @@ public class PokemaoTreinadorRepository {
         }
         return lista;
     }
-
 
     public int getLenPokemaoTreinador() {
         int len = 0;
@@ -104,17 +104,16 @@ public class PokemaoTreinadorRepository {
             try {
                 if (rs.next()) {
                     pokemaoTreinador = new PokemaoTreinador(
-                        rs.getLong("id"),
-                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                        new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
-                        rs.getInt("velocidade_ataque"),
-                        rs.getInt("ataque"),
-                        rs.getInt("defesa"),
-                        rs.getInt("hp"),
-                        rs.getBoolean("disponivel_para_troca"),
-                        rs.getDouble("xp"),
-                        rs.getTimestamp("data_captura").toLocalDateTime()
-                    );
+                            rs.getLong("id"),
+                            new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
+                            new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
+                            rs.getInt("velocidade_ataque"),
+                            rs.getInt("ataque"),
+                            rs.getInt("defesa"),
+                            rs.getInt("hp"),
+                            rs.getBoolean("disponivel_para_troca"),
+                            rs.getDouble("xp"),
+                            rs.getTimestamp("data_captura").toLocalDateTime());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -172,13 +171,13 @@ public class PokemaoTreinadorRepository {
         return resultado;
     }
 
-
     // uma troca é composta por duas transferências
     protected boolean transferir(PokemaoTreinador pokemaoTreinador1, Treinador treinador2) {
-        return transferir(pokemaoTreinador1, treinador2, false); 
+        return transferir(pokemaoTreinador1, treinador2, false);
     }
 
-    protected boolean transferir(PokemaoTreinador pokemaoTreinador1, Treinador treinador2, boolean mudarDisponivelParaTroca) {
+    protected boolean transferir(PokemaoTreinador pokemaoTreinador1, Treinador treinador2,
+            boolean mudarDisponivelParaTroca) {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
@@ -223,3 +222,50 @@ public class PokemaoTreinadorRepository {
         return resultado;
     }
 
+    public boolean curar(PokemaoTreinador pokemaoTreinador) {
+        boolean resultado = false;
+        try {
+            this.conexao.abrirConexao();
+            String sqlInsert = "UPDATE pokemao_treinador SET hp=? WHERE id=?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            statement.setInt(1, pokemaoTreinador.getPokemao().getHp());
+            statement.setLong(2, pokemaoTreinador.getId());
+            int linhasAfetadas = statement.executeUpdate();
+            resultado = linhasAfetadas > 0 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return resultado;
+    }
+
+    public Pokemao gerarWildPokemao() {
+        this.conexao.abrirConexao();
+
+        int random = (int) (Math.random() * 10) + 1;
+        PokemaoTreinador novo = null;
+        if (random <= 7) {
+            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(1);
+            int random2 = (int) (Math.random() * pokemaos.size());
+            Pokemao pokemao = pokemaos.get(random2);
+            novo = new PokemaoTreinador(pokemao, null);
+        } else if (random <= 9) {
+            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(2);
+            int random2 = (int) (Math.random() * pokemaos.size());
+            Pokemao pokemao = pokemaos.get(random2);
+            novo = new PokemaoTreinador(pokemao, null);
+        } else {
+            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(3);
+            int random2 = (int) (Math.random() * pokemaos.size());
+            Pokemao pokemao = pokemaos.get(random2);
+            novo = new PokemaoTreinador(pokemao, null);
+        }
+
+        this.conexao.fecharConexao();
+        return novo.getPokemao();
+
+        // 
+    }
+
+    

@@ -164,4 +164,21 @@ public class PokemaoCatalogoRepository {
         }
         return retorno;
     }
+
+    public ArrayList<Pokemao> listarPorRaridade(int x) {
+        ArrayList<Pokemao> lista = new ArrayList<>();
+        try {
+            this.conexao.abrirConexao();
+            String sqlSelect = "SELECT * FROM pokemao_catalogo WHERE raridade = ?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlSelect);
+            statement.setInt(1, x);
+            ResultSet rs = statement.executeQuery();
+            lista = ResultSettoList(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return lista;
+    }
 }
