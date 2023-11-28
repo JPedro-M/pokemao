@@ -265,7 +265,34 @@ public class PokemaoTreinadorRepository {
         this.conexao.fecharConexao();
         return novo.getPokemao();
 
-        // 
+        // 70% de chance de ser um pokemao de raridade normal, 20% de chance de ser um
+        // pokemao de raridade raro, 10% de chance de ser um pokemao de raridade lendário
     }
 
+    public boolean editar(PokemaoTreinador pokemaoTreinador) {
+        boolean resultado = false;
+        try {
+            this.conexao.abrirConexao();
+            String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?, ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id=?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            statement.setLong(1, pokemaoTreinador.getPokemao().getId());
+            statement.setLong(2, pokemaoTreinador.getTreinador().getId());
+            statement.setInt(3, pokemaoTreinador.getVelocidadeAtaque());
+            statement.setInt(4, pokemaoTreinador.getAtaque());
+            statement.setInt(5, pokemaoTreinador.getDefesa());
+            statement.setInt(6, pokemaoTreinador.getHp());
+            statement.setBoolean(7, pokemaoTreinador.isDisponivelParaTroca());
+            statement.setDouble(8, pokemaoTreinador.getXp());
+            statement.setTimestamp(9, java.sql.Timestamp.valueOf(pokemaoTreinador.getDataCaptura()));
+            statement.setLong(10, pokemaoTreinador.getId());
+            int linhasAfetadas = statement.executeUpdate();
+            resultado = linhasAfetadas > 0 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return resultado;
+    }
+}
     
