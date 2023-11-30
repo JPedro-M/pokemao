@@ -17,7 +17,7 @@ public class PokemaoTreinadorRepository {
     private ConexaoMySQL conexao;
 
     public PokemaoTreinadorRepository() {
-        this.conexao = new ConexaoMySQL("localhost", "3306", "root", "root", "pokemao");
+        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
     private ArrayList<PokemaoTreinador> ResultSettoList(ResultSet rs) {

@@ -15,7 +15,7 @@ public class PokemaoCatalogoRepository {
     private ConexaoMySQL conexao;
 
     public PokemaoCatalogoRepository() {
-        this.conexao = new ConexaoMySQL("localhost", "3306", "root", "root", "pokemao");
+        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
     private ArrayList<Pokemao> ResultSettoList(ResultSet rs) {

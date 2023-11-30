@@ -14,7 +14,7 @@ public class TreinadorRepository {
     private ConexaoMySQL conexao;
 
     public TreinadorRepository() {
-        this.conexao = new ConexaoMySQL("localhost", "3306", "root", "root", "pokemao");
+        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
     public Treinador getTreinadorLogado() {

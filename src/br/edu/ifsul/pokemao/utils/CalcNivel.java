@@ -1,4 +1,4 @@
-package br.edu.ifsul.pokemao.persistencia;
+package br.edu.ifsul.pokemao.utils;
 
 public class CalcNivel {
     // método para calcular o nível do pokémao a partir do seu XP
