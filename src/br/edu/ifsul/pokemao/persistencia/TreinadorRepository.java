@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import br.edu.ifsul.pokemao.model.Treinador;
+import br.edu.ifsul.pokemao.utils.BDConfigs;
+import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
 
 public class TreinadorRepository {
     // métodos para login, cadastro, logout

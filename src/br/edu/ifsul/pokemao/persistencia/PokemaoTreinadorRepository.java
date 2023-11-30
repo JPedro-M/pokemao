@@ -3,6 +3,8 @@ package br.edu.ifsul.pokemao.persistencia;
 import br.edu.ifsul.pokemao.model.Pokemao;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.model.Treinador;
+import br.edu.ifsul.pokemao.utils.BDConfigs;
+import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

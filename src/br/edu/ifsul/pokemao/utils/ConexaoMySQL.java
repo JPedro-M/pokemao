@@ -1,4 +1,4 @@
-package br.edu.ifsul.pokemao.persistencia;
+package br.edu.ifsul.pokemao.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
