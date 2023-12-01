@@ -56,7 +56,7 @@ PRIMARY KEY(id_troca),
 FOREIGN KEY(id_pokemao_treinador_1) REFERENCES pokemao_treinador(id_pokemao),
 FOREIGN KEY(id_pokemao_treinador_2) REFERENCES pokemao_treinador(id_pokemao),
 FOREIGN KEY(id_usuario_1) REFERENCES treinador(id_treinador),
-FOREIGN KEY(id_usuario_2) REFERENCES treinador(id_treinador);
+FOREIGN KEY(id_usuario_2) REFERENCES treinador(id_treinador)
 );
 
 -- criando a tabela de batalhas
@@ -73,13 +73,13 @@ FOREIGN KEY(id_pokemao_treinador_1) REFERENCES pokemao_treinador(id_pokemao),
 FOREIGN KEY(id_pokemao_treinador_2) REFERENCES pokemao_treinador(id_pokemao),
 FOREIGN KEY(id_pokemao_vencedor) REFERENCES pokemao_treinador(id_pokemao),
 FOREIGN KEY(id_usuario_1) REFERENCES treinador(id_treinador),
-FOREIGN KEY(id_usuario_2) REFERENCES treinador(id_treinador);
+FOREIGN KEY(id_usuario_2) REFERENCES treinador(id_treinador)
 );
 
 
 -- inserindo um registro dentro da tabela TREINADORES
 INSERT INTO treinador VALUES(null, 'bonachao', '12345', 'Diogo', '2003-11-12 15:00:00');
 
-INSERT INTO pokemao_catalogo VALUES(1, '🤔', 'Pensante', 10, 20, 5, 2, 'Ele pensa e isso o deixa sempre na defensiva. É um tanque.')
+INSERT INTO pokemao_catalogo VALUES(1, '🤔', 'Pensante', 10, 20, 5, 2, 'Ele pensa e isso o deixa sempre na defensiva. É um tanque.');
 
 INSERT INTO pokemao_treinador VALUES(null, 10, 20, 5, true, 0, '2021-05-01 15:00:00', 1, 1, 'Pensânio');

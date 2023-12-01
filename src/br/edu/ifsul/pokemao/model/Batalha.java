@@ -2,10 +2,23 @@ package br.edu.ifsul.pokemao.model;
 
 public class Batalha extends Acontecimento {
     private boolean vencedor;
-    // true significa que o usuarioInicial venceu
     
-    public Batalha(Treinador usuarioInicial, Treinador usuarioPassivo) {
-        super(usuarioInicial, usuarioPassivo);
+    private PokemaoTreinador pokemaoInicial;
+    private PokemaoTreinador pokemaoEscolhido;
+    // true significa que o pokemaoInicial venceu
+    
+    public Batalha(PokemaoTreinador pokemaoInicial, PokemaoTreinador pokemaoEscolhido) {
+        super(pokemaoInicial.getTreinador(), pokemaoEscolhido.getTreinador());
+        this.pokemaoInicial = pokemaoInicial;
+        this.pokemaoEscolhido = pokemaoEscolhido;
+    }
+
+    public PokemaoTreinador getPokemaoInicial() {
+        return pokemaoInicial;
+    }
+
+    public PokemaoTreinador getPokemaoEscolhido() {
+        return pokemaoEscolhido;
     }
 
     public boolean isInicialVencedor() {
@@ -13,6 +26,10 @@ public class Batalha extends Acontecimento {
     }
     
     public void setInicialStatus(boolean vencedor) {
+        this.vencedor = vencedor;
+    }
+
+    public void setVencedor(boolean vencedor) {
         this.vencedor = vencedor;
     }
 

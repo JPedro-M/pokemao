@@ -25,5 +25,7 @@ public class Troca extends Acontecimento {
     public void setPokemaoResposta(PokemaoTreinador pokemaoResposta) {
         this.pokemaoResposta = pokemaoResposta;
     }
+
+
     
 }
