@@ -32,7 +32,7 @@ public class Batalha extends JFrame {
         JLabel pokeIN = new JLabel("inimigo");
             pokeIN.setBounds(450,195, 200, 50);
 
-        JButton voltar = new JButton;
+        JButton voltar = new JButton();
             voltar.setBounds(500, 400, 100, 40);
 
         this.add(hpPokeT); this.add(pokeT); this.add(pokeTN); this.add(atk);
