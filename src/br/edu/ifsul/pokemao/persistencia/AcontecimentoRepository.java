@@ -4,6 +4,7 @@ import br.edu.ifsul.pokemao.model.Batalha;
 import br.edu.ifsul.pokemao.model.Troca;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
 import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
+import br.edu.ifsul.pokemao.utils.ListaMaker;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,52 +66,6 @@ public class AcontecimentoRepository {
         }
     }
 
-    private ArrayList<Troca> ResultSettoListTroca(ResultSet rs) {
-        ArrayList<Troca> lista = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                Troca troca = new Troca(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"))
-                );
-                troca.setId(rs.getLong("id_troca"));
-                troca.setData(rs.getTimestamp("data").toLocalDateTime());
-                troca.setTreinadorInicial(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_1")));
-                troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_2")));
-                lista.add(troca);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
-
-    private ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs) {
-        ArrayList<Batalha> lista = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                Batalha batalha = new Batalha(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"))
-                );
-                batalha.setId(rs.getLong("id_batalha"));
-                batalha.setData(rs.getTimestamp("data").toLocalDateTime());
-                if (rs.getLong("id_pokemao_vencedor") == batalha.getPokemaoInicial().getId()) {
-                    batalha.setVencedor(true);
-                } else {
-                    batalha.setVencedor(false);
-                }
-                batalha.setTreinadorInicial(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_1")));
-                batalha.setTreinadorEscolhido(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_2")));
-                lista.add(batalha);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
 
     public ArrayList<Troca> listarTrocas() {
         ArrayList<Troca> lista = new ArrayList<>();
@@ -119,7 +74,7 @@ public class AcontecimentoRepository {
             String sqlInsert = "SELECT * FROM troca";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoListTroca(rs);
+            lista = ListaMaker.ResultSettoListTroca(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -135,7 +90,7 @@ public class AcontecimentoRepository {
             String sqlInsert = "SELECT * FROM batalha";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoListBatalha(rs);
+            lista = ListaMaker.ResultSettoListBatalha(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -153,7 +108,7 @@ public class AcontecimentoRepository {
             statement.setLong(1, id);
             statement.setLong(2, id);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoListTroca(rs);
+            lista = ListaMaker.ResultSettoListTroca(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -171,7 +126,7 @@ public class AcontecimentoRepository {
             statement.setLong(1, id);
             statement.setLong(2, id);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoListBatalha(rs);
+            lista = ListaMaker.ResultSettoListBatalha(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -3,6 +3,7 @@ package br.edu.ifsul.pokemao.persistencia;
 import br.edu.ifsul.pokemao.model.Pokemao;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
 import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
+import br.edu.ifsul.pokemao.utils.ListaMaker;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,27 +21,7 @@ public class PokemaoCatalogoRepository {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
-    private ArrayList<Pokemao> ResultSettoList(ResultSet rs) {
-        ArrayList<Pokemao> lista = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                Pokemao pokemaoCatalogo = 
-                    new Pokemao(
-                        rs.getLong("id"),
-                        rs.getString("emoji"),
-                        rs.getString("nome"),
-                        rs.getInt("ataque"),
-                        rs.getInt("defesa"),
-                        rs.getInt("hp"),
-                        rs.getInt("raridade")
-                    );
-                lista.add(pokemaoCatalogo);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
+
 
     public ArrayList<Pokemao> listar() {
         ArrayList<Pokemao> lista = new ArrayList<>();
@@ -49,7 +30,7 @@ public class PokemaoCatalogoRepository {
             String sqlInsert = "SELECT * FROM pokemao_catalogo";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoList(rs);
+            lista = ListaMaker.ResultSettoListPokemaoCatalogo(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -175,7 +156,7 @@ public class PokemaoCatalogoRepository {
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlSelect);
             statement.setInt(1, x);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoList(rs);
+            lista = ListaMaker.ResultSettoListPokemaoCatalogo(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -26,6 +26,7 @@ public class ConexaoMySQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://" + this.ip + ":" + this.porta + "/" + this.nomeBD;
+            System.out.println(url);
             this.conexao = DriverManager.getConnection(url, this.usuario, this.senha);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
