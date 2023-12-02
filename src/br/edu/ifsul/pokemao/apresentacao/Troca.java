@@ -20,6 +20,9 @@ public class Troca extends JFrame {
         JLabel pokeNTImg = new JLabel("[:-|]");
             pokeNTImg.setBounds(450, 200, 200, 200);
 
+        JButton voltar = new JButton;
+        voltar.setBounds(500, 400, 100, 40);
+
         this.add(pokeTT); this.add(pokeTTImg); this.add(trocador); this.add(pokeNT); this.add(pokeNTImg);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);

@@ -21,7 +21,6 @@ public class Batalha extends JFrame {
         JButton def =  new JButton("Defender");
             def.setBounds(190, 300, 150, 45);
 
-
         JLabel hpPokeI = new JLabel("HP: ");
             hpPokeI.setBounds(450, 25, 200, 50);
 
@@ -31,6 +30,8 @@ public class Batalha extends JFrame {
         JLabel pokeIN = new JLabel("inimigo");
             pokeIN.setBounds(450,195, 200, 50);
 
+        JButton voltar = new JButton;
+            voltar.setBounds(500, 400, 100, 40);
 
         this.add(hpPokeT); this.add(pokeT); this.add(pokeTN); this.add(atk);
         this.add(def); this.add(hpPokeI); this.add(pokeI); this.add(pokeIN);

@@ -7,7 +7,7 @@ public class Main {
 // Menu de Login
 
 
-    Troca troca = new Troca();
+    Batalha batalha = new Batalha();
 
 
 
