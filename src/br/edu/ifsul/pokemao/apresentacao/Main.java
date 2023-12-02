@@ -1,16 +1,9 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package br.edu.ifsul.pokemao.apresentacao;
 
 public class Main {
     public static void main(String[] args) {
-// Menu de Login
 
-
-    Batalha batalha = new Batalha();
-
-
-
+        new PokemaoLogin();
 
     }
 }

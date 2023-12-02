@@ -1,3 +1,5 @@
+package br.edu.ifsul.pokemao.apresentacao;
+
 import javax.swing.*;
 
 public class Troca extends JFrame {
@@ -20,7 +22,7 @@ public class Troca extends JFrame {
         JLabel pokeNTImg = new JLabel("[:-|]");
             pokeNTImg.setBounds(450, 200, 200, 200);
 
-        JButton voltar = new JButton;
+        JButton voltar = new JButton();
         voltar.setBounds(500, 400, 100, 40);
 
         this.add(pokeTT); this.add(pokeTTImg); this.add(trocador); this.add(pokeNT); this.add(pokeNTImg);
