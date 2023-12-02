@@ -1,3 +1,5 @@
+package br.edu.ifsul.pokemao.apresentacao;
+
 import javax.swing.*;
 
 public class Troca extends JFrame {

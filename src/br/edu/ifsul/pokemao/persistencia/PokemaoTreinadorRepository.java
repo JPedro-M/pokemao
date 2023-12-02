@@ -5,6 +5,7 @@ import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
 import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
+import br.edu.ifsul.pokemao.utils.ListaMaker;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,28 +23,7 @@ public class PokemaoTreinadorRepository {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
-    private ArrayList<PokemaoTreinador> ResultSettoList(ResultSet rs) {
-        ArrayList<PokemaoTreinador> lista = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
-                        rs.getLong("id"),
-                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                        new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
-                        rs.getInt("velocidade_ataque"),
-                        rs.getInt("ataque"),
-                        rs.getInt("defesa"),
-                        rs.getInt("hp"),
-                        rs.getBoolean("disponivel_para_troca"),
-                        rs.getDouble("xp"),
-                        rs.getTimestamp("data_captura").toLocalDateTime());
-                lista.add(pokemaoTreinador);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
+
 
     public int getLenPokemaoTreinador() {
         int len = 0;
@@ -68,7 +48,7 @@ public class PokemaoTreinadorRepository {
             String sqlInsert = "SELECT * FROM pokemao_treinador";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoList(rs);
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -85,7 +65,7 @@ public class PokemaoTreinadorRepository {
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, treinador.getId());
             ResultSet rs = statement.executeQuery();
-            lista = ResultSettoList(rs);
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
