@@ -22,22 +22,6 @@ public class PokemaoTreinadorRepository {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
-    public int getLenPokemaoTreinador() {
-        int len = 0;
-        try {
-            this.conexao.abrirConexao();
-            String sqlInsert = "SELECT COUNT(*) FROM pokemao_treinador";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            ResultSet rs = statement.executeQuery();
-            len = rs.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
-        }
-        return len;
-    }
-
     public ArrayList<PokemaoTreinador> listar() {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
@@ -72,6 +56,30 @@ public class PokemaoTreinadorRepository {
 
     }
 
+    public ArrayList<PokemaoTreinador> listarDisponiveisParaTroca(Treinador ignorarTreinador) {
+        ArrayList<PokemaoTreinador> lista = new ArrayList<>();
+        try {
+            this.conexao.abrirConexao();
+            String sqlInsert = "SELECT * FROM pokemao_treinador";
+            if (ignorarTreinador != null) {
+                sqlInsert += " WHERE disponivel_para_troca = true AND id_treinador != ?";
+            } else {
+                sqlInsert += " WHERE disponivel_para_troca = true";
+            }
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            if (ignorarTreinador != null) {
+                statement.setLong(1, ignorarTreinador.getId());
+            }
+            ResultSet rs = statement.executeQuery();
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return lista;
+    }
+
     public PokemaoTreinador buscarPorId(long l) {
         PokemaoTreinador pokemaoTreinador = null;
         try {
@@ -83,9 +91,8 @@ public class PokemaoTreinadorRepository {
             try {
                 if (rs.next()) {
                     pokemaoTreinador = new PokemaoTreinador(
-                            rs.getLong("id_pokemao"),
                             new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                            new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
+                            new TreinadorRepository().buscarPorID(rs.getLong("id_treinador")),
                             rs.getInt("velocidade_ataque"),
                             rs.getInt("ataque"),
                             rs.getInt("defesa"),
@@ -93,6 +100,8 @@ public class PokemaoTreinadorRepository {
                             rs.getBoolean("disponivel_para_troca"),
                             rs.getDouble("xp"),
                             rs.getTimestamp("data_captura").toLocalDateTime());
+                    pokemaoTreinador.setId(rs.getLong("id_pokemao"));
+                    pokemaoTreinador.setNome(pokemaoTreinador.getPokemao().getNome());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -112,17 +121,18 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "INSERT INTO pokemao_treinador VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO pokemao_treinador VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, pokemaoTreinador.getPokemao().getId());
-            statement.setLong(2, pokemaoTreinador.getTreinador().getId());
-            statement.setInt(3, pokemaoTreinador.getVelocidadeAtaque());
-            statement.setInt(4, pokemaoTreinador.getAtaque());
-            statement.setInt(5, pokemaoTreinador.getDefesa());
-            statement.setInt(6, pokemaoTreinador.getHp());
-            statement.setBoolean(7, pokemaoTreinador.isDisponivelParaTroca());
-            statement.setDouble(8, pokemaoTreinador.getXp());
-            statement.setTimestamp(9, java.sql.Timestamp.valueOf(pokemaoTreinador.getDataCaptura()));
+            statement.setInt(1, pokemaoTreinador.getVelocidadeAtaque());
+            statement.setInt(2, pokemaoTreinador.getAtaque());
+            statement.setInt(3, pokemaoTreinador.getDefesa());
+            statement.setBoolean(4, pokemaoTreinador.isDisponivelParaTroca());
+            statement.setDouble(5, pokemaoTreinador.getXp());
+            statement.setTimestamp(6, java.sql.Timestamp.valueOf(pokemaoTreinador.getDataCaptura()));
+            statement.setLong(7, pokemaoTreinador.getPokemao().getId());
+            statement.setLong(8, pokemaoTreinador.getTreinador().getId());
+            statement.setString(9, pokemaoTreinador.getNome());
+            statement.setInt(10, pokemaoTreinador.getHp());
             int linhasAfetadas = statement.executeUpdate();
             resultado = linhasAfetadas > 0 ? true : false;
         } catch (Exception e) {
@@ -219,7 +229,7 @@ public class PokemaoTreinadorRepository {
         return resultado;
     }
 
-    public Pokemao gerarWildPokemao() {
+    public PokemaoTreinador gerarPokemaoSelvagem() {
         this.conexao.abrirConexao();
 
         int random = (int) (Math.random() * 10) + 1;
@@ -242,7 +252,7 @@ public class PokemaoTreinadorRepository {
         }
 
         this.conexao.fecharConexao();
-        return novo.getPokemao();
+        return novo;
 
         // 70% de chance de ser um pokemao de raridade normal, 20% de chance de ser um
         // pokemao de raridade raro, 10% de chance de ser um pokemao de raridade lendário

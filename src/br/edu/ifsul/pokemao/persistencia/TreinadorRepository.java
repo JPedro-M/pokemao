@@ -27,10 +27,6 @@ public class TreinadorRepository {
         this.treinadorLogado = treinadorLogado;
     }
 
-    public Treinador buscarPorId(long long1) {
-        return null;
-    }
-
     public int getLenTreinadores() {
         int len = 0;
         try {

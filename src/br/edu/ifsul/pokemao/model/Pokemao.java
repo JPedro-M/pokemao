@@ -79,6 +79,18 @@ public class Pokemao {
         return raridade;
     }
 
+    public String getRaridadeString() {
+        switch (this.raridade) {
+            case 1:
+                return "Comum";
+            case 2:
+                return "Raro";
+            case 3:
+                return "Lendário";
+        }
+        return this.raridade + "";
+    }
+
 
     public void setRaridade(int raridade) {
         this.raridade = raridade;

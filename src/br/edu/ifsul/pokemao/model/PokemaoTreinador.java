@@ -1,25 +1,24 @@
 package br.edu.ifsul.pokemao.model;
 
-import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import java.util.Random;
 import java.time.LocalDateTime;
 
 public class PokemaoTreinador {
-    public Pokemao pokemao;
-    public long id;
+    private Pokemao pokemao;
+    private long id;
 
-    public Treinador treinador;
-    public int velocidadeAtaque;
-    public int ataque;
-    public int defesa;
-    public int hp;
-    public boolean disponivelParaTroca;
-    public double xp;
-    public LocalDateTime dataCaptura;
-    
+    private Treinador treinador;
+    private int velocidadeAtaque;
+    private int ataque;
+    private int defesa;
+    private int hp;
+    private boolean disponivelParaTroca;
+    private double xp;
+    private LocalDateTime dataCaptura;
+
+    private String nome;
 
     public PokemaoTreinador(Pokemao pokemao, Treinador treinador) {
-        this.id = new PokemaoTreinadorRepository().getLenPokemaoTreinador() + 1;
         this.pokemao = pokemao;
         this.treinador = treinador;
         this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(0, 15);
@@ -31,8 +30,7 @@ public class PokemaoTreinador {
         this.disponivelParaTroca = false;
     }
 
-    public PokemaoTreinador(long id, Pokemao pokemao, Treinador treinador, int velocidadeAtaque, int ataque, int defesa, int hp, boolean disponivelParaTroca, double xp, LocalDateTime dataCaptura) {
-        this.id = id;
+    public PokemaoTreinador(Pokemao pokemao, Treinador treinador, int velocidadeAtaque, int ataque, int defesa, int hp, boolean disponivelParaTroca, double xp, LocalDateTime dataCaptura) {
         this.pokemao = pokemao;
         this.treinador = treinador;
         this.velocidadeAtaque = velocidadeAtaque;
@@ -130,5 +128,13 @@ public class PokemaoTreinador {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome == null ? pokemao.getNome() : nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

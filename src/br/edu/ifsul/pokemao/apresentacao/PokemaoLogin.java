@@ -46,6 +46,10 @@ public class PokemaoLogin extends JFrame {
         lErro.setVisible(false);
         lErro.setBounds(175, 210, 200, 25);
 
+        JButton debug = new JButton("SKIP");
+        debug.setBounds(10, 10, 75, 25);
+        debug.setVisible(true); // marcar como false para não aparecer quando for entregar
+
         this.add(pokemao);
         this.add(user);
         this.add(nUser);
@@ -57,6 +61,7 @@ public class PokemaoLogin extends JFrame {
         this.add(cadastro);
         this.add(msgCad);
         this.add(lErro);
+        this.add(debug);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);
@@ -82,6 +87,15 @@ public class PokemaoLogin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new PokemaoCadastro();
+                dispose();
+            }
+        });
+
+        debug.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                treinadorRepository.login("bonachao", "12345");
+                new PokemaoLobby(treinadorRepository);
                 dispose();
             }
         });

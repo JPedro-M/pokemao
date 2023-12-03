@@ -9,11 +9,7 @@ O projeto foi desenvolvido para a disciplina de Programação Orientada a Objeto
 Ainda a ser adicionado.
 
 ## Dependências
-Este projeto requer o driver JDBC MySQL Connector/J. Siga estas etapas para configurar seu ambiente:
+Escolhemos por fazer pull na pasta /lib/, portanto não é necessário instalar nenhuma dependência. 
 
-1. Baixe o arquivo JAR do MySQL Connector/J do [site oficial do MySQL](https://dev.mysql.com/downloads/connector/j/).
-2. Coloque o arquivo JAR baixado no diretório `lib` do projeto.
-3. Reinicie seu IDE ou atualize seu projeto.
-
-Além disso, o projeto requer a criação de um arquivo BDConfigs.java no pacote `br.edu.ifsul.utils`. Este arquivo deve conter as seguintes constantes:
+O projeto requer a criação de um arquivo BDConfigs.java no pacote `br.edu.ifsul.utils`. Este arquivo deve conter as seguintes constantes:
 - IP, PORTA, USUARIO, SENHA, NOME_BD

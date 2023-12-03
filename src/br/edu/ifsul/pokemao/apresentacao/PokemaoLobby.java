@@ -34,8 +34,13 @@ public class PokemaoLobby extends JFrame {
         this.setLayout(null);
         this.setVisible(true);
 
+        troca.addActionListener(e -> {
+            new IniciarTroca(treinadorRepository);
+            this.dispose();
+        });
+        
         pegar.addActionListener(e -> {
-            new Natureza();
+            new Natureza(treinadorRepository);
             this.dispose();
         });
 
