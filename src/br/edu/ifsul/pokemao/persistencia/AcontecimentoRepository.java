@@ -23,7 +23,8 @@ public class AcontecimentoRepository {
     public void adicionarTroca(Troca troca) {
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "INSERT INTO troca(id_troca, id_pokemao_treinador_1, id_pokemao_treinador_2, data, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO troca(id_troca, id_pokemao_treinador_1, id_pokemao_treinador_2,"+
+                            "data_troca, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
 
             statement.setLong(1, troca.getPokemaoOfertado().getId());
@@ -43,8 +44,8 @@ public class AcontecimentoRepository {
     public void adicionarBatalha(Batalha batalha) {
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "INSERT INTO batalha(id_batalha, id_pokemao_treinador_1, id_pokemao_treinador_2, data, " +
-                    "id_pokemao_vencedor, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO batalha(id_batalha, id_pokemao_treinador_1, id_pokemao_treinador_2, " +
+                    "data_batalha, id_pokemao_vencedor, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
 
             statement.setLong(1, batalha.getPokemaoInicial().getId());

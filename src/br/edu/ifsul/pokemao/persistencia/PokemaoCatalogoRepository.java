@@ -21,8 +21,6 @@ public class PokemaoCatalogoRepository {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
-
-
     public ArrayList<Pokemao> listar() {
         ArrayList<Pokemao> lista = new ArrayList<>();
         try {
@@ -39,25 +37,26 @@ public class PokemaoCatalogoRepository {
         return lista;
     }
 
-    public Pokemao buscarPorId(long l) {
+    public Pokemao buscarPorId(long id_busca) {
         Pokemao pokemaoCatalogo = null;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id=?";
+            String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, l);
+            statement.setLong(1, id_busca);
             ResultSet rs = statement.executeQuery();
             try {
                 if (rs.next()) {
                     pokemaoCatalogo = 
                         new Pokemao(
-                            rs.getLong("id"),
+                            rs.getLong("id_pokemao_catalogo"),
                             rs.getString("emoji"),
                             rs.getString("nome"),
                             rs.getInt("ataque"),
                             rs.getInt("defesa"),
                             rs.getInt("hp"),
-                            rs.getInt("raridade")
+                            rs.getInt("raridade"),
+                            rs.getString("descricao")
                         );
                 }
             } catch (Exception e) {
@@ -75,14 +74,17 @@ public class PokemaoCatalogoRepository {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "INSERT INTO pokemao_catalogo(emoji, nome, ataque, defesa, hp, raridade) VALUES(?, ?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO pokemao_catalogo(id_pokemao_catalogo, emoji, nome, ataque, defesa, hp,"+
+                                "raridade, descricao) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setString(1, pokemaoCatalogo.getEmoji());
-            statement.setString(2, pokemaoCatalogo.getNome());
-            statement.setInt(3, pokemaoCatalogo.getAtaque());
-            statement.setInt(4, pokemaoCatalogo.getDefesa());
-            statement.setInt(5, pokemaoCatalogo.getHp());
-            statement.setInt(6, pokemaoCatalogo.getRaridade());
+            statement.setLong(1, pokemaoCatalogo.getId());
+            statement.setString(2, pokemaoCatalogo.getEmoji());
+            statement.setString(3, pokemaoCatalogo.getNome());
+            statement.setInt(4, pokemaoCatalogo.getAtaque());
+            statement.setInt(5, pokemaoCatalogo.getDefesa());
+            statement.setInt(6, pokemaoCatalogo.getHp());
+            statement.setInt(7, pokemaoCatalogo.getRaridade());
+            statement.setString(8, pokemaoCatalogo.getDescricao());
             int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
                 retorno = true;
@@ -102,7 +104,8 @@ public class PokemaoCatalogoRepository {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE pokemao_catalogo SET emoji=?, nome=?, ataque=?, defesa=?, hp=?, raridade=? WHERE id=?";
+            String sqlInsert = "UPDATE pokemao_catalogo SET emoji=?, nome=?, ataque=?, defesa=?, hp=?,"+
+                            "raridade=?, descricao=? WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, pokemaoCatalogo.getEmoji());
             statement.setString(2, pokemaoCatalogo.getNome());
@@ -110,7 +113,8 @@ public class PokemaoCatalogoRepository {
             statement.setInt(4, pokemaoCatalogo.getDefesa());
             statement.setInt(5, pokemaoCatalogo.getHp());
             statement.setInt(6, pokemaoCatalogo.getRaridade());
-            statement.setLong(7, pokemaoCatalogo.getId());
+            statement.setString(7, pokemaoCatalogo.getDescricao());
+            statement.setLong(8, pokemaoCatalogo.getId());
             int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
                 retorno = true;
@@ -130,7 +134,7 @@ public class PokemaoCatalogoRepository {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "DELETE FROM pokemao_catalogo WHERE id=?";
+            String sqlInsert = "DELETE FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setInt(1, id);
             int linhasAfetadas = statement.executeUpdate();

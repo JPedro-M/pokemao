@@ -17,13 +17,14 @@ public class ListaMaker {
         try {
             while (rs.next()) {
                 Pokemao pokemaoCatalogo = new Pokemao(
-                        rs.getLong("id"),
+                        rs.getLong("id_pokemao_catalogo"),
                         rs.getString("emoji"),
                         rs.getString("nome"),
                         rs.getInt("ataque"),
                         rs.getInt("defesa"),
                         rs.getInt("hp"),
-                        rs.getInt("raridade"));
+                        rs.getInt("raridade"),
+                        rs.getString("descricao"));
                 lista.add(pokemaoCatalogo);
             }
         } catch (Exception e) {
@@ -37,7 +38,7 @@ public class ListaMaker {
         try {
             while (rs.next()) {
                 PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
-                        rs.getLong("id"),
+                        rs.getLong("id_pokemao"),
                         new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
                         new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
                         rs.getInt("velocidade_ataque"),
@@ -63,7 +64,7 @@ public class ListaMaker {
                         new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
                         new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
                 troca.setId(rs.getLong("id_troca"));
-                troca.setData(rs.getTimestamp("data").toLocalDateTime());
+                troca.setData(rs.getTimestamp("data_troca").toLocalDateTime());
                 troca.setTreinadorInicial(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_1")));
                 troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorId(rs.getLong("id_usuario_2")));
                 lista.add(troca);
@@ -83,7 +84,7 @@ public class ListaMaker {
                         new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
                         new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
                 batalha.setId(rs.getLong("id_batalha"));
-                batalha.setData(rs.getTimestamp("data").toLocalDateTime());
+                batalha.setData(rs.getTimestamp("data_batalha").toLocalDateTime());
                 if (rs.getLong("id_pokemao_vencedor") == batalha.getPokemaoInicial().getId()) {
                     batalha.setVencedor(true);
                 } else {

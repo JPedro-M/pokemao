@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 public class PokemaoTreinadorRepository {
     // métodos para listar, listardotreinador, cadastrar, libertar (excluir),
-    // trocar,
-    // batalhar, curar, encontrarnanatureza, marcarcomodisponivel
+    // trocar, batalhar, curar, encontrarnanatureza, marcarcomodisponivel
     // conexao com o banco de dados
 
     private ConexaoMySQL conexao;
@@ -22,8 +21,6 @@ public class PokemaoTreinadorRepository {
     public PokemaoTreinadorRepository() {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
-
-
 
     public int getLenPokemaoTreinador() {
         int len = 0;
@@ -79,14 +76,14 @@ public class PokemaoTreinadorRepository {
         PokemaoTreinador pokemaoTreinador = null;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "SELECT * FROM pokemao_treinador WHERE id=?";
+            String sqlInsert = "SELECT * FROM pokemao_treinador WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, l);
             ResultSet rs = statement.executeQuery();
             try {
                 if (rs.next()) {
                     pokemaoTreinador = new PokemaoTreinador(
-                            rs.getLong("id"),
+                            rs.getLong("id_pokemao"),
                             new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
                             new TreinadorRepository().buscarPorId(rs.getLong("id_treinador")),
                             rs.getInt("velocidade_ataque"),
@@ -140,7 +137,7 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "DELETE FROM pokemao_treinador WHERE id=?";
+            String sqlInsert = "DELETE FROM pokemao_treinador WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getId());
             int linhasAfetadas = statement.executeUpdate();
@@ -163,7 +160,7 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id=?";
+            String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, treinador2.getId());
             if (mudarDisponivelParaTroca) {
@@ -208,7 +205,7 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE pokemao_treinador SET hp=? WHERE id=?";
+            String sqlInsert = "UPDATE pokemao_treinador SET hp=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setInt(1, pokemaoTreinador.getPokemao().getHp());
             statement.setLong(2, pokemaoTreinador.getId());
@@ -255,7 +252,8 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?, ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id=?";
+            String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"+
+                            "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getPokemao().getId());
             statement.setLong(2, pokemaoTreinador.getTreinador().getId());

@@ -8,9 +8,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class PokemaoLogin extends JFrame {
-    PokemaoLogin(){
+    PokemaoLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();
-        
+
         this.setTitle("Login");
         this.setSize(600, 600);
 
@@ -18,7 +18,7 @@ public class PokemaoLogin extends JFrame {
         user.setBounds(125, 125, 150, 25);
         JTextField nUser = new JTextField();
         nUser.setBounds(200, 125, 150, 25);
-        
+
         JLabel senha = new JLabel("Senha");
         senha.setBounds(125, 150, 150, 25);
         JPasswordField senhaF = new JPasswordField();
@@ -41,9 +41,9 @@ public class PokemaoLogin extends JFrame {
         pokemao.setBounds(185, 45, 200, 50);
 
         JLabel lErro = new JLabel("Usuário ou senha inválidos.");
-        lErro.setBounds(120, 250, 100, 25);
-        lErro.setVisible(false);
         lErro.setForeground(Color.RED);
+        lErro.setVisible(false);
+        lErro.setBounds(175, 210, 200, 25);
 
         this.add(pokemao);
         this.add(user);
@@ -55,6 +55,7 @@ public class PokemaoLogin extends JFrame {
         this.add(dSenha);
         this.add(cadastro);
         this.add(msgCad);
+        this.add(lErro);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);
@@ -65,11 +66,12 @@ public class PokemaoLogin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String user = nUser.getText();
                 String senha = new String(senhaF.getPassword());
-                System.out.println(user + " " + senha);
                 if (treinadorRepository.login(user, senha)) {
+                    System.out.println("Login realizado com sucesso!");
                     new PokemaoLobby();
                     dispose();
                 } else {
+                    System.out.println("Usuário ou senha inválidos.");
                     lErro.setVisible(true);
                 }
             }

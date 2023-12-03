@@ -51,17 +51,17 @@ public class TreinadorRepository {
         Treinador treinador = null;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "SELECT * FROM treinador WHERE user = ?";
+            String sqlInsert = "SELECT * FROM treinador WHERE usuario = ?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, user);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getLong("id"),
-                    rs.getString("user"),
+                    rs.getLong("id_treinador"),
+                    rs.getString("usuario"),
                     rs.getString("senha"),
                     rs.getString("nome"),
-                    rs.getInt("idade")
+                    rs.getTimestamp("nascimento").toLocalDateTime()
                 );
             }
         } catch (Exception e) {
@@ -76,17 +76,17 @@ public class TreinadorRepository {
         Treinador treinador = null;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "SELECT * FROM treinador WHERE id = ?";
+            String sqlInsert = "SELECT * FROM treinador WHERE id_treinador = ?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getLong("id"),
-                    rs.getString("user"),
+                    rs.getLong("id_treinador"),
+                    rs.getString("usuario"),
                     rs.getString("senha"),
                     rs.getString("nome"),
-                    rs.getInt("idade")
+                    rs.getTimestamp("nascimento").toLocalDateTime()
                 );
             }
         } catch (Exception e) {
@@ -112,12 +112,12 @@ public class TreinadorRepository {
         long id = 0;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "INSERT INTO treinador(user, senha, nome, idade) VALUES(?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO treinador(id_treinador, usuario, senha, nome, nascimento) VALUES(null, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, treinador.getUser());
             statement.setString(2, treinador.getSenha());
             statement.setString(3, treinador.getNome());
-            statement.setInt(4, treinador.getIdade());
+            statement.setTimestamp(4, java.sql.Timestamp.valueOf(treinador.getNascimento()));
             int linhas = statement.executeUpdate();
             if (linhas > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
@@ -141,12 +141,12 @@ public class TreinadorRepository {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE treinador SET user=?, senha=?, nome=?, idade=? WHERE id=?";
+            String sqlInsert = "UPDATE treinador SET usuario=?, senha=?, nome=?, nascimento=? WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, treinador.getUser());
             statement.setString(2, treinador.getSenha());
             statement.setString(3, treinador.getNome());
-            statement.setInt(4, treinador.getIdade());
+            statement.setTimestamp(4, java.sql.Timestamp.valueOf(treinador.getNascimento()));
             statement.setLong(5, treinador.getId());
             int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -167,7 +167,7 @@ public class TreinadorRepository {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "DELETE FROM treinador WHERE id=?";
+            String sqlInsert = "DELETE FROM treinador WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);
             int linhasAfetadas = statement.executeUpdate();

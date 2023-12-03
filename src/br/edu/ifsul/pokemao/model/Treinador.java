@@ -1,6 +1,6 @@
 package br.edu.ifsul.pokemao.model;
 
-import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
+import java.time.LocalDateTime;
 
 public class Treinador {
     private long id;
@@ -8,24 +8,15 @@ public class Treinador {
     private String nome;
     private String user;
     private String senha;
-    private int idade;
+    private LocalDateTime nascimento;
     private int moedas;
 
-    public Treinador(String user, String senha, String nome, int idade) {
-        this.id = new TreinadorRepository().getLenTreinadores() + 1;
-        this.user = user;
-        this.senha = senha;
-        this.nome = nome;
-        this.idade = idade;
-        this.moedas = 500;
-    }
-
-    public Treinador(long id, String user, String senha, String nome, int idade) {
+    public Treinador(long id, String user, String senha, String nome, LocalDateTime nascimento) {
         this.id = id;
         this.user = user;
         this.senha = senha;
         this.nome = nome;
-        this.idade = idade;
+        this.nascimento = nascimento;
         this.moedas = 500;
     }
 
@@ -53,12 +44,12 @@ public class Treinador {
         this.senha = senha;
     }
 
-    public int getIdade() {
-        return idade;
+    public LocalDateTime getNascimento() {
+        return nascimento;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setNascimento(LocalDateTime nascimento) {
+        this.nascimento = nascimento;
     }
 
     public int getMoedas() {
