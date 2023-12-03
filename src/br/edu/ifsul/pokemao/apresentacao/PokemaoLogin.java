@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 public class PokemaoLogin extends JFrame {
     PokemaoLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();
+        
+        JLabel pokemao = new JLabel("POKEMÃO");
+        pokemao.setBounds(185, 45, 200, 50);
+        pokemao.setFont(pokemao.getFont().deriveFont(25.0f));
 
         this.setTitle("Login");
         this.setSize(600, 600);
@@ -36,9 +40,6 @@ public class PokemaoLogin extends JFrame {
         dNome.setBounds(120, 250, 100, 25);
         JLabel dSenha = new JLabel();
         dSenha.setBounds(210, 250, 100, 25);
-
-        JLabel pokemao = new JLabel("POKEMÃO");
-        pokemao.setBounds(185, 45, 200, 50);
 
         JLabel lErro = new JLabel("Usuário ou senha inválidos.");
         lErro.setForeground(Color.RED);
@@ -68,12 +69,20 @@ public class PokemaoLogin extends JFrame {
                 String senha = new String(senhaF.getPassword());
                 if (treinadorRepository.login(user, senha)) {
                     System.out.println("Login realizado com sucesso!");
-                    new PokemaoLobby();
+                    new PokemaoLobby(treinadorRepository);
                     dispose();
                 } else {
                     System.out.println("Usuário ou senha inválidos.");
                     lErro.setVisible(true);
                 }
+            }
+        });
+
+        cadastro.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PokemaoCadastro();
+                dispose();
             }
         });
     }

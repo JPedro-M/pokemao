@@ -57,12 +57,12 @@ public class TreinadorRepository {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getLong("id_treinador"),
                     rs.getString("usuario"),
                     rs.getString("senha"),
                     rs.getString("nome"),
                     rs.getTimestamp("nascimento").toLocalDateTime()
                 );
+                treinador.setId(rs.getLong("id_treinador"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,12 +82,12 @@ public class TreinadorRepository {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getLong("id_treinador"),
                     rs.getString("usuario"),
                     rs.getString("senha"),
                     rs.getString("nome"),
                     rs.getTimestamp("nascimento").toLocalDateTime()
                 );
+                treinador.setId(rs.getLong("id_treinador"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,11 +109,11 @@ public class TreinadorRepository {
     }
 
     public long cadastrar(Treinador treinador) {
-        long id = 0;
+        long id = -1;
         try {
             this.conexao.abrirConexao();
             String sqlInsert = "INSERT INTO treinador(id_treinador, usuario, senha, nome, nascimento) VALUES(null, ?, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, treinador.getUser());
             statement.setString(2, treinador.getSenha());
             statement.setString(3, treinador.getNome());

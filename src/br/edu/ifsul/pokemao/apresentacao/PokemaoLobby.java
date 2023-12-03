@@ -2,13 +2,14 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
-public class PokemaoLobby extends JFrame {
+import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
-    PokemaoLobby(){
+public class PokemaoLobby extends JFrame {
+    PokemaoLobby(TreinadorRepository treinadorRepository){
         this.setTitle("Lobby");
         this.setSize(600, 500);
 
-        JLabel msgTela = new JLabel("Bem vindo ao mundo Pokemão!");
+        JLabel msgTela = new JLabel("Bem vindo, " + treinadorRepository.getTreinadorLogado().getNome() + "!");
             msgTela.setBounds(180, 10, 300, 50);
 
         JButton batalha = new JButton("Batalhar");
@@ -32,6 +33,11 @@ public class PokemaoLobby extends JFrame {
         this.setResizable(false);
         this.setLayout(null);
         this.setVisible(true);
+
+        pegar.addActionListener(e -> {
+            new Natureza();
+            this.dispose();
+        });
 
     }
 }

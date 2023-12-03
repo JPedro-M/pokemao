@@ -1,12 +1,18 @@
 package br.edu.ifsul.pokemao.apresentacao;
 
+import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
+
 import javax.swing.*;
+
+import br.edu.ifsul.pokemao.model.Treinador;
+import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class PokemaoCadastro extends JFrame {
     PokemaoCadastro() {
         this.setTitle("Cadastro");
         this.setSize(600, 500);
-        JLabel lUser = new JLabel("Usúario");
+        JLabel lUser = new JLabel("Usuário");
             lUser.setBounds(25, 10, 100, 40);
         JTextField tUser = new JTextField();
             tUser.setBounds(90, 15, 200, 30);
@@ -21,8 +27,8 @@ public class PokemaoCadastro extends JFrame {
         JTextField tNome = new JTextField();
             tNome.setBounds(90, 115, 200, 30);
 
-        JLabel lIdade = new JLabel("Idade");
-            lIdade.setBounds(25, 160, 100, 40);
+        JLabel lIdade = new JLabel("Idade em anos");
+            lIdade.setBounds(25, 160, 150, 40);
         JTextField tIdade = new JTextField();
             tIdade.setBounds(90, 165, 200, 30);
 
@@ -38,5 +44,26 @@ public class PokemaoCadastro extends JFrame {
         this.setResizable(false);
         this.setLayout(null);
         this.setVisible(true);
+
+        cadastrar.addActionListener (new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tUser.getText().equals("") || tSenha.getText().equals("") || tNome.getText().equals("") || tIdade.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+                } else {
+                    TreinadorRepository treinadorRepository = new TreinadorRepository();
+                    // nascimento = dia de hoje - idade
+                    LocalDateTime nascimento = LocalDateTime.now().minusYears(Integer.parseInt(tIdade.getText()));
+                    Treinador treinador = new Treinador(tUser.getText(), tSenha.getText(), tNome.getText(), nascimento);
+                    if (treinadorRepository.cadastrar(treinador) != -1) {
+                        JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
+                    }
+                    dispose();
+                    new PokemaoLogin();
+                }
+            }
+        });
     }
 }

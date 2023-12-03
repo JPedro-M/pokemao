@@ -11,13 +11,15 @@ public class Treinador {
     private LocalDateTime nascimento;
     private int moedas;
 
-    public Treinador(long id, String user, String senha, String nome, LocalDateTime nascimento) {
-        this.id = id;
+    public Treinador(String user, String senha, String nome, LocalDateTime nascimento) {
         this.user = user;
         this.senha = senha;
         this.nome = nome;
         this.nascimento = nascimento;
         this.moedas = 500;
+    }
+
+    public Treinador() {
     }
 
     public String getNome() {
