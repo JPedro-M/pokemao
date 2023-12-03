@@ -14,18 +14,45 @@ public class EscolherTroca extends JFrame {
     ArrayList<PokemaoTreinador> pokemaos = null;
 
     public EscolherTroca(TreinadorRepository treinadorRepository, PokemaoTreinador pokemaoOrigem) {
-        pokemaos = pokemaoTreinadorRepository.listarDisponiveisParaTroca(null);
+        pokemaos = pokemaoTreinadorRepository.listarDisponiveisParaTroca(treinadorRepository.getTreinadorLogado());
 
         setTitle("Troca");
         setBounds(100, 100, 800, 600);
 
+        setLayout(null);
+
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new CircleTextPanel());
+
+        JTextField escolha = new JTextField();
+        escolha.setBounds(350, 250, 100, 20);
+        add(escolha);
+
+        JButton confirmar = new JButton("Escolher");
+        confirmar.setBounds(350, 300, 100, 50);
+        add(confirmar);
+
+        JPanel panel = new CircleTextPanel();
+        panel.setBounds(100, 1, 600, 550);
+        add(panel);
 
         setVisible(true);
 
-        
+        confirmar.addActionListener(e -> {
+            int index = Integer.parseInt(escolha.getText()) - 1;
+            if (index >= 0 && index < pokemaos.size()) {
+                PokemaoTreinador pokemaoDestino = pokemaos.get(index);
+                try {
+                    pokemaoTreinadorRepository.trocar(pokemaoOrigem, pokemaoDestino);
+                    JOptionPane.showMessageDialog(null, "Troca realizada com sucesso!");
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Erro ao realizar troca!");
+                }
+                new PokemaoLobby(treinadorRepository);
+                this.dispose();
+            }
+        });
     }
 
     /**
@@ -45,6 +72,8 @@ public class EscolherTroca extends JFrame {
                 double angle = 2 * Math.PI * i / size;
                 int x = centerX + (int) (radius * Math.cos(angle));
                 int y = centerY + (int) (radius * Math.sin(angle));
+                Font newFont = new Font("Calibri", Font.PLAIN, 14);
+                g.setFont(newFont);
                 FontMetrics fm = g.getFontMetrics();
                 int textWidth = fm.stringWidth(pokemaos.get(i).getNome());
                 int textHeight = fm.getHeight();
@@ -52,9 +81,14 @@ public class EscolherTroca extends JFrame {
                 // mostrar o valor de i logo acima do nome
                 // mostrar o nome do treinador logo abaixo do nome do pokemao
 
-                g.drawString(String.valueOf(i + 1), x - textWidth / 2, y + textHeight / 2 - textHeight);
                 g.drawString(pokemaos.get(i).getTreinador().getNome(), x - textWidth / 2,
-                        y + textHeight / 2 + textHeight);
+                    y + textHeight / 2 + textHeight);
+                newFont = g.getFont().deriveFont(Font.BOLD, 18f);
+                g.setFont(newFont);
+                g.drawString(String.valueOf(i + 1), x - textWidth / 2, y + textHeight / 2 - 5 - textHeight);
+                newFont = new Font("Segoe UI Emoji", Font.PLAIN, 30);
+                g.setFont(newFont);
+                g.drawString(pokemaos.get(i).getPokemao().getEmoji(), x - textWidth / 2 + 10, y + textHeight / 2 - 7 - textHeight);
             }
         }
     }

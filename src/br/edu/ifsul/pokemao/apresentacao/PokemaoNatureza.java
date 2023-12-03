@@ -65,6 +65,11 @@ public class PokemaoNatureza extends JFrame {
         add(desc);
         desc.setVisible(false);
 
+        JButton ok = new JButton("OK");
+        ok.setBounds(10, 500, 100, 50);
+        add(ok);
+        ok.setVisible(false);
+
         abanar.addActionListener(e -> {
             // gerar número aleatório entre 0 e 100
             int chance = (int) (Math.random() * 100);
@@ -80,25 +85,25 @@ public class PokemaoNatureza extends JFrame {
                 abanar.setVisible(false);
                 specs.setVisible(true);
                 desc.setVisible(true);
+                ok.setVisible(true);
                 pokemaoSelvagem.setTreinador(treinadorRepository.getTreinadorLogado());
                 new PokemaoTreinadorRepository().cadastrar(pokemaoSelvagem);
-            } else if ((chance < 60 && pokemaoSelvagem.getPokemao().getRaridade() ==1) || (chance < 50 && pokemaoSelvagem.getPokemao().getRaridade() ==2) || (chance < 80 && pokemaoSelvagem.getPokemao().getRaridade() ==3)) {
+            } else if ((chance < 60 && pokemaoSelvagem.getPokemao().getRaridade() ==1) || (chance < 50 && pokemaoSelvagem.getPokemao().getRaridade() ==2) || (chance < 65 && pokemaoSelvagem.getPokemao().getRaridade() ==3)) {
                 // alterar tela para mostrar que o pokemao fugiu
                 header.setText("O " + pokemaoSelvagem.getNome() + " fugiu!");
                 abanar.setVisible(false);
-                // wait and then close, open natureza again
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-                }
-                this.dispose();
-                new Natureza(treinadorRepository);
+                
+                ok.setVisible(true);
+                
             } else {
                 // alterar tela para mostrar que o pokemao não respondeu
                 header.setText("O " + pokemaoSelvagem.getNome() + " te ignorou kkkk");
                 callToAction.setText("Tente novamente!");
             }
+        });
+
+        ok.addActionListener(e -> {
+            this.dispose();
         });
 
         this.setVisible(true);

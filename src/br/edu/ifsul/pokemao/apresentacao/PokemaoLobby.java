@@ -24,11 +24,11 @@ public class PokemaoLobby extends JFrame {
         JButton dex = new JButton("Enciclopédia");
             dex.setBounds(350, 175, 150, 75);
 
-        JButton cura = new JButton("Curar");
-            cura.setBounds(225, 275, 150, 75);
+        JButton meuspokemao = new JButton("Meus Pokémãos");
+            meuspokemao.setBounds(225, 275, 150, 75);
 
         this.add(msgTela);
-        this.add(batalha); this.add(troca); this.add(pegar); this.add(dex); this.add(cura);
+        this.add(batalha); this.add(troca); this.add(pegar); this.add(dex); this.add(meuspokemao);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);
@@ -44,5 +44,9 @@ public class PokemaoLobby extends JFrame {
             this.dispose();
         });
 
+        meuspokemao.addActionListener(e -> {
+            new MeusPokemaos(treinadorRepository);
+            this.dispose();
+        });
     }
 }

@@ -76,6 +76,13 @@ FOREIGN KEY(id_usuario_1) REFERENCES treinador(id_treinador),
 FOREIGN KEY(id_usuario_2) REFERENCES treinador(id_treinador)
 );
 
+-- criando a tabela de raridades
+CREATE TABLE raridade(
+id_raridade BIGINT UNIQUE NOT NULL,
+nome VARCHAR(20) NOT NULL,
+hex_cor VARCHAR(7) NOT NULL,
+PRIMARY KEY(id_raridade)
+);
 
 -- inserindo um registro dentro da tabela TREINADORES
 INSERT INTO treinador VALUES(null, 'bonachao', '12345', 'Diogo', '2003-11-12 15:00:00');
@@ -83,3 +90,8 @@ INSERT INTO treinador VALUES(null, 'bonachao', '12345', 'Diogo', '2003-11-12 15:
 INSERT INTO pokemao_catalogo VALUES(1, '🤔', 'Pensante', 10, 20, 5, 2, 'Ele pensa e isso o deixa sempre na defensiva. É um tanque.');
 
 INSERT INTO pokemao_treinador VALUES(null, 10, 20, 5, true, 0, '2021-05-01 15:00:00', 1, 1, 'Pensânio');
+
+-- inserindo as três raridades
+INSERT INTO raridade VALUES(1, 'Comum', '#d3d3d3');
+INSERT INTO raridade VALUES(2, 'Raro', '#add8e6');
+INSERT INTO raridade VALUES(3, 'Lendário', '#90ee90');

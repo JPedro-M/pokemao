@@ -19,7 +19,8 @@ public class PokemaoTreinadorRepository {
     private ConexaoMySQL conexao;
 
     public PokemaoTreinadorRepository() {
-        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
+        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA,
+                BDConfigs.NOME_BD);
     }
 
     public ArrayList<PokemaoTreinador> listar() {
@@ -189,24 +190,19 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            this.conexao.getConexao().setAutoCommit(false);
-            resultado = transferir(pokemaoTreinador1, pokemaoTreinador2.getTreinador());
-            resultado = transferir(pokemaoTreinador2, pokemaoTreinador1.getTreinador());
-            this.conexao.getConexao().commit();
+            String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id_pokemao=?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            statement.setLong(1, pokemaoTreinador2.getTreinador().getId());
+            statement.setBoolean(2, false);
+            statement.setLong(3, pokemaoTreinador1.getId());
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sqlInsert);
+            statement2.setLong(1, pokemaoTreinador1.getTreinador().getId());
+            statement2.setBoolean(2, false);
+            statement2.setLong(3, pokemaoTreinador2.getId());
+            int linhasAfetadas = statement.executeUpdate() + statement2.executeUpdate();
+            resultado = linhasAfetadas > 0 ? true : false;
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                this.conexao.getConexao().rollback();
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        } finally {
-            try {
-                this.conexao.getConexao().setAutoCommit(true);
-            } catch (Exception e3) {
-                e3.printStackTrace();
-            }
-            this.conexao.fecharConexao();
         }
         return resultado;
     }
@@ -255,15 +251,17 @@ public class PokemaoTreinadorRepository {
         return novo;
 
         // 70% de chance de ser um pokemao de raridade normal, 20% de chance de ser um
-        // pokemao de raridade raro, 10% de chance de ser um pokemao de raridade lendário
+        // pokemao de raridade raro, 10% de chance de ser um pokemao de raridade
+        // lendário
     }
 
     public boolean editar(PokemaoTreinador pokemaoTreinador) {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao();
-            String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"+
-                            "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id_pokemao=?";
+            String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"
+                    +
+                    "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getPokemao().getId());
             statement.setLong(2, pokemaoTreinador.getTreinador().getId());
@@ -285,4 +283,3 @@ public class PokemaoTreinadorRepository {
         return resultado;
     }
 }
-    

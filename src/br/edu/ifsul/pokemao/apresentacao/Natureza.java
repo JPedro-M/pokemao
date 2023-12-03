@@ -73,9 +73,9 @@ public class Natureza extends JPanel {
     }
 
     private void naGrama(TreinadorRepository treinadorRepository) {
-        // chance de 20% de encontrar um pokemao ou, se não, um aviso de que não encontrou nada
+        // chance de 50% de encontrar um pokemao ou, se não, um aviso de que não encontrou nada
         int chance = (int) (Math.random() * 100);
-        if (chance < 20) {
+        if (chance < 50) {
             new PokemaoNatureza(treinadorRepository);
         } else {
             JOptionPane.showMessageDialog(null, "Não encontrou nada!");

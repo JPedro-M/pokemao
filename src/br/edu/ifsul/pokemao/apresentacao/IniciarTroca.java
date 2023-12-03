@@ -7,9 +7,7 @@ import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 
 public class IniciarTroca extends JFrame {
     public IniciarTroca(TreinadorRepository treinadorRepository) {
@@ -31,22 +29,9 @@ public class IniciarTroca extends JFrame {
         // lista simples de pokemaos em linha, onde cada um é um botão
         // ao clicar no botão, abre a tela de escolher pokemao para troca
         
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1));
-        panel.setBorder(BorderFactory.createEmptyBorder(60, 10, 10, 10));
+        JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "troca");
+        panel.setBounds(10, 50, 400, 400);
         add(panel);
-
-        for (PokemaoTreinador pokemao : pokemaos) {
-            JButton button = new JButton(pokemao.getNome());
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    new EscolherTroca(treinadorRepository, pokemao);
-                    dispose();
-                }
-            });
-            panel.add(button);
-        }
 
         setVisible(true);
     }
