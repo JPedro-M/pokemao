@@ -51,7 +51,7 @@ public class PokemaoNatureza extends JFrame {
         add(callToAction);
 
         JButton abanar = new JButton("Abanar");
-        abanar.setBounds(this.getWidth()/2-50, 200, 150, 50);
+        abanar.setBounds(this.getWidth()/2-75, 200, 150, 50);
         add(abanar);
         abanar.setVisible(true);
 
@@ -120,10 +120,10 @@ public class PokemaoNatureza extends JFrame {
             } else if ((chance < 60 && pokemaoSelvagem.getPokemao().getRaridade() ==1) || (chance < 50 && pokemaoSelvagem.getPokemao().getRaridade() ==2) || (chance < 65 && pokemaoSelvagem.getPokemao().getRaridade() ==3)) {
                 // alterar tela para mostrar que o pokemao fugiu
                 header.setText("O " + pokemaoSelvagem.getNome() + " fugiu!");
+                callToAction.setText("Mais tarde ele volta.");
                 abanar.setVisible(false);
                 voltar.setVisible(false);
                 ok.setVisible(true);
-                
             } else {
                 // alterar tela para mostrar que o pokemao não respondeu
                 header.setText("O " + pokemaoSelvagem.getNome() + " te ignorou kkkk");
