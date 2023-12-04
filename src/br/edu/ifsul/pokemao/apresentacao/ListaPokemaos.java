@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
-import br.edu.ifsul.pokemao.persistencia.RaridadeRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class ListaPokemaos extends JPanel {
@@ -24,7 +23,7 @@ public class ListaPokemaos extends JPanel {
             panel.setLayout(null);
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.setBounds(0, 0, 400, 40);
-            panel.setBackground(Color.decode(new RaridadeRepository().corRaridade(pokemao.getPokemao().getRaridade())));
+            panel.setBackground(pokemao.getPokemao().getRaridadeColor());
             this.add(panel);
 
             JLabel emoji = new JLabel(pokemao.getPokemao().getEmoji());

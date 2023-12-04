@@ -22,7 +22,7 @@ public class AcontecimentoRepository {
 
     public void adicionarTroca(Troca troca) {
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("adicionarTroca");
             String sqlInsert = "INSERT INTO troca(id_troca, id_pokemao_treinador_1, id_pokemao_treinador_2,"+
                             "data_troca, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
@@ -43,7 +43,7 @@ public class AcontecimentoRepository {
 
     public void adicionarBatalha(Batalha batalha) {
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("adicionarBatalha");
             String sqlInsert = "INSERT INTO batalha(id_batalha, id_pokemao_treinador_1, id_pokemao_treinador_2, " +
                     "data_batalha, id_pokemao_vencedor, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
@@ -71,7 +71,7 @@ public class AcontecimentoRepository {
     public ArrayList<Troca> listarTrocas() {
         ArrayList<Troca> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarTrocas");
             String sqlInsert = "SELECT * FROM troca";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
@@ -87,7 +87,7 @@ public class AcontecimentoRepository {
     public ArrayList<Batalha> listarBatalhas() {
         ArrayList<Batalha> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarBatalhas");
             String sqlInsert = "SELECT * FROM batalha";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
@@ -103,7 +103,7 @@ public class AcontecimentoRepository {
     public ArrayList<Troca> listarTrocasPorTreinador(long id) {
         ArrayList<Troca> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarTrocasPorTreinador");
             String sqlInsert = "SELECT * FROM troca WHERE id_usuario_1=? OR id_usuario_2=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);
@@ -121,7 +121,7 @@ public class AcontecimentoRepository {
     public ArrayList<Batalha> listarBatalhasPorTreinador(long id) {
         ArrayList<Batalha> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarBatalhasPorTreinador");
             String sqlInsert = "SELECT * FROM batalha WHERE id_usuario_1=? OR id_usuario_2=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);

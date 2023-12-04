@@ -24,7 +24,7 @@ public class PokemaoCatalogoRepository {
     public ArrayList<Pokemao> listar() {
         ArrayList<Pokemao> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listar, pokemaoCatalogoRepository");
             String sqlInsert = "SELECT * FROM pokemao_catalogo";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
@@ -37,12 +37,24 @@ public class PokemaoCatalogoRepository {
         return lista;
     }
 
-    public Pokemao buscarPorId(long id_busca) {
+    public Pokemao buscarPorId(long id_busca){
         Pokemao pokemaoCatalogo = null;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("buscarPorId, pokemaoCatalogoRepository");
+            pokemaoCatalogo = buscarPorId(id_busca, this.conexao);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return pokemaoCatalogo;
+    }
+
+    public Pokemao buscarPorId(long id_busca, ConexaoMySQL conexao) {
+        Pokemao pokemaoCatalogo = null;
+        try {
             String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id_busca);
             ResultSet rs = statement.executeQuery();
             try {
@@ -64,8 +76,6 @@ public class PokemaoCatalogoRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
         }
         return pokemaoCatalogo;
     }
@@ -73,7 +83,7 @@ public class PokemaoCatalogoRepository {
     public boolean cadastrar(Pokemao pokemaoCatalogo) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("cadastrar, pokemaoCatalogoRepository");
             String sqlInsert = "INSERT INTO pokemao_catalogo(id_pokemao_catalogo, emoji, nome, ataque, defesa, hp,"+
                                 "raridade, descricao) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
@@ -103,7 +113,7 @@ public class PokemaoCatalogoRepository {
     public boolean editar(Pokemao pokemaoCatalogo) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("editar, pokemaoCatalogoRepository");
             String sqlInsert = "UPDATE pokemao_catalogo SET emoji=?, nome=?, ataque=?, defesa=?, hp=?,"+
                             "raridade=?, descricao=? WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
@@ -133,7 +143,7 @@ public class PokemaoCatalogoRepository {
     public boolean deletar(int id) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("deletar, pokemaoCatalogoRepository");
             String sqlInsert = "DELETE FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setInt(1, id);
@@ -155,7 +165,7 @@ public class PokemaoCatalogoRepository {
     public ArrayList<Pokemao> listarPorRaridade(int x) {
         ArrayList<Pokemao> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarPorRaridade, pokemaoCatalogoRepository");
             String sqlSelect = "SELECT * FROM pokemao_catalogo WHERE raridade = ?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlSelect);
             statement.setInt(1, x);

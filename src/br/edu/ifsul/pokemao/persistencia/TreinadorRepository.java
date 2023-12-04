@@ -30,7 +30,7 @@ public class TreinadorRepository {
     public int getLenTreinadores() {
         int len = 0;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("getLenTreinadores");
             String sqlInsert = "SELECT COUNT(*) FROM treinador";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
@@ -46,7 +46,7 @@ public class TreinadorRepository {
     public Treinador buscarPorUser(String user) {
         Treinador treinador = null;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("buscarPorUser, treinadorRepository");
             String sqlInsert = "SELECT * FROM treinador WHERE usuario = ?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, user);
@@ -68,12 +68,24 @@ public class TreinadorRepository {
         return treinador;
     }
 
-    public Treinador buscarPorID(long id) {
+    public Treinador buscarPorID(long id){
         Treinador treinador = null;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("buscarPorID, treinadorRepository");
+            treinador = buscarPorID(id, this.conexao);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return treinador;
+    }
+
+    public Treinador buscarPorID(long id, ConexaoMySQL conexao) {
+        Treinador treinador = null;
+        try {
             String sqlInsert = "SELECT * FROM treinador WHERE id_treinador = ?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -87,9 +99,7 @@ public class TreinadorRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
-        }
+        } 
         return treinador;
     }
 
@@ -107,7 +117,7 @@ public class TreinadorRepository {
     public long cadastrar(Treinador treinador) {
         long id = -1;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("cadastrar, treinadorRepository");
             String sqlInsert = "INSERT INTO treinador(id_treinador, usuario, senha, nome, nascimento) VALUES(null, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, treinador.getUser());
@@ -136,7 +146,7 @@ public class TreinadorRepository {
     public boolean atualizar(Treinador treinador) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("atualizar, treinadorRepository");
             String sqlInsert = "UPDATE treinador SET usuario=?, senha=?, nome=?, nascimento=? WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, treinador.getUser());
@@ -162,7 +172,7 @@ public class TreinadorRepository {
     public boolean remover(long id) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("remover, treinadorRepository");
             String sqlInsert = "DELETE FROM treinador WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, id);

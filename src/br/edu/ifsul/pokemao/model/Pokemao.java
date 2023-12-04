@@ -1,5 +1,7 @@
 package br.edu.ifsul.pokemao.model;
 
+import java.awt.Color;
+
 public class Pokemao {
     private long id;
 
@@ -89,6 +91,18 @@ public class Pokemao {
                 return "Lendário";
         }
         return this.raridade + "";
+    }
+
+    public Color getRaridadeColor() {
+        switch (this.raridade) {
+            case 1:
+                return new Color(211,211,211);
+            case 2:
+                return new Color(173,216,230);
+            case 3:
+                return new Color(144,238,144);
+        }
+        return null;
     }
 
 

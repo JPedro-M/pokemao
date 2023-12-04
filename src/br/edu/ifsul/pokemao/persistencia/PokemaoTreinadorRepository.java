@@ -26,11 +26,11 @@ public class PokemaoTreinadorRepository {
     public ArrayList<PokemaoTreinador> listar() {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listar, pokemaoTreinadorRepository");
             String sqlInsert = "SELECT * FROM pokemao_treinador";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -42,12 +42,12 @@ public class PokemaoTreinadorRepository {
     public ArrayList<PokemaoTreinador> listarDoTreinador(Treinador treinador) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarDoTreinador, pokemaoTreinadorRepository");
             String sqlInsert = "SELECT * FROM pokemao_treinador WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, treinador.getId());
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +60,7 @@ public class PokemaoTreinadorRepository {
     public ArrayList<PokemaoTreinador> listarDisponiveisParaTroca(Treinador ignorarTreinador) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("listarDisponiveisParaTroca, pokemaoTreinadorRepository");
             String sqlInsert = "SELECT * FROM pokemao_treinador";
             if (ignorarTreinador != null) {
                 sqlInsert += " WHERE disponivel_para_troca = true AND id_treinador != ?";
@@ -72,7 +72,7 @@ public class PokemaoTreinadorRepository {
                 statement.setLong(1, ignorarTreinador.getId());
             }
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs);
+            lista = ListaMaker.ResultSettoListPokemaoTreinador(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -84,7 +84,7 @@ public class PokemaoTreinadorRepository {
     public PokemaoTreinador buscarPorId(long l) {
         PokemaoTreinador pokemaoTreinador = null;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("buscarPorId, pokemaoTreinadorRepository");
             String sqlInsert = "SELECT * FROM pokemao_treinador WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, l);
@@ -121,7 +121,7 @@ public class PokemaoTreinadorRepository {
     public boolean cadastrar(PokemaoTreinador pokemaoTreinador) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("cadastrar, pokemaoTreinadorRepository");
             String sqlInsert = "INSERT INTO pokemao_treinador VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setInt(1, pokemaoTreinador.getVelocidadeAtaque());
@@ -147,7 +147,7 @@ public class PokemaoTreinadorRepository {
     public boolean libertar(PokemaoTreinador pokemaoTreinador) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("libertar, pokemaoTreinadorRepository");
             String sqlInsert = "DELETE FROM pokemao_treinador WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getId());
@@ -170,7 +170,7 @@ public class PokemaoTreinadorRepository {
             boolean mudarDisponivelParaTroca) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("transferir, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, treinador2.getId());
@@ -189,7 +189,7 @@ public class PokemaoTreinadorRepository {
     public boolean trocar(PokemaoTreinador pokemaoTreinador1, PokemaoTreinador pokemaoTreinador2) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("trocar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador2.getTreinador().getId());
@@ -210,7 +210,7 @@ public class PokemaoTreinadorRepository {
     public boolean curar(PokemaoTreinador pokemaoTreinador) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("curar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET hp=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setInt(1, pokemaoTreinador.getPokemao().getHp());
@@ -226,7 +226,7 @@ public class PokemaoTreinadorRepository {
     }
 
     public PokemaoTreinador gerarPokemaoSelvagem() {
-        this.conexao.abrirConexao();
+        this.conexao.abrirConexao("gerarPokemaoSelvagem, pokemaoTreinadorRepository");
 
         int random = (int) (Math.random() * 10) + 1;
         PokemaoTreinador novo = null;
@@ -258,7 +258,7 @@ public class PokemaoTreinadorRepository {
     public boolean editar(PokemaoTreinador pokemaoTreinador) {
         boolean resultado = false;
         try {
-            this.conexao.abrirConexao();
+            this.conexao.abrirConexao("editar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"
                     +
                     "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id_pokemao=?";

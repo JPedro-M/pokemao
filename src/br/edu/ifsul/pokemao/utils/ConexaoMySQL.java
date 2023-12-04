@@ -22,11 +22,11 @@ public class ConexaoMySQL {
         this.nomeBD = nomeBD;
     }
 
-    public void abrirConexao(){
+    public void abrirConexao(String origem){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://" + this.ip + ":" + this.porta + "/" + this.nomeBD;
-            System.out.println(url);
+            System.out.println("Executando " + url + " a partir de " + origem);
             this.conexao = DriverManager.getConnection(url, this.usuario, this.senha);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -36,6 +36,7 @@ public class ConexaoMySQL {
     public void fecharConexao(){
         try {
             this.conexao.close();
+            System.out.println("Fechando conexão com o banco de dados");
         } catch (SQLException e) {
             e.printStackTrace();
         }

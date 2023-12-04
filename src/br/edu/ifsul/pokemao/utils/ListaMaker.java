@@ -33,13 +33,13 @@ public class ListaMaker {
         return lista;
     }
 
-    public static ArrayList<PokemaoTreinador> ResultSettoListPokemaoTreinador(ResultSet rs) {
+    public static ArrayList<PokemaoTreinador> ResultSettoListPokemaoTreinador(ResultSet rs, ConexaoMySQL conexao) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
-                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                        new TreinadorRepository().buscarPorID(rs.getLong("id_treinador")),
+                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo"), conexao),
+                        new TreinadorRepository().buscarPorID(rs.getLong("id_treinador"), conexao),
                         rs.getInt("velocidade_ataque"),
                         rs.getInt("ataque"),
                         rs.getInt("defesa"),
