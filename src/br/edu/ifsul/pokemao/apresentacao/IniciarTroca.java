@@ -16,36 +16,34 @@ public class IniciarTroca extends JFrame {
         setBounds(200, 75, 800, 600);       
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
         
         ArrayList<PokemaoTreinador> pokemaos = new PokemaoTreinadorRepository().listarDoTreinador(treinadorRepository.getTreinadorLogado());
 
-        JLabel label = new JLabel("Escolha um pokemão para trocar");
+        JLabel label = new JLabel("Centro de trocas");
         Font currentFont = label.getFont();
         Font newFont = currentFont.deriveFont(Font.BOLD, 20f);
         label.setFont(newFont);
-        label.setBounds(10, 10, 400, 50);
-        add(label);
+        label.setBounds(120, 10, 400, 30);
+        JLabel label2 = new JLabel("Selecione o pokemão a ser trocado.");
+        label2.setBounds(120, 40, 400, 30);
+        add(label); add(label2);
 
-        // lista simples de pokemaos em linha, onde cada um é um botão
-        // ao clicar no botão, abre a tela de escolher pokemao para troca
+        JButton voltar = new JButton("<-- Voltar");
+        voltar.setBounds(10, 10, 90, 30);
+        add(voltar);
 
-        JButton voltar = new JButton("Voltar");
-            voltar.setBounds(500, 400, 100, 40);
+        this.setVisible(true);
 
-
-        
-        this.add(voltar);
-
-        voltar.addActionListener(e ->{
+        voltar.addActionListener(e -> {
             new PokemaoLobby(treinadorRepository);
             this.dispose();
-
-        });  
-        
+        });
         
         JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "troca");
-        panel.setBounds(10, 50, 400, 400);
-        add(panel);
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setBounds(0, 80, this.getWidth(), this.getHeight() - 120);
+        add(scrollPane);
 
         setVisible(true);
     }

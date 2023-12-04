@@ -36,11 +36,20 @@ public class PokemaoCadastro extends JFrame {
         JButton cadastrar = new JButton("Cadastrar");
         cadastrar.setBounds(65, 230, 200, 50);
 
+        JButton voltar = new JButton("<-- Voltar");
+        voltar.setBounds(10, 10, 90, 30);
+        add(voltar);
+
+        voltar.addActionListener(e -> {
+            new PokemaoLogin();
+            this.dispose();
+        });
+
         this.add(lNome); this.add(tNome);
         this.add(lIdade); this.add(tIdade);
         this.add(lUser); this.add(tUser);
         this.add(lSenha); this.add(tSenha);
-        this.add(cadastrar);
+        this.add(cadastrar); this.add(voltar);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);

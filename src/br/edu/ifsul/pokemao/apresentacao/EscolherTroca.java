@@ -36,7 +36,16 @@ public class EscolherTroca extends JFrame {
         panel.setBounds(100, 1, 600, 550);
         add(panel);
 
+        JButton voltar = new JButton("<-- Voltar");
+        voltar.setBounds(10, 10, 90, 30);
+        add(voltar);
+
         setVisible(true);
+
+        voltar.addActionListener(e -> {
+            new PokemaoLobby(treinadorRepository);
+            this.dispose();
+        });
 
         confirmar.addActionListener(e -> {
             int index = Integer.parseInt(escolha.getText()) - 1;

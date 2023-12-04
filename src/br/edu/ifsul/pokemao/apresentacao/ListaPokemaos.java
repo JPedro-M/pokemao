@@ -32,7 +32,7 @@ public class ListaPokemaos extends JPanel {
 
             JLabel emoji = new JLabel(pokemao.getPokemao().getEmoji());
             emoji.setBounds(10, 5, 50, 50);
-            Font font = new Font("Arial, Segoe UI Emoji", Font.PLAIN, 30);
+            Font font = new Font("Segoe UI Emoji", Font.PLAIN, 30);
             emoji.setFont(font);
             panel.add(emoji);
 

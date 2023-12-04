@@ -1,5 +1,7 @@
 package br.edu.ifsul.pokemao.apresentacao;
 
+import java.awt.Font;
+
 import javax.swing.*;
 
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
@@ -10,7 +12,11 @@ public class PokemaoLobby extends JFrame {
         this.setBounds(200, 75, 600, 500);     
 
         JLabel msgTela = new JLabel("Bem vindo, " + treinadorRepository.getTreinadorLogado().getNome() + "!");
-            msgTela.setBounds(180, 10, 300, 50);
+            msgTela.setBounds(0, 10, this.getWidth(), 50);
+            msgTela.setHorizontalAlignment(JLabel.CENTER);
+            Font currentFont = msgTela.getFont();
+            Font newFont = currentFont.deriveFont(Font.BOLD, 20f);
+            msgTela.setFont(newFont);
 
         JButton batalha = new JButton("Batalhar");
             batalha.setBounds(125, 75, 150, 75 );
@@ -27,7 +33,9 @@ public class PokemaoLobby extends JFrame {
         JButton meuspokemao = new JButton("Meus Pokémãos");
             meuspokemao.setBounds(225, 275, 150, 75);
 
-        this.add(msgTela);
+            JButton sair = new JButton("Sair");
+            sair.setBounds(10, this.getHeight() - 75, 90, 30);
+        this.add(msgTela); this.add(sair);
         this.add(batalha); this.add(troca); this.add(pegar); this.add(dex); this.add(meuspokemao);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -58,6 +66,11 @@ public class PokemaoLobby extends JFrame {
             this.dispose();
         });       
         
+        sair.addActionListener(e -> {
+            new PokemaoLogin();
+            treinadorRepository.setTreinadorLogado(null);
+            this.dispose();
+        });
 
     }
 }
