@@ -10,13 +10,13 @@ import java.awt.event.ActionEvent;
 public class PokemaoLogin extends JFrame {
     PokemaoLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();
+
+        this.setTitle("Login");
+        this.setBounds(200, 75, 600, 600);       
         
         JLabel pokemao = new JLabel("POKEMÃO");
         pokemao.setBounds(185, 45, 200, 50);
         pokemao.setFont(pokemao.getFont().deriveFont(25.0f));
-
-        this.setTitle("Login");
-        this.setSize(600, 600);
 
         JLabel user = new JLabel("Usuário");
         user.setBounds(125, 125, 150, 25);

@@ -2,13 +2,12 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
-import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class PokemaoLobby extends JFrame {
     PokemaoLobby(TreinadorRepository treinadorRepository){
         this.setTitle("Lobby");
-        this.setSize(600, 500);
+        this.setBounds(200, 75, 600, 500);     
 
         JLabel msgTela = new JLabel("Bem vindo, " + treinadorRepository.getTreinadorLogado().getNome() + "!");
             msgTela.setBounds(180, 10, 300, 50);
@@ -54,12 +53,10 @@ public class PokemaoLobby extends JFrame {
             this.dispose();
         });
 
-        cura.addActionListener(e ->{
-            
-
-        });
-
-        
+        dex.addActionListener(e -> {
+            new Pokemaodex(treinadorRepository);
+            this.dispose();
+        });       
 
     }
 }

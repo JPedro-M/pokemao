@@ -12,8 +12,10 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class ListaPokemaos extends JPanel {
     ListaPokemaos(TreinadorRepository treinadorRepository, ArrayList<PokemaoTreinador> array, String contexto) {
-        this.setLayout(new GridLayout(0, 1, 10, 10));
-        this.setBorder(BorderFactory.createEmptyBorder(60, 0, 10, 0));
+        this.setLayout(null);
+        int totalHeight = array.size() * 60;
+        this.setPreferredSize(new Dimension(500, totalHeight));
+        int y = 0;
 
         for (PokemaoTreinador pokemao : array) {
             // no panel, mostrar o emoji do pokemao, o nome e o HP
@@ -22,9 +24,11 @@ public class ListaPokemaos extends JPanel {
             JPanel panel = new JPanel();
             panel.setLayout(null);
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.setBounds(0, 0, 400, 40);
+            panel.setBounds(0, y, 400, 50);
             panel.setBackground(pokemao.getPokemao().getRaridadeColor());
             this.add(panel);
+
+            y += 60;
 
             JLabel emoji = new JLabel(pokemao.getPokemao().getEmoji());
             emoji.setBounds(10, 5, 50, 50);
@@ -33,12 +37,19 @@ public class ListaPokemaos extends JPanel {
             panel.add(emoji);
 
             JLabel nome = new JLabel(pokemao.getNome());
-            nome.setBounds(50, 10, 200, 30);
+            nome.setBounds(60, 10, 200, 30);
             panel.add(nome);
 
             JLabel hp = new JLabel("HP: " + pokemao.getHp());
             hp.setBounds(250, 10, 100, 30);
             panel.add(hp);
+
+            JLabel dispTroca = new JLabel();
+            if (pokemao.isDisponivelParaTroca()) {
+                dispTroca.setText("Disp.: Sim");
+            } else {
+                dispTroca.setText("Disp.: Não");
+            }
 
             panel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -92,6 +103,8 @@ public class ListaPokemaos extends JPanel {
                                 default:
                                     break;
                             }
+                            SwingUtilities.getWindowAncestor(panel).dispose();
+                            new MeusPokemaos(treinadorRepository);
                             break;
                         default:
                             break;

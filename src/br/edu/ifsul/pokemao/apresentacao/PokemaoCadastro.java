@@ -11,7 +11,7 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 public class PokemaoCadastro extends JFrame {
     PokemaoCadastro() {
         this.setTitle("Cadastro");
-        setBounds(200, 75, 600,500);       
+        this.setBounds(200, 75, 600,500);       
         
         JLabel lUser = new JLabel("Usuário");
             lUser.setBounds(25, 10, 100, 40);
@@ -31,7 +31,7 @@ public class PokemaoCadastro extends JFrame {
         JLabel lIdade = new JLabel("Idade em anos");
             lIdade.setBounds(25, 160, 150, 40);
         JTextField tIdade = new JTextField();
-            tIdade.setBounds(90, 165, 200, 30);
+            tIdade.setBounds(120, 165, 170, 30);
 
         JButton cadastrar = new JButton("Cadastrar");
         cadastrar.setBounds(65, 230, 200, 50);

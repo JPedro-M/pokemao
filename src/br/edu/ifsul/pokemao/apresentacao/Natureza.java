@@ -16,10 +16,9 @@ public class Natureza extends JPanel {
     public Natureza(TreinadorRepository treinadorRepository) {
         JFrame frame = new JFrame("Natureza");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.add(this, BorderLayout.CENTER);
-        setBounds(200, 75, 600, 600);       
-        frame.setVisible(true);
+        frame.getContentPane().add(this);
+        frame.setBounds(200, 75, 600, 600);
+        frame.setResizable(false);
 
         JLabel label = new JLabel("Arraste o treinador até a grama para pegar um pokemão!");
         Font currentFont = label.getFont();
@@ -28,7 +27,14 @@ public class Natureza extends JPanel {
         label.setBounds(10, 10, 400, 50);
         add(label);
 
-        
+        JButton voltar = new JButton("<-- Voltar");
+        voltar.setBounds(frame.getHeight()-40, 10, 90, 30);
+        add(voltar);
+
+        voltar.addActionListener(e -> {
+            new PokemaoLobby(treinadorRepository);
+            frame.dispose();
+        });
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -63,6 +69,7 @@ public class Natureza extends JPanel {
                 }
             }
         });
+        frame.setVisible(true);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class PokemaoNatureza extends JFrame {
 
     public PokemaoNatureza(TreinadorRepository treinadorRepository) {
         this.setTitle("Captura");
-        this.setSize(600, 600);
+        this.setBounds(200, 75, 600, 600);     
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);

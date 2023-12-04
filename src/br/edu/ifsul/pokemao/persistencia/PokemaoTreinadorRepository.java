@@ -213,7 +213,7 @@ public class PokemaoTreinadorRepository {
             this.conexao.abrirConexao("curar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET hp=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setInt(1, pokemaoTreinador.getPokemao().getHp());
+            statement.setInt(1, 100);
             statement.setLong(2, pokemaoTreinador.getId());
             int linhasAfetadas = statement.executeUpdate();
             resultado = linhasAfetadas > 0 ? true : false;
@@ -260,8 +260,8 @@ public class PokemaoTreinadorRepository {
         try {
             this.conexao.abrirConexao("editar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"
-                    +
-                    "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=? WHERE id_pokemao=?";
+                    + "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=?, nome_custom=?"+
+                    " WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getPokemao().getId());
             statement.setLong(2, pokemaoTreinador.getTreinador().getId());
@@ -272,7 +272,8 @@ public class PokemaoTreinadorRepository {
             statement.setBoolean(7, pokemaoTreinador.isDisponivelParaTroca());
             statement.setDouble(8, pokemaoTreinador.getXp());
             statement.setTimestamp(9, java.sql.Timestamp.valueOf(pokemaoTreinador.getDataCaptura()));
-            statement.setLong(10, pokemaoTreinador.getId());
+            statement.setString(10, pokemaoTreinador.getNome());
+            statement.setLong(11, pokemaoTreinador.getId());
             int linhasAfetadas = statement.executeUpdate();
             resultado = linhasAfetadas > 0 ? true : false;
         } catch (Exception e) {

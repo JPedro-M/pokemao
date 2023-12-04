@@ -5,31 +5,31 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import br.edu.ifsul.pokemao.model.PokemaoTreinador;
-import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
+import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.persistencia.PokemaoCatalogoRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
-public class MeusPokemaos extends JFrame {
-    public MeusPokemaos(TreinadorRepository treinadorRepository) {
-        this.setTitle("Meus Pokemãos");
-        setBounds(200, 75, 600, 500);       
+public class Pokemaodex extends JFrame {
+    public Pokemaodex(TreinadorRepository treinadorRepository) {
+        this.setTitle("Pokémãodex");
+        this.setBounds(200, 50, 600, 700);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        ArrayList<PokemaoTreinador> pokemaos = new PokemaoTreinadorRepository().listarDoTreinador(treinadorRepository.getTreinadorLogado());
+        ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listar();
 
-        JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "telatreinador");
+        JPanel panel = new ListaCatalogo(treinadorRepository, pokemaos, "pokedex");
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(0, 80, this.getWidth(), this.getHeight() - 120);
         add(scrollPane);
 
-        JLabel label = new JLabel("Meus pokémãos");
+        JLabel label = new JLabel("Pokémãodex");
         Font currentFont = label.getFont();
         Font newFont = currentFont.deriveFont(Font.BOLD, 20f);
         label.setFont(newFont);
         label.setBounds(120, 10, 400, 30);
-        JLabel label2 = new JLabel("Clique em um pokemão para ações.");
+        JLabel label2 = new JLabel("Esses são todos os pokemãos que existem.");
         label2.setBounds(120, 40, 400, 30);
         add(label); add(label2);
 
@@ -44,4 +44,5 @@ public class MeusPokemaos extends JFrame {
             this.dispose();
         });
     }
+    
 }
