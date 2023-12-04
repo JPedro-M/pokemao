@@ -57,6 +57,7 @@ public class PokemaoLobby extends JFrame {
             new Pokemaodex(treinadorRepository);
             this.dispose();
         });       
+        
 
     }
 }
