@@ -11,7 +11,8 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 public class PokemaoCadastro extends JFrame {
     PokemaoCadastro() {
         this.setTitle("Cadastro");
-        this.setSize(600, 500);
+        setBounds(200, 75, 600,500);       
+        
         JLabel lUser = new JLabel("Usuário");
             lUser.setBounds(25, 10, 100, 40);
         JTextField tUser = new JTextField();

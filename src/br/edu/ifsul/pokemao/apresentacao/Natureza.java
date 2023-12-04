@@ -14,11 +14,11 @@ public class Natureza extends JPanel {
     private Rectangle dropZone = new Rectangle(300, 50, 250, 500);
 
     public Natureza(TreinadorRepository treinadorRepository) {
-        JFrame frame = new JFrame("Draggable Object");
+        JFrame frame = new JFrame("Natureza");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(this, BorderLayout.CENTER);
-        frame.setSize(600, 600);
+        setBounds(200, 75, 600, 600);       
         frame.setVisible(true);
 
         JLabel label = new JLabel("Arraste o treinador até a grama para pegar um pokemão!");

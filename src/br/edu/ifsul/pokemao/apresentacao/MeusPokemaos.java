@@ -11,7 +11,7 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 public class MeusPokemaos extends JFrame {
     public MeusPokemaos(TreinadorRepository treinadorRepository) {
         this.setTitle("Meus Pokemãos");
-        this.setSize(600, 500);
+        setBounds(200, 75, 600, 500);       
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);

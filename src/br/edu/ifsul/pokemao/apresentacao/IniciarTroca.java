@@ -13,7 +13,7 @@ public class IniciarTroca extends JFrame {
     public IniciarTroca(TreinadorRepository treinadorRepository) {
         // escolher pokemao entre lista de pokemaos do treinador logado
         setTitle("Troca");
-        setBounds(100, 100, 800, 600);       
+        setBounds(200, 75, 800, 600);       
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

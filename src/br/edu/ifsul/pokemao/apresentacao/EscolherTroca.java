@@ -17,7 +17,7 @@ public class EscolherTroca extends JFrame {
         pokemaos = pokemaoTreinadorRepository.listarDisponiveisParaTroca(treinadorRepository.getTreinadorLogado());
 
         setTitle("Troca");
-        setBounds(100, 100, 800, 600);
+        setBounds(200, 75, 800, 600);       
 
         setLayout(null);
 
