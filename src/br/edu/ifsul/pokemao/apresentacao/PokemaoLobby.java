@@ -48,5 +48,12 @@ public class PokemaoLobby extends JFrame {
             new MeusPokemaos(treinadorRepository);
             this.dispose();
         });
+        batalha.addActionListener(e -> {
+            new Batalha();
+            this.dispose();
+        });
+
+        
+
     }
 }
