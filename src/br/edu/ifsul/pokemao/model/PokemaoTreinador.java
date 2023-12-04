@@ -21,10 +21,10 @@ public class PokemaoTreinador {
     public PokemaoTreinador(Pokemao pokemao, Treinador treinador) {
         this.pokemao = pokemao;
         this.treinador = treinador;
-        this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(0, 15);
-        this.ataque = pokemao.getAtaque() + new Random().nextInt(-5, 5);
-        this.defesa = pokemao.getDefesa() + new Random().nextInt(-5, 5);
-        this.hp = pokemao.getHp() + new Random().nextInt(-5, 5);
+        this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(5);
+        this.ataque = pokemao.getAtaque() + new Random().nextInt(5);
+        this.defesa = pokemao.getDefesa() + new Random().nextInt(5);
+        this.hp = pokemao.getHp() + new Random().nextInt(5);
         this.xp = 100;
         this.dataCaptura = LocalDateTime.now();
         this.disponivelParaTroca = false;

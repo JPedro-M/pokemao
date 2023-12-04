@@ -14,7 +14,7 @@ public class Batalha extends JFrame {
 
         PokemaoTreinador inicial = new PokemaoTreinadorRepository().buscarPorId(12);
 
-        PokemaoTreinador oponente = new PokemaoTreinadorRepository().buscarPorId(3);
+        PokemaoTreinador oponente = new PokemaoTreinadorRepository().buscarPorId(8);
 
         JLabel hpPokeT = new JLabel("HP: "+inicial.getHp());
             hpPokeT.setBounds(105, 75, 200, 50);
@@ -54,21 +54,30 @@ public class Batalha extends JFrame {
 
         atk.addActionListener(e ->{
             oponente.setHp(oponente.getDefesa()-inicial.getAtaque());  
+                if (oponente.getHp()<=0){
+                    JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
+                } else if(inicial.getHp()<=0){
+                    JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
+                }
             inicial.setHp(inicial.getDefesa()-oponente.getAtaque());
-
-            
+                if (oponente.getHp()<=0){
+                    JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
+                } else if(inicial.getHp()<=0){
+                    JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
+                }
         });
 
         def.addActionListener(e ->{
             inicial.setHp((inicial.getDefesa()*2)-oponente.getAtaque());
+            if (oponente.getHp()<=0){
+                JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
+            } else if(inicial.getHp()<=0){
+                JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
+        }
             
         });
 
-        if (oponente.getHp()<=0){
-                JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
-            }
+        
 
         
 
