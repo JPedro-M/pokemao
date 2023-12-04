@@ -83,6 +83,7 @@ public class PokemaoTreinador {
     }
 
     public int getHp() {
+        System.out.println(hp);
         return hp;
     }
 

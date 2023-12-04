@@ -56,22 +56,19 @@ public class Batalha extends JFrame {
             oponente.setHp(oponente.getDefesa()-inicial.getAtaque());  
             inicial.setHp(inicial.getDefesa()-oponente.getAtaque());
 
-            if (oponente.getHp()<=0){
-                JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
-            }
+            
         });
 
         def.addActionListener(e ->{
             inicial.setHp((inicial.getDefesa()*2)-oponente.getAtaque());
             
-            if (oponente.getHp()<=0){
+        });
+
+        if (oponente.getHp()<=0){
                 JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
             }
-        });
 
         
 
