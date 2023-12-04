@@ -28,6 +28,20 @@ public class IniciarTroca extends JFrame {
 
         // lista simples de pokemaos em linha, onde cada um é um botão
         // ao clicar no botão, abre a tela de escolher pokemao para troca
+
+        JButton voltar = new JButton("Voltar");
+            voltar.setBounds(500, 400, 100, 40);
+
+
+        
+        this.add(voltar);
+
+        voltar.addActionListener(e ->{
+            new PokemaoLobby(treinadorRepository);
+            this.dispose();
+
+        });  
+        
         
         JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "troca");
         panel.setBounds(10, 50, 400, 400);

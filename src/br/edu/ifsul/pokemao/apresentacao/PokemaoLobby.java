@@ -2,6 +2,7 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
+import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class PokemaoLobby extends JFrame {
@@ -49,8 +50,13 @@ public class PokemaoLobby extends JFrame {
             this.dispose();
         });
         batalha.addActionListener(e -> {
-            new Batalha();
+            new Batalha(treinadorRepository);
             this.dispose();
+        });
+
+        cura.addActionListener(e ->{
+            
+
         });
 
         

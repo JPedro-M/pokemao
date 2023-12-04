@@ -2,13 +2,21 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
+import br.edu.ifsul.pokemao.model.PokemaoTreinador;
+import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
+import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
+
 public class Batalha extends JFrame {
 
-    Batalha(){
+    Batalha(TreinadorRepository treinadorRepository){
         this.setTitle("Batalha");
         this.setSize(600, 500);
 
-        JLabel hpPokeT = new JLabel("HP: ");
+        PokemaoTreinador inicial = new PokemaoTreinadorRepository().buscarPorId(12);
+
+        PokemaoTreinador oponente = new PokemaoTreinadorRepository().buscarPorId(3);
+
+        JLabel hpPokeT = new JLabel("HP: "+inicial.getHp());
             hpPokeT.setBounds(105, 75, 200, 50);
 
         JLabel pokeT = new JLabel();
@@ -23,7 +31,7 @@ public class Batalha extends JFrame {
         JButton def =  new JButton("Defender");
             def.setBounds(190, 300, 150, 45);
 
-        JLabel hpPokeI = new JLabel("HP: ");
+        JLabel hpPokeI = new JLabel("HP: "+oponente.getHp());
             hpPokeI.setBounds(450, 25, 200, 50);
 
         JLabel pokeI = new JLabel();
@@ -37,10 +45,33 @@ public class Batalha extends JFrame {
 
 
         voltar.addActionListener(e ->{
-            new PokemaoLobby();
+            new PokemaoLobby(treinadorRepository);
             this.dispose();
 
-        });   
+        });  
+        
+        
+
+        atk.addActionListener(e ->{
+            oponente.setHp(oponente.getDefesa()-inicial.getAtaque());  
+            inicial.setHp(inicial.getDefesa()-oponente.getAtaque());
+
+        });
+
+        def.addActionListener(e ->{
+            inicial.setHp((inicial.getDefesa()*2)-oponente.getAtaque());
+        });
+
+        if (oponente.getHp()<=0){
+            JOptionPane.showMessageDialog(null,"Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,"Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
+        }
+
+        
+
+        
+        
         this.add(hpPokeT); this.add(pokeT); this.add(pokeTN); this.add(atk);
         this.add(def); this.add(hpPokeI); this.add(pokeI); this.add(pokeIN);
         this.add(voltar);
