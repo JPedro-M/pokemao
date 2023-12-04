@@ -52,6 +52,19 @@ public class PokemaoNatureza extends JFrame {
         add(abanar);
         abanar.setVisible(true);
 
+        JButton voltar = new JButton("Voltar");
+            voltar.setBounds(500, 400, 100, 40);
+
+
+        
+        this.add(voltar);
+
+        voltar.addActionListener(e ->{
+            new PokemaoLobby(treinadorRepository);
+            this.dispose();
+
+        }); 
+
         JLabel specs = new JLabel("Raridade: " + pokemaoSelvagem.getPokemao().getRaridadeString() + "\n"+
                 "Ataque: " + pokemaoSelvagem.getAtaque() + "\n"+
                 "Defesa: " + pokemaoSelvagem.getDefesa() + "\n"+

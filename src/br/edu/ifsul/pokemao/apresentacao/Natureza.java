@@ -28,6 +28,8 @@ public class Natureza extends JPanel {
         label.setBounds(10, 10, 400, 50);
         add(label);
 
+        
+
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
