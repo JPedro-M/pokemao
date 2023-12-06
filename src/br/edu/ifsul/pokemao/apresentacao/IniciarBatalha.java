@@ -18,7 +18,8 @@ public class IniciarBatalha extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
-        ArrayList<PokemaoTreinador> pokemaos = new PokemaoTreinadorRepository().listarDoTreinador(treinadorRepository.getTreinadorLogado());
+        ArrayList<PokemaoTreinador> pokemaos = new PokemaoTreinadorRepository().
+            listarDoTreinador(treinadorRepository.getTreinadorLogado());
 
         JLabel label = new JLabel("Centro de batalhas");
         Font currentFont = label.getFont();

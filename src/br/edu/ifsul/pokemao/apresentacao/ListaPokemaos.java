@@ -60,7 +60,8 @@ public class ListaPokemaos extends JPanel {
                             SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
                         case "batalha":
-                            // new EscolherBatalha(treinadorRepository, pokemao);
+                            new Batalha(treinadorRepository, pokemao);
+                            SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
                         case "telatreinador":
                             Object[] options = { "Curar", "Disponível para troca", "Libertar", "Alterar nome" };

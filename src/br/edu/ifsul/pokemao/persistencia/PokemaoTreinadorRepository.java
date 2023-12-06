@@ -10,6 +10,7 @@ import br.edu.ifsul.pokemao.utils.ListaMaker;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PokemaoTreinadorRepository {
     // métodos para listar, listardotreinador, cadastrar, libertar (excluir),
@@ -260,7 +261,7 @@ public class PokemaoTreinadorRepository {
         try {
             this.conexao.abrirConexao("editar, pokemaoTreinadorRepository");
             String sqlInsert = "UPDATE pokemao_treinador SET id_pokemao_catalogo=?, id_treinador=?, velocidade_ataque=?,"
-                    + "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=?, nome_custom=?"+
+                    + "ataque=?, defesa=?, hp=?, disponivel_para_troca=?, xp=?, data_captura=?, nome_custom=?" +
                     " WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getPokemao().getId());
@@ -282,5 +283,33 @@ public class PokemaoTreinadorRepository {
             this.conexao.fecharConexao();
         }
         return resultado;
+    }
+
+    public PokemaoTreinador escolherPokemaoParaBatalha(PokemaoTreinador inicial) {
+        // procurar oponente entre todos os pokemaos do sistema
+        // priorizar raridade semelhante.
+        // caso não encontre, a raridade do oponente não importa
+        // gerar pokemao aleatório sem treinador caso não encontre nenhum
+
+        ArrayList<PokemaoTreinador> pokemaos = this.listar();
+        ArrayList<PokemaoTreinador> pokemaosDoTreinador = this.listarDoTreinador(inicial.getTreinador());
+        ArrayList<PokemaoTreinador> possiveisOponentes = new ArrayList<>();
+        possiveisOponentes.addAll(pokemaos);
+        possiveisOponentes.removeAll(pokemaosDoTreinador);
+
+        Collections.shuffle(possiveisOponentes);
+
+        if (!possiveisOponentes.isEmpty()) {
+            for (PokemaoTreinador oponente : possiveisOponentes) {
+                if (oponente.getPokemao().getRaridade() == inicial.getPokemao().getRaridade()) {
+                    return oponente;
+                }
+            }
+            return possiveisOponentes.get(0);
+        }
+
+        PokemaoTreinador pokemaoSelvagem = gerarPokemaoSelvagem();
+        new PokemaoTreinadorRepository().cadastrar(pokemaoSelvagem);
+        return pokemaoSelvagem;
     }
 }
