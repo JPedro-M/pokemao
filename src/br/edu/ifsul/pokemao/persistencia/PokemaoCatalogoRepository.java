@@ -66,7 +66,6 @@ public class PokemaoCatalogoRepository {
                             rs.getString("nome"),
                             rs.getInt("ataque"),
                             rs.getInt("defesa"),
-                            rs.getInt("hp"),
                             rs.getInt("raridade"),
                             rs.getString("foto"),
                             rs.getString("descricao")
@@ -93,7 +92,6 @@ public class PokemaoCatalogoRepository {
             statement.setString(3, pokemaoCatalogo.getNome());
             statement.setInt(4, pokemaoCatalogo.getAtaque());
             statement.setInt(5, pokemaoCatalogo.getDefesa());
-            statement.setInt(6, pokemaoCatalogo.getHp());
             statement.setInt(7, pokemaoCatalogo.getRaridade());
             statement.setString(8, pokemaoCatalogo.getDescricao());
             int linhasAfetadas = statement.executeUpdate();
@@ -122,7 +120,6 @@ public class PokemaoCatalogoRepository {
             statement.setString(2, pokemaoCatalogo.getNome());
             statement.setInt(3, pokemaoCatalogo.getAtaque());
             statement.setInt(4, pokemaoCatalogo.getDefesa());
-            statement.setInt(5, pokemaoCatalogo.getHp());
             statement.setInt(6, pokemaoCatalogo.getRaridade());
             statement.setString(7, pokemaoCatalogo.getDescricao());
             statement.setLong(8, pokemaoCatalogo.getId());

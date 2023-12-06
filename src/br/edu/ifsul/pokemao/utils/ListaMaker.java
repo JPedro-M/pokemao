@@ -22,7 +22,6 @@ public class ListaMaker {
                         rs.getString("nome"),
                         rs.getInt("ataque"),
                         rs.getInt("defesa"),
-                        rs.getInt("hp"),
                         rs.getInt("raridade"),
                         rs.getString("foto"),
                         rs.getString("descricao"));

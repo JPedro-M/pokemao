@@ -24,7 +24,7 @@ public class PokemaoTreinador {
         this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(5);
         this.ataque = pokemao.getAtaque() + new Random().nextInt(5);
         this.defesa = pokemao.getDefesa() + new Random().nextInt(5);
-        this.hp = pokemao.getHp() + new Random().nextInt(5);
+        this.hp = 100;
         this.xp = 100;
         this.dataCaptura = LocalDateTime.now();
         this.disponivelParaTroca = false;
@@ -83,7 +83,6 @@ public class PokemaoTreinador {
     }
 
     public int getHp() {
-        System.out.println(hp);
         return hp;
     }
 
@@ -92,7 +91,7 @@ public class PokemaoTreinador {
     }
 
     public void fullHp() {
-        this.hp = pokemao.getHp();
+        this.hp = 100;
     }
 
     public double getXp() {
