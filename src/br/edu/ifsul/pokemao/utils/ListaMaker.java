@@ -24,6 +24,7 @@ public class ListaMaker {
                         rs.getInt("defesa"),
                         rs.getInt("hp"),
                         rs.getInt("raridade"),
+                        rs.getString("foto"),
                         rs.getString("descricao"));
                 lista.add(pokemaoCatalogo);
             }

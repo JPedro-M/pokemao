@@ -68,6 +68,7 @@ public class PokemaoCatalogoRepository {
                             rs.getInt("defesa"),
                             rs.getInt("hp"),
                             rs.getInt("raridade"),
+                            rs.getString("foto"),
                             rs.getString("descricao")
                         );
                 }

@@ -13,10 +13,11 @@ public class Pokemao {
     private int hp;
     private int velocidade;
     private int raridade;
-
+    
+    private String foto;
     private String descricao;
 
-    public Pokemao(long id, String emoji, String nome, int ataque, int defesa, int hp, int raridade, String descricao) {
+    public Pokemao(long id, String emoji, String nome, int ataque, int defesa, int hp, int raridade, String foto,String descricao) {
         this.id = id;
         this.emoji = emoji;
         this.nome = nome;
@@ -25,6 +26,7 @@ public class Pokemao {
         this.hp = hp;
         this.velocidade = 20;
         this.raridade = raridade;
+        this.foto = foto;
         this.descricao = descricao;
     }
 
@@ -117,6 +119,14 @@ public class Pokemao {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getFoto(){
+        return foto;
+    }
+
+    public void setFoto(String foto){
+        this.foto = foto;
     }
 
     public String getDescricao() {

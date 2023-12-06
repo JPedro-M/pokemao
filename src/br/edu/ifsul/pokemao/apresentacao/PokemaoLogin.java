@@ -94,7 +94,7 @@ public class PokemaoLogin extends JFrame {
         debug.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                treinadorRepository.login("bonachao", "12345");
+                treinadorRepository.login("Lazanha", "batata");
                 new PokemaoLobby(treinadorRepository);
                 dispose();
             }
