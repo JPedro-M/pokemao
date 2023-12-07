@@ -33,4 +33,20 @@ public class Batalha extends Acontecimento {
         this.vencedor = vencedor;
     }
 
+    public void setVencedor(PokemaoTreinador vencedor) {
+        if (vencedor.equals(pokemaoInicial)) {
+            this.vencedor = true;
+        } else {
+            this.vencedor = false;
+        }
+    }
+
+    public PokemaoTreinador getVencedor() {
+        if (vencedor) {
+            return pokemaoInicial;
+        } else {
+            return pokemaoEscolhido;
+        }
+    }
+
 }

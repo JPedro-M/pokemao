@@ -2,19 +2,26 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
+import br.edu.ifsul.pokemao.model.Batalha;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
+import br.edu.ifsul.pokemao.persistencia.AcontecimentoRepository;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
-public class Batalha extends JFrame implements CheckForWinner {
+public class TelaBatalha extends JFrame {
 
-    Batalha(TreinadorRepository treinadorRepository, PokemaoTreinador inicial){
+    PokemaoTreinador vencedor = null;
+    Batalha batalha;
+
+    public TelaBatalha(TreinadorRepository treinadorRepository, PokemaoTreinador inicial){
         this.setTitle("Batalha");
         this.setSize(600, 500);
 
         PokemaoTreinador oponente = new PokemaoTreinadorRepository().escolherPokemaoParaBatalha(inicial);
 
-        JLabel hpPokeT = new JLabel("HP: "+inicial.getHp());
+        batalha = new Batalha(inicial, oponente);
+
+        JLabel hpPokeT = new JLabel("HP: "+oponente.getHp());
         hpPokeT.setBounds(105, 75, 200, 50);
 
         JLabel pokeT = new JLabel();
@@ -68,11 +75,11 @@ public class Batalha extends JFrame implements CheckForWinner {
     private void checkBattleResult(PokemaoTreinador inicial, PokemaoTreinador oponente) {
         if (oponente.getHp() <= 0) {
             JOptionPane.showMessageDialog(null, "Ganhou!", "Parabéns!", JOptionPane.WARNING_MESSAGE);
-            
+            oponente.setHp(0);
+            batalha.setVencedor(true);
+            new AcontecimentoRepository().adicionarBatalha(batalha);          
         } else if (inicial.getHp() <= 0) {
             JOptionPane.showMessageDialog(null, "Perdeu!", "Cure seu Pokemão", JOptionPane.WARNING_MESSAGE);
         }
-
-        
     }
 }

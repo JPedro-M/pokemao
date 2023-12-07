@@ -60,7 +60,7 @@ public class ListaPokemaos extends JPanel {
                             SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
                         case "batalha":
-                            new Batalha(treinadorRepository, pokemao);
+                            new TelaBatalha(treinadorRepository, pokemao);
                             SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
                         case "telatreinador":
