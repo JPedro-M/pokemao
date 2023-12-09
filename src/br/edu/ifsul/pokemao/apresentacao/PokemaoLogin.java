@@ -7,6 +7,12 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
+/*
+ * Tela inicial do programa. Onde os usuários realizam login.
+ * 
+ * 
+ */
+
 public class PokemaoLogin extends JFrame {
     PokemaoLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();

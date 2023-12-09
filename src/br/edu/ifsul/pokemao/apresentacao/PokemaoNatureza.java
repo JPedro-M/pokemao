@@ -9,16 +9,17 @@ import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 public class PokemaoNatureza extends JFrame {
-    // mostrar um pokemao aleatório para que o treinador possa capturá-lo
-    // essa é a tela de captura
-
-    // primeiro, aparece o emoji do pokemao aleatório
-    // há uma opção de abanar para o pokemao
-    // o pokemao tem uma chance de fugir, não responder ao abanar, ou aceitar ser capturado
-    // as chances variam de acordo com a raridade do pokemao
-    // se o pokemao fugir, o treinador perde a chance de capturá-lo
-    // se o pokemao não responder, o treinador pode tentar novamente
-    // se o pokemao aceitar, ele vai para a bolsa do treinador
+    /*  mostrar um pokemao aleatório para que o treinador possa capturá-lo
+    * essa é a tela de captura
+    *
+    * primeiro, aparece o emoji do pokemao aleatório
+    * há uma opção de abanar para o pokemao
+    * o pokemao tem uma chance de fugir, não responder ao abanar, ou aceitar ser capturado
+    * as chances variam de acordo com a raridade do pokemao
+    * se o pokemao fugir, o treinador perde a chance de capturá-lo
+    * se o pokemao não responder, o treinador pode tentar novamente
+    * se o pokemao aceitar, ele vai para a bolsa do treinador
+    */ 
 
     public PokemaoNatureza(TreinadorRepository treinadorRepository) {
         this.setTitle("Captura");

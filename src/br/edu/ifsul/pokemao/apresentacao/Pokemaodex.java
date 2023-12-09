@@ -8,7 +8,12 @@ import javax.swing.*;
 import br.edu.ifsul.pokemao.model.Pokemao;
 import br.edu.ifsul.pokemao.persistencia.PokemaoCatalogoRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-
+/*
+ * Aqui os treinadores/ usuários podem ver a lista completa de todos os
+ * pokemaos existentes.
+ * 
+ * 
+ */
 public class Pokemaodex extends JFrame {
     public Pokemaodex(TreinadorRepository treinadorRepository) {
         this.setTitle("Pokémãodex");

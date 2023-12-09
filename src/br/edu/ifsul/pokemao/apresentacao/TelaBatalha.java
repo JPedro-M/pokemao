@@ -8,6 +8,12 @@ import br.edu.ifsul.pokemao.persistencia.AcontecimentoRepository;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
+/*
+ * A Batalha ocorre aqui. O usuário comandará seu pokemao em batalha contra outro
+ * pokemao que pertencerá ou a um outro usuário ou será um pokemao gerado aleatóriamente. 
+ * 
+ */
+
 public class TelaBatalha extends JFrame {
 
     PokemaoTreinador vencedor = null;

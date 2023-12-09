@@ -9,7 +9,14 @@ import javax.swing.*;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-
+/*
+ * Classe auxiliar de "MeusPokemaos". Aqui o usuário pode:
+ * - alterar o nome dos seus pokemaos;
+ * - libertar seus pokemaos;
+ * - curar seus pokemaos;
+ * - disponibilizar seus pokemaos para troca; 
+ * 
+ */
 public class ListaPokemaos extends JPanel {
     ListaPokemaos(TreinadorRepository treinadorRepository, ArrayList<PokemaoTreinador> array, String contexto) {
         this.setLayout(null);

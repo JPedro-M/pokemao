@@ -8,7 +8,11 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+/*
+ * Tela de seleção do pokemao que será usado pelo usuário em batalha.
+ * 
+ * 
+ */
 public class IniciarBatalha extends JFrame {
     public IniciarBatalha(TreinadorRepository treinadorRepository) {
         // escolher pokemao entre lista de pokemaos do treinador logado

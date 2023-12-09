@@ -8,7 +8,11 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+/*
+ * Aqui o usuário escolherá qual pokemao ele quer em troca do seu que foi enviado;
+ * 
+ * 
+ */
 public class EscolherTroca extends JFrame {
     PokemaoTreinadorRepository pokemaoTreinadorRepository = new PokemaoTreinadorRepository();
     ArrayList<PokemaoTreinador> pokemaos = null;

@@ -7,7 +7,11 @@ import javax.swing.*;
 
 import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-
+/*
+ * Aqui os usuários sem cadastro podem se registrar na plataforma e começar sua 
+ * jornada no mundo pokemão.
+ * 
+ */
 public class PokemaoCadastro extends JFrame {
     PokemaoCadastro() {
         this.setTitle("Cadastro");

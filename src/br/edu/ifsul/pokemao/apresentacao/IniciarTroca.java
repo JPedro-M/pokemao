@@ -8,7 +8,12 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+/*
+ * Tela de selação pré-troca. Aqui o usuário escolhe qual dos deus pokemaos será
+ * enviado para troca;
+ * 
+ * 
+ */
 public class IniciarTroca extends JFrame {
     public IniciarTroca(TreinadorRepository treinadorRepository) {
         // escolher pokemao entre lista de pokemaos do treinador logado

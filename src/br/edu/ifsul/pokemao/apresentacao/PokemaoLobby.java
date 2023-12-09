@@ -6,6 +6,16 @@ import javax.swing.*;
 
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
+/*
+ * Lobby. Ponto acessado após usuário realizar o login com sucesso.
+ * Aqui o usuário pode escolher uma das ações a seguir:
+ * - Batalhar com seus pokemãos;
+ * - Trocar pokemãos;
+ * - Acessar a enciclopédia dos pokemãos;
+ * - Administrar seus pokemãos;
+ * - Sair do seu login;
+ */
+
 public class PokemaoLobby extends JFrame {
     PokemaoLobby(TreinadorRepository treinadorRepository){
         this.setTitle("Lobby");

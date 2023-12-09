@@ -8,7 +8,12 @@ import javax.swing.*;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-
+/*
+ * Menu onde o usuário pode administrar os pokemaos associados a sua conta.
+ *
+ * 
+ * 
+ */
 public class MeusPokemaos extends JFrame {
     public MeusPokemaos(TreinadorRepository treinadorRepository) {
         this.setTitle("Meus Pokemãos");

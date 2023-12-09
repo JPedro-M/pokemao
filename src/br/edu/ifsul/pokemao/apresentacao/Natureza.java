@@ -6,7 +6,12 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
 import java.awt.event.*;
-
+/*
+ * Os usuários acessam essa área para poder capturarem novos pokemaos
+ * para fazer isso eles devem "balançar" a bola azul na tela e com o tempo
+ * encontrará um pokemao.
+ * 
+ */
 public class Natureza extends JPanel {
     private boolean dragging = false;
     private Point objectPos = new Point(100, 200);

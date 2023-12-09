@@ -7,7 +7,10 @@ import javax.swing.*;
 
 import br.edu.ifsul.pokemao.model.Pokemao;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-
+/*
+ * Tela de exibição de cada pokemao dentro da enciclopédia pokemao.
+ * 
+ */
 public class ListaCatalogo extends JPanel {
     public ListaCatalogo(TreinadorRepository treinadorRepository, ArrayList<Pokemao> array, String contexto) {
         this.setLayout(null);
