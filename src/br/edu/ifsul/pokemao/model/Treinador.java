@@ -2,6 +2,16 @@ package br.edu.ifsul.pokemao.model;
 
 import java.time.LocalDateTime;
 
+/*
+ * A classe treinador é o abstração que representa o usuário permitindo que este possa
+ * interagir com o resto do programa.
+ * 
+ * Os atríbutos id, nome, user e senha identificam o usuário. 
+ * 
+ * nascimento indica a idade do usuaŕio.
+ * moedas indica quantas moedas estão associadas a conta do usuário.
+ */
+
 public class Treinador {
     private long id;
 
@@ -19,8 +29,8 @@ public class Treinador {
         this.moedas = 500;
     }
 
-    public Treinador() {
-    }
+    //public Treinador() {
+    //}
 
     public String getNome() {
         return nome;

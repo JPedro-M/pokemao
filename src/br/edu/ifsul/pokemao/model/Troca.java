@@ -1,5 +1,14 @@
 package br.edu.ifsul.pokemao.model;
 
+/*
+ * A classe Troca permite que usuários troquemm pokemaos entre si, basta o pokemao 
+ * estar disponível para troca.
+ * 
+ * pokemaoOfertado corresponde ao pokemao que o usuário escolheu para trocar com os
+ * pokemaos disponiveís no banco.
+ * 
+ */
+
 public class Troca extends Acontecimento {
     private PokemaoTreinador pokemaoOfertado;
     private PokemaoTreinador pokemaoResposta;

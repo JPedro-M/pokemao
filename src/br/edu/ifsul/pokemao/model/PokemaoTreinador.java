@@ -3,6 +3,23 @@ package br.edu.ifsul.pokemao.model;
 import java.util.Random;
 import java.time.LocalDateTime;
 
+/* Classe PokemaoTreinador
+ * 
+ * Esta classe define um pokemao que foi capturado e agora está associado a
+ * um treinador.
+ * 
+ * O pokemao agora associado a um treinador recebe novos valores derivados de seus
+ * valores básicos originais (ataque, defesa, velocidadeAtaque e hp).
+ * 
+ * O atributo disponivelParaTroca é um booleano que indíca se um pokemao está ou não
+ * apto a ser trocado por pokemaos de outros treinadores.
+ * 
+ * dataCaptura guarda o momento em que o pokemao foi adquirido por um treinador
+ * 
+ * nome possiblita que o usuário possa trocar o nome do pokemão capturado, substituindo
+ * o nome "original" da criatura por algo da preferencia do treinador
+ */
+
 public class PokemaoTreinador {
     private Pokemao pokemao;
     private long id;

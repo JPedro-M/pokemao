@@ -1,7 +1,19 @@
 package br.edu.ifsul.pokemao.model;
 
 import java.awt.Color;
-
+/* Classe Pokemao 
+ * 
+ * Está classe gera os pokemaos que poderão se capturados pelos usuários e após isso
+ * usados em trocas e batalhas.
+ * 
+ * "id" serve para que cada pokemao seja único no sistema, fazendo que não existam dois
+ * pokemaos iguais;
+ * 
+ * Os atríbutos "nome", "raridade", "foto" e "descricao" são características que servem   
+ * para informar ao usuário que pokemao ele capturou.
+ * 
+ * "ataque", "defesa" e "velocidade" são atríbutos usados durante as batalhas.
+*/
 public class Pokemao {
     private long id;
 
