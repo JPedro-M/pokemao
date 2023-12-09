@@ -4,19 +4,30 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import br.edu.ifsul.pokemao.model.Batalha;
-import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.model.Troca;
 import br.edu.ifsul.pokemao.persistencia.PokemaoCatalogoRepository;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
+/**
+ * Esta classe contém métodos estáticos para converter objetos ResultSet em
+ * ArrayLists de objetos específicos.
+ */
 public class ListaMaker {
-    public static ArrayList<Pokemao> ResultSettoListPokemaoCatalogo(ResultSet rs) {
-        ArrayList<Pokemao> lista = new ArrayList<>();
+
+    /**
+     * Converte um ResultSet em uma lista de objetos PokemaoCatalogo.
+     * 
+     * @param rs O ResultSet contendo os dados do PokemaoCatalogo.
+     * @return Uma lista de objetos PokemaoCatalogo.
+     */
+    public static ArrayList<PokemaoCatalogo> ResultSettoListPokemaoCatalogo(ResultSet rs) {
+        ArrayList<PokemaoCatalogo> lista = new ArrayList<>();
         try {
             while (rs.next()) {
-                Pokemao pokemaoCatalogo = new Pokemao(
+                PokemaoCatalogo pokemaoCatalogo = new PokemaoCatalogo(
                         rs.getLong("id_pokemao_catalogo"),
                         rs.getString("emoji"),
                         rs.getString("nome"),
@@ -33,6 +44,16 @@ public class ListaMaker {
         return lista;
     }
 
+    /**
+     * Converte um ResultSet em uma lista de objetos PokemaoTreinador.
+     * <p>
+     * A conexão é passada como parâmetro para evitar que a conexão seja aberta e
+     * fechada várias vezes.
+     * 
+     * @param rs      O ResultSet contendo os dados do PokemaoTreinador.
+     * @param conexao A conexão com o banco de dados.
+     * @return Uma lista de objetos PokemaoTreinador.
+     */
     public static ArrayList<PokemaoTreinador> ResultSettoListPokemaoTreinador(ResultSet rs, ConexaoMySQL conexao) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
@@ -57,6 +78,12 @@ public class ListaMaker {
         return lista;
     }
 
+    /**
+     * Converte um ResultSet em uma lista de objetos Troca.
+     * 
+     * @param rs O ResultSet contendo os dados da Troca.
+     * @return Uma lista de objetos Troca.
+     */
     public static ArrayList<Troca> ResultSettoListTroca(ResultSet rs) {
         ArrayList<Troca> lista = new ArrayList<>();
         try {
@@ -77,6 +104,12 @@ public class ListaMaker {
         return lista;
     }
 
+    /**
+     * Converte um ResultSet em uma lista de objetos Batalha.
+     * 
+     * @param rs O ResultSet contendo os dados da Batalha.
+     * @return Uma lista de objetos Batalha.
+     */
     public static ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs) {
         ArrayList<Batalha> lista = new ArrayList<>();
         try {

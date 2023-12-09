@@ -7,16 +7,27 @@ import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
 import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
 
+/**
+ * Classe para gerenciar os treinadores (usuários) do sistema.
+ * <p>
+ * Esta classe fornece métodos para realizar login, cadastro e logout de um
+ * treinador, além de fornecer métodos para buscar treinadores no banco de dados
+ * e atualizar e remover treinadores do banco de dados.
+ * 
+ * @see Treinador
+ */
 public class TreinadorRepository {
-    // métodos para login, cadastro, logout
-    // conexao com o banco de dados
 
+    /**
+     * Representa o treinador atualmente logado no sistema.
+     */
     Treinador treinadorLogado;
 
     private ConexaoMySQL conexao;
 
     public TreinadorRepository() {
-        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
+        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA,
+                BDConfigs.NOME_BD);
     }
 
     public Treinador getTreinadorLogado() {
@@ -53,11 +64,10 @@ public class TreinadorRepository {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getString("usuario"),
-                    rs.getString("senha"),
-                    rs.getString("nome"),
-                    rs.getTimestamp("nascimento").toLocalDateTime()
-                );
+                        rs.getString("usuario"),
+                        rs.getString("senha"),
+                        rs.getString("nome"),
+                        rs.getTimestamp("nascimento").toLocalDateTime());
                 treinador.setId(rs.getLong("id_treinador"));
             }
         } catch (Exception e) {
@@ -68,7 +78,7 @@ public class TreinadorRepository {
         return treinador;
     }
 
-    public Treinador buscarPorID(long id){
+    public Treinador buscarPorID(long id) {
         Treinador treinador = null;
         try {
             this.conexao.abrirConexao("buscarPorID, treinadorRepository");
@@ -90,16 +100,15 @@ public class TreinadorRepository {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 treinador = new Treinador(
-                    rs.getString("usuario"),
-                    rs.getString("senha"),
-                    rs.getString("nome"),
-                    rs.getTimestamp("nascimento").toLocalDateTime()
-                );
+                        rs.getString("usuario"),
+                        rs.getString("senha"),
+                        rs.getString("nome"),
+                        rs.getTimestamp("nascimento").toLocalDateTime());
                 treinador.setId(rs.getLong("id_treinador"));
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return treinador;
     }
 
@@ -119,7 +128,8 @@ public class TreinadorRepository {
         try {
             this.conexao.abrirConexao("cadastrar, treinadorRepository");
             String sqlInsert = "INSERT INTO treinador(id_treinador, usuario, senha, nome, nascimento) VALUES(null, ?, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert,
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, treinador.getUser());
             statement.setString(2, treinador.getSenha());
             statement.setString(3, treinador.getNome());

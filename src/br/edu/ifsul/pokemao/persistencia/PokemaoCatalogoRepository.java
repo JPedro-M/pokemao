@@ -1,6 +1,6 @@
 package br.edu.ifsul.pokemao.persistencia;
 
-import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
 import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
 import br.edu.ifsul.pokemao.utils.ListaMaker;
@@ -9,6 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+/**
+ * Classe para gerenciar os pokemaos do catálogo do sistema.
+ * <p>
+ * Esta classe fornece métodos para buscar pokemaos no banco de dados,
+ * cadastrar, editar e excluir pokemaos do banco de dados.
+ * 
+ * @see PokemaoCatalogo 
+ */
 public class PokemaoCatalogoRepository {
     // métodos para listar, cadastrar, editar, excluir
     // conexao com o banco de dados
@@ -21,8 +29,8 @@ public class PokemaoCatalogoRepository {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
-    public ArrayList<Pokemao> listar() {
-        ArrayList<Pokemao> lista = new ArrayList<>();
+    public ArrayList<PokemaoCatalogo> listar() {
+        ArrayList<PokemaoCatalogo> lista = new ArrayList<>();
         try {
             this.conexao.abrirConexao("listar, pokemaoCatalogoRepository");
             String sqlInsert = "SELECT * FROM pokemao_catalogo";
@@ -37,8 +45,8 @@ public class PokemaoCatalogoRepository {
         return lista;
     }
 
-    public Pokemao buscarPorId(long id_busca){
-        Pokemao pokemaoCatalogo = null;
+    public PokemaoCatalogo buscarPorId(long id_busca){
+        PokemaoCatalogo pokemaoCatalogo = null;
         try {
             this.conexao.abrirConexao("buscarPorId, pokemaoCatalogoRepository");
             pokemaoCatalogo = buscarPorId(id_busca, this.conexao);
@@ -50,8 +58,8 @@ public class PokemaoCatalogoRepository {
         return pokemaoCatalogo;
     }
 
-    public Pokemao buscarPorId(long id_busca, ConexaoMySQL conexao) {
-        Pokemao pokemaoCatalogo = null;
+    public PokemaoCatalogo buscarPorId(long id_busca, ConexaoMySQL conexao) {
+        PokemaoCatalogo pokemaoCatalogo = null;
         try {
             String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
             PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
@@ -60,7 +68,7 @@ public class PokemaoCatalogoRepository {
             try {
                 if (rs.next()) {
                     pokemaoCatalogo = 
-                        new Pokemao(
+                        new PokemaoCatalogo(
                             rs.getLong("id_pokemao_catalogo"),
                             rs.getString("emoji"),
                             rs.getString("nome"),
@@ -80,7 +88,7 @@ public class PokemaoCatalogoRepository {
         return pokemaoCatalogo;
     }
 
-    public boolean cadastrar(Pokemao pokemaoCatalogo) {
+    public boolean cadastrar(PokemaoCatalogo pokemaoCatalogo) {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao("cadastrar, pokemaoCatalogoRepository");
@@ -109,7 +117,7 @@ public class PokemaoCatalogoRepository {
         return retorno;
     }
 
-    public boolean editar(Pokemao pokemaoCatalogo) {
+    public boolean editar(PokemaoCatalogo pokemaoCatalogo) {
         boolean retorno = false;
         try {
             this.conexao.abrirConexao("editar, pokemaoCatalogoRepository");
@@ -160,8 +168,8 @@ public class PokemaoCatalogoRepository {
         return retorno;
     }
 
-    public ArrayList<Pokemao> listarPorRaridade(int x) {
-        ArrayList<Pokemao> lista = new ArrayList<>();
+    public ArrayList<PokemaoCatalogo> listarPorRaridade(int x) {
+        ArrayList<PokemaoCatalogo> lista = new ArrayList<>();
         try {
             this.conexao.abrirConexao("listarPorRaridade, pokemaoCatalogoRepository");
             String sqlSelect = "SELECT * FROM pokemao_catalogo WHERE raridade = ?";

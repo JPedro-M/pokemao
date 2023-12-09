@@ -1,19 +1,18 @@
 package br.edu.ifsul.pokemao.model;
+
 import java.time.LocalDateTime;
 
-/*
- * A classe Acontecimento existe como classe mãe das classes Batalha e Troca, ou seja
- * ela serve para indicar os dois treinadores que participarão de algum dos eventos
- * citados anteriormente.
- * 
- * Os atributos usuarioInicial e usuarioEscolhidos informam os dois treinadores que 
- * irão participar dos eventos, sendo usuarioInicial o que representa o usuário que 
- * está acessando o programa no momento. usuarioEscolhido usa os dados de algum outro 
- * usuário guardado no banco de dados.
- *
- * 
+/**
+ * Esta classe existe como classe mãe das classes {@code Batalha} e
+ * {@code Troca}, ou seja, ela serve para indicar os dois treinadores que
+ * participarão de algum desses eventos.
+ * <p>
+ * Os atributos {@code usuarioInicial} e {@code usuarioEscolhido} armazenam a
+ * informação dos dois treinadores que irão participar dos eventos, sendo o
+ * primeiro o que representa o usuário que está acessando o programa no momento.
+ * {@code usuarioEscolhido} usa os dados de algum outro usuário guardado no
+ * banco de dados.
  */
-
 public class Acontecimento {
     private long id;
     private LocalDateTime data;

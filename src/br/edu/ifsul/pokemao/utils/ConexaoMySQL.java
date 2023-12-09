@@ -4,14 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Esta classe representa uma conexão com um banco de dados MySQL.
+ * <p>
+ * Ela fornece métodos para abrir e fechar a conexão, bem como acessar o objeto
+ * de conexão.
+ */
 public class ConexaoMySQL {
-
     private String ip;
     private String porta;
     private String usuario;
     private String senha;
     private String nomeBD;
 
+    /**
+     * Representa uma conexão com um banco de dados MySQL.
+     */
     private Connection conexao;
 
     public ConexaoMySQL(String ip, String porta, String usuario, String senha, String nomeBD) {
@@ -22,7 +30,7 @@ public class ConexaoMySQL {
         this.nomeBD = nomeBD;
     }
 
-    public void abrirConexao(String origem){
+    public void abrirConexao(String origem) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://" + this.ip + ":" + this.porta + "/" + this.nomeBD;
@@ -33,7 +41,7 @@ public class ConexaoMySQL {
         }
     }
 
-    public void fecharConexao(){
+    public void fecharConexao() {
         try {
             this.conexao.close();
             System.out.println("Fechando conexão com o banco de dados");

@@ -1,6 +1,6 @@
 package br.edu.ifsul.pokemao.persistencia;
 
-import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.utils.BDConfigs;
@@ -12,13 +12,20 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Classe para gerenciar objetos PokemaoTreinador e suas interações com o banco
+ * de dados.
+ * <p>
+ * Esta classe fornece métodos para listar, cadastrar, excluir,
+ * atualizar, batalhar, curar e encontrar objetos PokemaoTreinador.
+ * Também fornece métodos para gerar pokemaos selvagens e escolher
+ * pokemaos para batalha.
+ * 
+ * @see PokemaoTreinador
+ */
 public class PokemaoTreinadorRepository {
-    // métodos para listar, listardotreinador, cadastrar, libertar (excluir),
-    // trocar, batalhar, curar, encontrarnanatureza, marcarcomodisponivel
-    // conexao com o banco de dados
-
     private ConexaoMySQL conexao;
-
+    
     public PokemaoTreinadorRepository() {
         this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA,
                 BDConfigs.NOME_BD);
@@ -162,7 +169,6 @@ public class PokemaoTreinadorRepository {
         return resultado;
     }
 
-    // uma troca é composta por duas transferências
     protected boolean transferir(PokemaoTreinador pokemaoTreinador1, Treinador treinador2) {
         return transferir(pokemaoTreinador1, treinador2, false);
     }
@@ -232,19 +238,19 @@ public class PokemaoTreinadorRepository {
         int random = (int) (Math.random() * 10) + 1;
         PokemaoTreinador novo = null;
         if (random <= 7) {
-            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(1);
+            ArrayList<PokemaoCatalogo> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(1);
             int random2 = (int) (Math.random() * pokemaos.size());
-            Pokemao pokemao = pokemaos.get(random2);
+            PokemaoCatalogo pokemao = pokemaos.get(random2);
             novo = new PokemaoTreinador(pokemao, null);
         } else if (random <= 9) {
-            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(2);
+            ArrayList<PokemaoCatalogo> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(2);
             int random2 = (int) (Math.random() * pokemaos.size());
-            Pokemao pokemao = pokemaos.get(random2);
+            PokemaoCatalogo pokemao = pokemaos.get(random2);
             novo = new PokemaoTreinador(pokemao, null);
         } else {
-            ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(3);
+            ArrayList<PokemaoCatalogo> pokemaos = new PokemaoCatalogoRepository().listarPorRaridade(3);
             int random2 = (int) (Math.random() * pokemaos.size());
-            Pokemao pokemao = pokemaos.get(random2);
+            PokemaoCatalogo pokemao = pokemaos.get(random2);
             novo = new PokemaoTreinador(pokemao, null);
         }
 

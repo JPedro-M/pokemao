@@ -3,25 +3,26 @@ package br.edu.ifsul.pokemao.model;
 import java.util.Random;
 import java.time.LocalDateTime;
 
-/* Classe PokemaoTreinador
- * 
+/**
  * Esta classe define um pokemao que foi capturado e agora está associado a
  * um treinador.
- * 
- * O pokemao agora associado a um treinador recebe novos valores derivados de seus
- * valores básicos originais (ataque, defesa, velocidadeAtaque e hp).
- * 
- * O atributo disponivelParaTroca é um booleano que indíca se um pokemao está ou não
- * apto a ser trocado por pokemaos de outros treinadores.
- * 
- * dataCaptura guarda o momento em que o pokemao foi adquirido por um treinador
- * 
- * nome possiblita que o usuário possa trocar o nome do pokemão capturado, substituindo
- * o nome "original" da criatura por algo da preferencia do treinador
+ * <p>
+ * O pokemao agora associado a um treinador recebe novos valores derivados de
+ * seus valores básicos originais ({@code ataque}, {@code defesa},
+ * {@code velocidadeAtaque} e {@code hp}).
+ * <p>
+ * O atributo {@code disponivelParaTroca} é um booleano que indica se o pokemao
+ * está ou não apto a ser trocado por pokemaos de outros treinadores.
+ * <p>
+ * {@code dataCaptura} guarda o momento em que o pokemao foi adquirido ou obtido
+ * por um treinador
+ * <p>
+ * {@code nome} possiblita que o usuário possa trocar o nome do pokemão
+ * capturado, substituindo o nome "original" da criatura por algo da preferência
+ * do treinador
  */
-
 public class PokemaoTreinador {
-    private Pokemao pokemao;
+    private PokemaoCatalogo pokemao;
     private long id;
 
     private Treinador treinador;
@@ -35,7 +36,7 @@ public class PokemaoTreinador {
 
     private String nome;
 
-    public PokemaoTreinador(Pokemao pokemao, Treinador treinador) {
+    public PokemaoTreinador(PokemaoCatalogo pokemao, Treinador treinador) {
         this.pokemao = pokemao;
         this.treinador = treinador;
         this.velocidadeAtaque = pokemao.getVelocidade() + new Random().nextInt(5);
@@ -47,7 +48,8 @@ public class PokemaoTreinador {
         this.disponivelParaTroca = false;
     }
 
-    public PokemaoTreinador(Pokemao pokemao, Treinador treinador, int velocidadeAtaque, int ataque, int defesa, int hp, boolean disponivelParaTroca, double xp, LocalDateTime dataCaptura) {
+    public PokemaoTreinador(PokemaoCatalogo pokemao, Treinador treinador, int velocidadeAtaque, int ataque, int defesa, int hp,
+            boolean disponivelParaTroca, double xp, LocalDateTime dataCaptura) {
         this.pokemao = pokemao;
         this.treinador = treinador;
         this.velocidadeAtaque = velocidadeAtaque;
@@ -59,11 +61,11 @@ public class PokemaoTreinador {
         this.dataCaptura = dataCaptura;
     }
 
-    public Pokemao getPokemao() {
+    public PokemaoCatalogo getPokemao() {
         return pokemao;
     }
 
-    public void setPokemao(Pokemao pokemao) {
+    public void setPokemao(PokemaoCatalogo pokemao) {
         this.pokemao = pokemao;
     }
 

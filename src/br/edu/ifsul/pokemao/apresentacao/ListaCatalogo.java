@@ -5,20 +5,20 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 /*
  * Tela de exibição de cada pokemao dentro da enciclopédia pokemao.
  * 
  */
 public class ListaCatalogo extends JPanel {
-    public ListaCatalogo(TreinadorRepository treinadorRepository, ArrayList<Pokemao> array, String contexto) {
+    public ListaCatalogo(TreinadorRepository treinadorRepository, ArrayList<PokemaoCatalogo> array, String contexto) {
         this.setLayout(null);
         int totalHeight = array.size() * 60;
         this.setPreferredSize(new Dimension(500, totalHeight));
         int y = 0;
 
-        for (Pokemao pokemao : array) {
+        for (PokemaoCatalogo pokemao : array) {
             // no panel, mostrar o emoji do pokemao, o nome, o ataque e a defesa
             // usar um panel clicável em vez de botão
             

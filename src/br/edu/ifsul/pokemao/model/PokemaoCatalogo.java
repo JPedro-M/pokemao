@@ -1,20 +1,22 @@
 package br.edu.ifsul.pokemao.model;
 
 import java.awt.Color;
-/* Classe Pokemao 
- * 
- * Está classe gera os pokemaos que poderão se capturados pelos usuários e após isso
- * usados em trocas e batalhas.
- * 
- * "id" serve para que cada pokemao seja único no sistema, fazendo que não existam dois
- * pokemaos iguais;
- * 
- * Os atríbutos "nome", "raridade", "foto" e "descricao" são características que servem   
- * para informar ao usuário que pokemao ele capturou.
- * 
- * "ataque", "defesa" e "velocidade" são atríbutos usados durante as batalhas.
-*/
-public class Pokemao {
+
+/**
+ * Esta classe gera os pokemaos que poderão se capturados pelos usuários e após
+ * isso usados em trocas e batalhas.
+ * <p>
+ * {@code id} serve para que cada pokemao seja único no sistema, fazendo que não
+ * existam dois pokemaos iguais;
+ * <p>
+ * Os atríbutos {@code nome}, {@code raridade}, {@code foto} e {@code descricao}
+ * são características que servem para informar ao usuário que pokemao ele
+ * capturou.
+ * <p>
+ * {@code ataque}, {@code defesa} e {@code velocidade} são atríbutos usados
+ * durante as batalhas.
+ */
+public class PokemaoCatalogo {
     private long id;
 
     private String emoji;
@@ -24,11 +26,12 @@ public class Pokemao {
     private int defesa;
     private int velocidade;
     private int raridade;
-    
+
     private String foto;
     private String descricao;
 
-    public Pokemao(long id, String emoji, String nome, int ataque, int defesa, int raridade, String foto,String descricao) {
+    public PokemaoCatalogo(long id, String emoji, String nome, int ataque, int defesa, int raridade, String foto,
+            String descricao) {
         this.id = id;
         this.emoji = emoji;
         this.nome = nome;
@@ -71,7 +74,7 @@ public class Pokemao {
     public void setDefesa(int defesa) {
         this.defesa = defesa;
     }
-    
+
     public int getVelocidade() {
         return velocidade;
     }
@@ -79,7 +82,6 @@ public class Pokemao {
     public void setVelocidade(int velocidade) {
         this.velocidade = velocidade;
     }
-
 
     public int getRaridade() {
         return raridade;
@@ -100,15 +102,14 @@ public class Pokemao {
     public Color getRaridadeColor() {
         switch (this.raridade) {
             case 1:
-                return new Color(211,211,211);
+                return new Color(211, 211, 211);
             case 2:
-                return new Color(173,216,230);
+                return new Color(173, 216, 230);
             case 3:
-                return new Color(144,238,144);
+                return new Color(144, 238, 144);
         }
         return null;
     }
-
 
     public void setRaridade(int raridade) {
         this.raridade = raridade;
@@ -118,16 +119,15 @@ public class Pokemao {
         return id;
     }
 
-
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getFoto(){
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto){
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
@@ -135,7 +135,7 @@ public class Pokemao {
         return descricao;
     }
 
-    public void setDescricao(String descricao) { 
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 }

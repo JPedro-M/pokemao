@@ -7,19 +7,21 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
-/*
- * Tela inicial do programa. Onde os usuários realizam login.
- * 
- * 
- */
-
 public class PokemaoLogin extends JFrame {
+    /**
+     * Tela inicial do programa, onde o usuário poderá fazer login ou se cadastrar.
+     */
     PokemaoLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();
 
+        // configurações da janela
         this.setTitle("Login");
-        this.setBounds(200, 75, 600, 600);       
-        
+        this.setBounds(200, 75, 600, 600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(null);
+
+        // elementos da janela
         JLabel pokemao = new JLabel("POKEMÃO");
         pokemao.setBounds(185, 45, 200, 50);
         pokemao.setFont(pokemao.getFont().deriveFont(25.0f));
@@ -56,6 +58,7 @@ public class PokemaoLogin extends JFrame {
         debug.setBounds(10, 10, 75, 25);
         debug.setVisible(true); // marcar como false para não aparecer quando for entregar
 
+        // adicionando elementos à janela
         this.add(pokemao);
         this.add(user);
         this.add(nUser);
@@ -68,11 +71,8 @@ public class PokemaoLogin extends JFrame {
         this.add(msgCad);
         this.add(lErro);
         this.add(debug);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setLayout(null);
-        this.setVisible(true);
 
+        // ações dos botões
         acesso.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,5 +105,8 @@ public class PokemaoLogin extends JFrame {
                 dispose();
             }
         });
+
+        // tornando a janela visível
+        this.setVisible(true);
     }
 }

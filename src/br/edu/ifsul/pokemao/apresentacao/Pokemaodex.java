@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import br.edu.ifsul.pokemao.model.Pokemao;
+import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
 import br.edu.ifsul.pokemao.persistencia.PokemaoCatalogoRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 /*
@@ -22,7 +22,7 @@ public class Pokemaodex extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        ArrayList<Pokemao> pokemaos = new PokemaoCatalogoRepository().listar();
+        ArrayList<PokemaoCatalogo> pokemaos = new PokemaoCatalogoRepository().listar();
 
         JPanel panel = new ListaCatalogo(treinadorRepository, pokemaos, "pokedex");
         JScrollPane scrollPane = new JScrollPane(panel);

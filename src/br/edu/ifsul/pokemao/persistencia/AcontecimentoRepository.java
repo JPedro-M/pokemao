@@ -11,9 +11,18 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.Timestamp;
 
+/**
+ * Classe para gerenciar os acontecimentos do sistema.
+ * <p>
+ * Esta classe fornece métodos para adicionar acontecimentos de trocas e batalhas
+ * ao banco de dados, além de fornecer métodos para listar acontecimentos de um
+ * treinador ou todos do banco de dados.
+ * 
+ * @see Troca
+ * @see Batalha
+ * @see Acontecimento
+ */
 public class AcontecimentoRepository {
-    // métodos para adicionar acontecimentos: trocas e batalhas
-    // métodos para listar acontecimentos de um treinador ou todos em um periodo de tempo
     private ConexaoMySQL conexao;
 
     public AcontecimentoRepository() {
@@ -66,7 +75,6 @@ public class AcontecimentoRepository {
             this.conexao.fecharConexao();
         }
     }
-
 
     public ArrayList<Troca> listarTrocas() {
         ArrayList<Troca> lista = new ArrayList<>();
