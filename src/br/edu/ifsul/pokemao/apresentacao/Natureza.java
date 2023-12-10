@@ -6,25 +6,30 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.*;
 import java.awt.event.*;
-/*
- * Os usuários acessam essa área para poder capturarem novos pokemaos
- * para fazer isso eles devem "balançar" a bola azul na tela e com o tempo
- * encontrará um pokemao.
- * 
- */
+
 public class Natureza extends JPanel {
     private boolean dragging = false;
     private Point objectPos = new Point(100, 200);
     private Point mouseOffset = new Point();
     private Rectangle dropZone = new Rectangle(300, 50, 250, 500);
 
+    /**
+     * Os usuários acessam essa área para tentar capturar novos pokemaos e para
+     * fazer isso eles devem arrastar o ícone do treinador (círculo azul) até a
+     * grama (área verde) e com o tempo encontrará um pokemao selvagem.
+     * 
+     * @param treinadorRepository Repositório de treinadores, para acesso ao
+     *                            treinador logado
+     */
     public Natureza(TreinadorRepository treinadorRepository) {
+        // configurações da janela
         JFrame frame = new JFrame("Natureza");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(this);
         frame.setBounds(200, 75, 600, 600);
         frame.setResizable(false);
 
+        // elementos da janela
         JLabel label = new JLabel("Arraste o treinador até a grama para pegar um pokemão!");
         Font currentFont = label.getFont();
         Font newFont = currentFont.deriveFont(20f);
@@ -33,9 +38,10 @@ public class Natureza extends JPanel {
         add(label);
 
         JButton voltar = new JButton("<-- Voltar");
-        voltar.setBounds(frame.getHeight()-40, 10, 90, 30);
+        voltar.setBounds(frame.getHeight() - 40, 10, 90, 30);
         add(voltar);
 
+        // ações dos botões
         voltar.addActionListener(e -> {
             new PokemaoLobby(treinadorRepository);
             frame.dispose();
@@ -74,9 +80,14 @@ public class Natureza extends JPanel {
                 }
             }
         });
+
+        // tornando a janela visível
         frame.setVisible(true);
     }
 
+    /**
+     * Método para desenhar os elementos na tela.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -86,11 +97,17 @@ public class Natureza extends JPanel {
         g.fillOval(objectPos.x, objectPos.y, 50, 50);
     }
 
+    /**
+     * Método responsável por simular a busca por um Pokemão na grama.
+     * Possui uma chance de 50% de encontrar um Pokemão ou exibir uma mensagem de
+     * que não foi encontrado nada.
+     * 
+     * @param treinadorRepository o repositório do treinador
+     */
     private void naGrama(TreinadorRepository treinadorRepository) {
-        // chance de 50% de encontrar um pokemao ou, se não, um aviso de que não encontrou nada
         int chance = (int) (Math.random() * 100);
         if (chance < 50) {
-            new PokemaoNatureza(treinadorRepository);
+            new PokemaoCaptura(treinadorRepository);
         } else {
             JOptionPane.showMessageDialog(null, "Não encontrou nada!");
         }

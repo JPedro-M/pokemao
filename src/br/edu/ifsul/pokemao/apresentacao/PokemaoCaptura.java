@@ -8,7 +8,7 @@ import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
-public class PokemaoNatureza extends JFrame {
+public class PokemaoCaptura extends JFrame {
     /**
      * Esta é a tela de captura, que mostra um pokemao aleatório para que o
      * treinador possa capturá-lo.
@@ -27,7 +27,7 @@ public class PokemaoNatureza extends JFrame {
      * @param treinadorRepository Repositório de treinadores, para acesso ao
      *                            treinador logado
      */
-    public PokemaoNatureza(TreinadorRepository treinadorRepository) {
+    public PokemaoCaptura(TreinadorRepository treinadorRepository) {
         // configurações da janela
         this.setTitle("Captura");
         this.setBounds(200, 75, 600, 600);

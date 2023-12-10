@@ -7,11 +7,11 @@ import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
-public class PokemaoLogin extends JFrame {
+public class TreinadorLogin extends JFrame {
     /**
      * Tela inicial do programa, onde o usuário poderá fazer login ou se cadastrar.
      */
-    PokemaoLogin() {
+    TreinadorLogin() {
         TreinadorRepository treinadorRepository = new TreinadorRepository();
 
         // configurações da janela
@@ -92,7 +92,7 @@ public class PokemaoLogin extends JFrame {
         cadastro.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PokemaoCadastro();
+                new TreinadorCadastro();
                 dispose();
             }
         });

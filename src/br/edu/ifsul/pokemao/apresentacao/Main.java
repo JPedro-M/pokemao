@@ -4,10 +4,10 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-/**
- * Ponto inicial da execução do código. Aqui começa a interface.
- */
 public class Main {
+    /**
+     * Ponto inicial da execução do código. Aqui começa a interface.
+     */
     public static void main(String[] args) {
 
         // inicialização da biblioteca FlatLaf, da interface gráfica
@@ -18,6 +18,6 @@ public class Main {
         }
 
         // inicialização da tela de login
-        new PokemaoLogin();
+        new TreinadorLogin();
     }
 }

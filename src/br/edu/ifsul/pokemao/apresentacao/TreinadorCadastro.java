@@ -8,14 +8,14 @@ import javax.swing.*;
 import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
-public class PokemaoCadastro extends JFrame {
+public class TreinadorCadastro extends JFrame {
     /**
      * Aqui os usuários sem cadastro podem se registrar na plataforma e começar sua
      * jornada no mundo pokemão como treinadores.
      * 
      * Após o cadastro, o usuário é redirecionado para a tela de login.
      */
-    PokemaoCadastro() {
+    TreinadorCadastro() {
         // configurações da janela
         this.setTitle("Cadastro");
         this.setBounds(200, 75, 600, 500);
@@ -80,13 +80,13 @@ public class PokemaoCadastro extends JFrame {
                         JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
                     }
                     dispose();
-                    new PokemaoLogin();
+                    new TreinadorLogin();
                 }
             }
         });
         
         voltar.addActionListener(e -> {
-            new PokemaoLogin();
+            new TreinadorLogin();
             this.dispose();
         });
 

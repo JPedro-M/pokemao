@@ -90,7 +90,7 @@ public class PokemaoLobby extends JFrame {
         });
 
         sair.addActionListener(e -> {
-            new PokemaoLogin();
+            new TreinadorLogin();
             treinadorRepository.setTreinadorLogado(null);
             this.dispose();
         });

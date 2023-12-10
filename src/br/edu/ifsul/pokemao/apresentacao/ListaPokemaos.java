@@ -9,25 +9,33 @@ import javax.swing.*;
 import br.edu.ifsul.pokemao.model.PokemaoTreinador;
 import br.edu.ifsul.pokemao.persistencia.PokemaoTreinadorRepository;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
-/*
- * Classe auxiliar de "MeusPokemaos". Aqui o usuário pode:
- * - alterar o nome dos seus pokemaos;
- * - libertar seus pokemaos;
- * - curar seus pokemaos;
- * - disponibilizar seus pokemaos para troca; 
- * 
- */
+
 public class ListaPokemaos extends JPanel {
+    /**
+     * Classe responsável por exibir uma lista de PokemaoTreinador na interface
+     * gráfica.<p>
+     * A lista é exibida em um JPanel, que é adicionado a um JScrollPane.
+     * 
+     * @param treinadorRepository Repositório de treinadores, para acesso ao
+     *                            treinador logado
+     * @param array               A lista de Pokemãos a ser exibida.
+     * @param contexto            O contexto em que a lista está sendo exibida. O
+     *                            contexto pode ser:
+     *                            <ul>
+     *                            <li>troca</li>
+     *                            <li>batalha</li>
+     *                            <li>telatreinador</li>
+     *                            </ul>
+     */
     ListaPokemaos(TreinadorRepository treinadorRepository, ArrayList<PokemaoTreinador> array, String contexto) {
+        // configurações do painel
         this.setLayout(null);
         int totalHeight = array.size() * 60;
         this.setPreferredSize(new Dimension(500, totalHeight));
         int y = 0;
 
+        // para cada pokemao na lista, criar um painel menor com as informações dele
         for (PokemaoTreinador pokemao : array) {
-            // no panel, mostrar o emoji do pokemao, o nome e o HP
-            // usar um panel clicável em vez de botão
-
             JPanel panel = new JPanel();
             panel.setLayout(null);
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,7 +65,10 @@ public class ListaPokemaos extends JPanel {
             } else {
                 dispTroca.setText("Disp.: Não");
             }
+            dispTroca.setBounds(350, 10, 100, 30);
+            panel.add(dispTroca);
 
+            // ações do painel
             panel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -124,6 +135,7 @@ public class ListaPokemaos extends JPanel {
             this.add(panel);
         }
 
+        // tornando o painel visível
         this.setVisible(true);
     }
 }
