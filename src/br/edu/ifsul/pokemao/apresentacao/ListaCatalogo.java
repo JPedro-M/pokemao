@@ -23,7 +23,7 @@ public class ListaCatalogo extends JPanel {
     public ListaCatalogo(TreinadorRepository treinadorRepository, ArrayList<PokemaoCatalogo> array, String contexto) {
         // configurações do painel
         this.setLayout(null);
-        int totalHeight = array.size() * 60;
+        int totalHeight = array.size() * 80;
         this.setPreferredSize(new Dimension(500, totalHeight));
         int y = 0;
 
@@ -32,11 +32,11 @@ public class ListaCatalogo extends JPanel {
             JPanel panel = new JPanel();
             panel.setLayout(null);
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.setBounds(0, y, 500, 100);
+            panel.setBounds(0, y, 500, 80);
             panel.setBackground(pokemao.getRaridadeColor());
             this.add(panel);
 
-            y += 110;
+            y += 90;
 
             JLabel emoji = new JLabel(pokemao.getEmoji());
             emoji.setBounds(10, 5, 50, 50);

@@ -84,17 +84,17 @@ public class ListaMaker {
      * @param rs O ResultSet contendo os dados da Troca.
      * @return Uma lista de objetos Troca.
      */
-    public static ArrayList<Troca> ResultSettoListTroca(ResultSet rs) {
+    public static ArrayList<Troca> ResultSettoListTroca(ResultSet rs, ConexaoMySQL conexao) {
         ArrayList<Troca> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 Troca troca = new Troca(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1"), conexao),
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"), conexao));
                 troca.setId(rs.getLong("id_troca"));
                 troca.setData(rs.getTimestamp("data_troca").toLocalDateTime());
-                troca.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1")));
-                troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2")));
+                troca.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1"), conexao));
+                troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2"), conexao));
                 lista.add(troca);
             }
         } catch (Exception e) {

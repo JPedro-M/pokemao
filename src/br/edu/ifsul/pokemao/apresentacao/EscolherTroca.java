@@ -102,13 +102,19 @@ public class EscolherTroca extends JFrame {
                 int textWidth = fm.stringWidth(pokemaos.get(i).getNome());
                 int textHeight = fm.getHeight();
 
-                // desenhar o texto
+                // informar o nome do pokemao
                 g.drawString(pokemaos.get(i).getNome(), x - textWidth / 2, y + textHeight / 2);
-                g.drawString(pokemaos.get(i).getTreinador().getNome(), x - textWidth / 2,
+                // informar o nome do treinador
+                g.drawString("Treinador: " + pokemaos.get(i).getTreinador().getNome(), x - textWidth / 2,
                         y + textHeight / 2 + textHeight);
+                // informar a raridade do pokemao
+                g.drawString(pokemaos.get(i).getPokemao().getRaridadeString(), x - textWidth / 2,
+                        y + textHeight / 2 + 2 * textHeight);
+                // informar o número do pokemao para escolha
                 newFont = g.getFont().deriveFont(Font.BOLD, 18f);
                 g.setFont(newFont);
                 g.drawString(String.valueOf(i + 1), x - textWidth / 2, y + textHeight / 2 - 5 - textHeight);
+                // informar o emoji do pokemao
                 newFont = new Font("Segoe UI Emoji", Font.PLAIN, 30);
                 g.setFont(newFont);
                 g.drawString(pokemaos.get(i).getPokemao().getEmoji(), x - textWidth / 2 + 10,

@@ -21,11 +21,12 @@ public class IniciarTroca extends JFrame {
     public IniciarTroca(TreinadorRepository treinadorRepository) {
         // coletando os pokemaos do treinador logado
         ArrayList<PokemaoTreinador> pokemaos = new PokemaoTreinadorRepository()
-                .listarDoTreinador(treinadorRepository.getTreinadorLogado());
+            .listarDoTreinador(treinadorRepository.getTreinadorLogado());
 
         // configurações da janela
         setTitle("Troca");
         setBounds(200, 75, 800, 600);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
@@ -41,6 +42,9 @@ public class IniciarTroca extends JFrame {
         JButton voltar = new JButton("<-- Voltar");
         voltar.setBounds(10, 10, 90, 30);
 
+        JButton historico = new JButton("Histórico");
+        historico.setBounds(this.getWidth() - 120, 10, 90, 30);
+
         // lista de pokemaos
         JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "troca");
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -51,11 +55,16 @@ public class IniciarTroca extends JFrame {
         add(label);
         add(label2);
         add(voltar);
+        add(historico);
 
         // ações dos botões
         voltar.addActionListener(e -> {
             new PokemaoLobby(treinadorRepository);
             this.dispose();
+        });
+
+        historico.addActionListener(e -> {
+            new HistTrocas(treinadorRepository);
         });
 
         // tornando a janela visível

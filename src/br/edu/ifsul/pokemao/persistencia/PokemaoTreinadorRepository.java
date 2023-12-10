@@ -93,15 +93,27 @@ public class PokemaoTreinadorRepository {
         PokemaoTreinador pokemaoTreinador = null;
         try {
             this.conexao.abrirConexao("buscarPorId, pokemaoTreinadorRepository");
+            pokemaoTreinador = buscarPorId(l, this.conexao);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+        return pokemaoTreinador;
+    }
+
+    public PokemaoTreinador buscarPorId(long l, ConexaoMySQL conexao) {
+        PokemaoTreinador pokemaoTreinador = null;
+        try {
             String sqlInsert = "SELECT * FROM pokemao_treinador WHERE id_pokemao=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
+            PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, l);
             ResultSet rs = statement.executeQuery();
             try {
                 if (rs.next()) {
                     pokemaoTreinador = new PokemaoTreinador(
-                            new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
-                            new TreinadorRepository().buscarPorID(rs.getLong("id_treinador")),
+                            new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo"), conexao),
+                            new TreinadorRepository().buscarPorID(rs.getLong("id_treinador"), conexao),
                             rs.getInt("velocidade_ataque"),
                             rs.getInt("ataque"),
                             rs.getInt("defesa"),
@@ -120,8 +132,6 @@ public class PokemaoTreinadorRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
         }
         return pokemaoTreinador;
     }
@@ -156,7 +166,7 @@ public class PokemaoTreinadorRepository {
         boolean resultado = false;
         try {
             this.conexao.abrirConexao("libertar, pokemaoTreinadorRepository");
-            String sqlInsert = "DELETE FROM pokemao_treinador WHERE id_pokemao=?";
+            String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=null, disponivel_para_troca=0 WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador.getId());
             int linhasAfetadas = statement.executeUpdate();
@@ -196,17 +206,33 @@ public class PokemaoTreinadorRepository {
     public boolean trocar(PokemaoTreinador pokemaoTreinador1, PokemaoTreinador pokemaoTreinador2) {
         boolean resultado = false;
         try {
+            // abrindo a conexão
             this.conexao.abrirConexao("trocar, pokemaoTreinadorRepository");
+
+            // atualizando pokemao 1
             String sqlInsert = "UPDATE pokemao_treinador SET id_treinador=?, disponivel_para_troca=? WHERE id_pokemao=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setLong(1, pokemaoTreinador2.getTreinador().getId());
             statement.setBoolean(2, false);
             statement.setLong(3, pokemaoTreinador1.getId());
+
+            // atualizando pokemao 2
             PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement2.setLong(1, pokemaoTreinador1.getTreinador().getId());
             statement2.setBoolean(2, false);
             statement2.setLong(3, pokemaoTreinador2.getId());
-            int linhasAfetadas = statement.executeUpdate() + statement2.executeUpdate();
+
+            // registrando a troca
+            String sqlInsert2 = "INSERT INTO troca VALUES(null, ?, ?, ?, ?, ?)";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sqlInsert2);
+            statement3.setLong(1, pokemaoTreinador1.getId());
+            statement3.setLong(2, pokemaoTreinador2.getId());
+            statement3.setTimestamp(3, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+            statement3.setLong(4, pokemaoTreinador1.getTreinador().getId());
+            statement3.setLong(5, pokemaoTreinador2.getTreinador().getId());
+
+            // executando as atualizações
+            int linhasAfetadas = statement.executeUpdate() + statement2.executeUpdate() + statement3.executeUpdate();
             resultado = linhasAfetadas > 0 ? true : false;
         } catch (Exception e) {
             e.printStackTrace();

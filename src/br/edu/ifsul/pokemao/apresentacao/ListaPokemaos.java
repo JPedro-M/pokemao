@@ -39,7 +39,7 @@ public class ListaPokemaos extends JPanel {
             JPanel panel = new JPanel();
             panel.setLayout(null);
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.setBounds(0, y, 400, 50);
+            panel.setBounds(0, y, 550, 50);
             panel.setBackground(pokemao.getPokemao().getRaridadeColor());
             this.add(panel);
 

@@ -29,12 +29,18 @@ public class PokemaoLobby extends JFrame {
         this.setLayout(null);
 
         // elementos da janela
+        JPanel header = new JPanel();
+        header.setBounds(0, 0, this.getWidth(), 50);
         JLabel msgTela = new JLabel("Bem vindo, " + treinadorRepository.getTreinadorLogado().getNome() + "!");
         msgTela.setBounds(0, 10, this.getWidth(), 50);
         msgTela.setHorizontalAlignment(JLabel.CENTER);
         Font currentFont = msgTela.getFont();
         Font newFont = currentFont.deriveFont(Font.BOLD, 20f);
         msgTela.setFont(newFont);
+        header.add(msgTela);
+        JButton edicao = new JButton("Editar perfil");
+        edicao.setBounds(this.getWidth() - 140, 0, 100, 50);
+        header.add(edicao);
 
         JButton batalha = new JButton("Batalhar");
         batalha.setBounds(125, 75, 150, 75);
@@ -55,7 +61,7 @@ public class PokemaoLobby extends JFrame {
         sair.setBounds(10, this.getHeight() - 75, 90, 30);
 
         // adicionando elementos à janela
-        this.add(msgTela);
+        this.add(header);
         this.add(sair);
         this.add(batalha);
         this.add(troca);
@@ -64,6 +70,10 @@ public class PokemaoLobby extends JFrame {
         this.add(meuspokemao);
 
         // ações dos botões
+        edicao.addActionListener(e -> {
+            new TreinadorEditar(treinadorRepository);
+        });
+
         troca.addActionListener(e -> {
             new IniciarTroca(treinadorRepository);
             this.dispose();

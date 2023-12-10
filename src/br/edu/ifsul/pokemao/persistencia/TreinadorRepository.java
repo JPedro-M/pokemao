@@ -153,10 +153,10 @@ public class TreinadorRepository {
         this.treinadorLogado = null;
     }
 
-    public boolean atualizar(Treinador treinador) {
+    public boolean editar(Treinador treinador) {
         boolean retorno = false;
         try {
-            this.conexao.abrirConexao("atualizar, treinadorRepository");
+            this.conexao.abrirConexao("editar, treinadorRepository");
             String sqlInsert = "UPDATE treinador SET usuario=?, senha=?, nome=?, nascimento=? WHERE id_treinador=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             statement.setString(1, treinador.getUser());

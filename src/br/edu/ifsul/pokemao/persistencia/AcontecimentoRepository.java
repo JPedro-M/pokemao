@@ -83,7 +83,7 @@ public class AcontecimentoRepository {
             String sqlInsert = "SELECT * FROM troca";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListTroca(rs);
+            lista = ListaMaker.ResultSettoListTroca(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -117,7 +117,7 @@ public class AcontecimentoRepository {
             statement.setLong(1, id);
             statement.setLong(2, id);
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListTroca(rs);
+            lista = ListaMaker.ResultSettoListTroca(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
