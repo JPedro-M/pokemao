@@ -324,19 +324,24 @@ public class PokemaoTreinadorRepository {
         // gerar pokemao aleatório sem treinador caso não encontre nenhum
 
         ArrayList<PokemaoTreinador> pokemaos = this.listar();
-        ArrayList<PokemaoTreinador> pokemaosDoTreinador = this.listarDoTreinador(inicial.getTreinador());
         ArrayList<PokemaoTreinador> possiveisOponentes = new ArrayList<>();
-        possiveisOponentes.addAll(pokemaos);
-        possiveisOponentes.removeAll(pokemaosDoTreinador);
+        
+        for (PokemaoTreinador pokemao : pokemaos) {
+            if (pokemao.getTreinador() != null && pokemao.getTreinador().getId() != inicial.getTreinador().getId()) {
+                possiveisOponentes.add(pokemao);
+            }
+        }
 
         Collections.shuffle(possiveisOponentes);
 
         if (!possiveisOponentes.isEmpty()) {
             for (PokemaoTreinador oponente : possiveisOponentes) {
                 if (oponente.getPokemao().getRaridade() == inicial.getPokemao().getRaridade()) {
+                    System.out.println("Oponente encontrado: " + oponente.getPokemao().getNome());
                     return oponente;
                 }
             }
+            System.out.println("Oponente encontrado: " + possiveisOponentes.get(0).getPokemao().getNome());
             return possiveisOponentes.get(0);
         }
 

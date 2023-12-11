@@ -54,7 +54,7 @@ public class AcontecimentoRepository {
         try {
             this.conexao.abrirConexao("adicionarBatalha");
             String sqlInsert = "INSERT INTO batalha(id_batalha, id_pokemao_treinador_1, id_pokemao_treinador_2, " +
-                    "data_batalha, id_pokemao_vencedor, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?)";
+                    "data_batalha, id_pokemao_vencedor, id_usuario_1, id_usuario_2) VALUES(null, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
 
             statement.setLong(1, batalha.getPokemaoInicial().getId());

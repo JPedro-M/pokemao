@@ -78,6 +78,14 @@ public class ListaPokemaos extends JPanel {
                             SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
                         case "batalha":
+                            // verificar se o HP está cheio
+                            if (pokemao.getHp() < 100) {
+                                int opcao = JOptionPane.showConfirmDialog(null, "Deseja curar " + pokemao.getNome() + "?");
+                                if (opcao == JOptionPane.YES_OPTION) {
+                                    pokemao.fullHp();
+                                    new PokemaoTreinadorRepository().curar(pokemao);
+                                }
+                            }
                             new TelaBatalha(treinadorRepository, pokemao);
                             SwingUtilities.getWindowAncestor(panel).dispose();
                             break;
