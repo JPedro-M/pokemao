@@ -17,6 +17,8 @@ public class TelaBatalha extends JFrame {
     PokemaoTreinador inicial;
     PokemaoTreinador oponente;
 
+    TreinadorRepository repositorio;
+
     JLabel statusInicial;
     JLabel statusOponente;
     JLabel header;
@@ -44,6 +46,8 @@ public class TelaBatalha extends JFrame {
         this.inicial = escolha;
         this.oponente = new PokemaoTreinadorRepository().escolherPokemaoParaBatalha(inicial);
         oponente.fullHp();
+
+        this.repositorio = treinadorRepository;
 
         // criação da batalha
         batalha = new Batalha(inicial, oponente);
@@ -180,8 +184,8 @@ public class TelaBatalha extends JFrame {
             atacado = inicial;
         }
 
+        // definindo o valor do dano
         int dano = atacante.getAtaque() - atacado.getDefesa();
-        System.out.println(dano);
         int x = 1;
         while (dano < 0) {
             int danoanterior = dano + 0;
@@ -194,8 +198,15 @@ public class TelaBatalha extends JFrame {
         }
         dano += new Random().nextInt(atacante.getVelocidadeAtaque());
         atacado.setHp(atacado.getHp() - dano);
-        statusOponente.setText("HP: " + atacado.getHp() + " | ATK: " + atacado.getAtaque() + " | DEF: "
-                + atacado.getDefesa());
+
+        // atualizando o status do pokemao atacado
+        if (inicialAtaca) {
+            statusOponente.setText("HP: " + atacado.getHp() + " | ATK: " + atacado.getAtaque() + " | DEF: "
+                    + atacado.getDefesa());
+        } else {
+            statusInicial.setText("HP: " + atacado.getHp() + " | ATK: " + atacado.getAtaque() + " | DEF: "
+                    + atacado.getDefesa());
+        }
 
         // definindo o texto do header
         String textoheader = "";
@@ -206,15 +217,14 @@ public class TelaBatalha extends JFrame {
         } else {
             textoheader = atacante.getNome() + " atacou " + atacado.getNome();
         }
-        header.setText(textoheader + " e causou " + dano + " de dano: de " + atacado.getHp() + " para "
-                + (atacado.getHp() - dano) + " de HP.");
+        header.setText(textoheader + " e causou " + dano + " de dano");
         System.out.println(header.getText());
 
         // desabilitando os botões de ataque e poção
         atk.setEnabled(true);
         pocao.setEnabled(true);
 
-        // aguardar 2 segundos para o ataque do oponente
+        // verificando o resultado da batalha e executando o ataque do oponente
         checkBattleResult();
         if (inicialAtaca) {
             ataqueDoOponente();
@@ -228,42 +238,61 @@ public class TelaBatalha extends JFrame {
         } else {
             pokemao = oponente;
         }
-        pokemao.setHp(pokemao.getHp() + 10);
-        if (pokemao.getHp() > 100) {
+
+        // curando o pokemao
+        if (pokemao.getHp() > 85) {
             pokemao.setHp(100);
+        } else {
+            pokemao.setHp(pokemao.getHp() + 15);
         }
-        statusInicial.setText("HP: " + pokemao.getHp() + " | ATK: " + pokemao.getAtaque() + " | DEF: "
-                + pokemao.getDefesa());
-        header.setText(pokemao.getNome() + " tomou uma poção de cura e recuperou 10 de HP: de " + (pokemao.getHp() - 10)
-                + " para " + pokemao.getHp() + " de HP.");
+
+        // atualizando o status do pokemao
+        if (curarInicial) {
+            statusInicial.setText("HP: " + pokemao.getHp() + " | ATK: " + pokemao.getAtaque() + " | DEF: "
+                    + pokemao.getDefesa());
+        } else {
+            statusOponente.setText("HP: " + pokemao.getHp() + " | ATK: " + pokemao.getAtaque() + " | DEF: "
+                    + pokemao.getDefesa());
+        }
+
+        // definindo o texto do header
+        header.setText(pokemao.getNome() + " tomou uma poção de cura e recuperou 15 de HP");
         System.out.println(header.getText());
 
+        // desabilitando os botões de ataque e poção
         atk.setEnabled(true);
         pocao.setEnabled(true);
+
+        // verificando o resultado da batalha e executando o ataque do oponente
         checkBattleResult();
         if (curarInicial) {
             ataqueDoOponente();
         }
     }
 
+    /**
+     * Código "bot" responsável por realizar o ataque do oponente.
+     * <p>
+     * O oponente tem 70% de chance de atacar e 30% de chance de usar uma poção de
+     * cura. Se o HP do oponente for menor do que 10, ele vai preferir se curar.
+     */
     private void ataqueDoOponente() {
-        // aguardar 2 segundos para o ataque do oponente
-        // 70% de chance de atacar, 30% de chance de usar poção
+        // executar o ataque do oponente após 2 segundos
         Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int chance = (int) (Math.random() * 100);
-                if (chance < 70) {
+                if (chance < 70 && oponente.getHp() > 10) {
                     realizarAtaque(false);
                 } else {
                     tomarPocao(false);
                 }
             }
         });
-
-        // Start the timer
         timer.setRepeats(false);
         timer.start();
+
+        // habilitando os botões de ataque e poção
         atk.setEnabled(false);
         pocao.setEnabled(false);
     }
@@ -280,15 +309,40 @@ public class TelaBatalha extends JFrame {
      */
     private void checkBattleResult() {
         if (oponente.getHp() <= 0) {
-            JOptionPane.showMessageDialog(null, "Seu pokemão " + inicial.getNome() + " venceu a batalha!", "VITÓRIA",
+            // vitória do pokemao inicial
+            atk.setEnabled(true);
+            pocao.setEnabled(true);
+            JOptionPane.showMessageDialog(null, "Seu pokemão " + inicial.getNome() + " venceu a batalha! (+50XP)",
+                    "VITÓRIA",
                     JOptionPane.INFORMATION_MESSAGE);
+            header.setText("Aguarde...");
             oponente.setHp(0);
             batalha.setVencedor(true);
             new AcontecimentoRepository().adicionarBatalha(batalha);
+
+            inicial.addXp(50);
+            new PokemaoTreinadorRepository().editar(inicial);
+            new PokemaoTreinadorRepository().editar(oponente);
+
+            new PokemaoLobby(repositorio);
+            this.dispose();
         } else if (inicial.getHp() <= 0) {
+            // vitória do pokemao oponente
+            atk.setEnabled(true);
+            pocao.setEnabled(true);
             JOptionPane.showMessageDialog(null, "O pokemão do adversário levou a melhor.", "NÃO FOI DESSA VEZ",
                     JOptionPane.INFORMATION_MESSAGE);
+            header.setText("Aguarde...");
+            inicial.setHp(0);
+            batalha.setVencedor(false);
+            new AcontecimentoRepository().adicionarBatalha(batalha);
 
+            oponente.addXp(50);
+            new PokemaoTreinadorRepository().editar(inicial);
+            new PokemaoTreinadorRepository().editar(oponente);
+
+            new PokemaoLobby(repositorio);
+            this.dispose();
         }
     }
 }

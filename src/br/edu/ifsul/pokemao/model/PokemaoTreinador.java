@@ -106,6 +106,7 @@ public class PokemaoTreinador {
     }
 
     public void setHp(int hp) {
+        System.out.println("HP de " + this.nome + " alterado de " + this.hp + " para " + hp);
         this.hp = hp;
     }
 
