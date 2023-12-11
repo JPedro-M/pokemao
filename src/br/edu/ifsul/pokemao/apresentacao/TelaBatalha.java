@@ -62,20 +62,22 @@ public class TelaBatalha extends JFrame {
         JLabel nomeInicial = new JLabel(inicial.getNome());
         Font newFont = nomeInicial.getFont().deriveFont(Font.BOLD, 20f);
         nomeInicial.setFont(newFont);
-        nomeInicial.setBounds(0, 10, 200, 30);
+        nomeInicial.setBounds(10, 10, 200, 30);
 
         statusInicial = new JLabel("HP: " + inicial.getHp() + " | ATK: " + inicial.getAtaque() + " | DEF: "
                 + inicial.getDefesa());
-        statusInicial.setBounds(0, 80, 200, 30);
+        statusInicial.setBounds(10, 100, 200, 30);
 
-        JLabel emojiInicial = new JLabel();
-        emojiInicial.setBounds(0, 60, 200, 200);
+        JLabel emojiInicial = new JLabel(inicial.getPokemao().getEmoji());
+        Font font = new Font("Segoe UI Emoji", Font.PLAIN, 50);
+        emojiInicial.setFont(font);
+        emojiInicial.setBounds(10, -50, 200, 200);
 
         JLabel treinadorInicial = new JLabel("Treinador: " + treinadorRepository.getTreinadorLogado().getNome());
-        treinadorInicial.setBounds(0, 120, 200, 30);
+        treinadorInicial.setBounds(10, 140, 200, 30);
 
         JLabel descInicial = new JLabel("Meu pokemão");
-        descInicial.setBounds(0, 150, 200, 30);
+        descInicial.setBounds(10, 170, 200, 30);
 
         panelPokemaoInicial.add(nomeInicial);
         panelPokemaoInicial.add(statusInicial);
@@ -94,21 +96,22 @@ public class TelaBatalha extends JFrame {
 
         JLabel nomeOponente = new JLabel(oponente.getNome());
         nomeOponente.setFont(newFont);
-        nomeOponente.setBounds(0, 10, 200, 30);
+        nomeOponente.setBounds(10, 10, 200, 30);
 
         statusOponente = new JLabel("HP: " + oponente.getHp() + " | ATK: " + oponente.getAtaque() + " | DEF: "
                 + oponente.getDefesa());
-        statusOponente.setBounds(0, 80, 200, 30);
+        statusOponente.setBounds(10, 100, 200, 30);
 
-        JLabel emojiOponente = new JLabel();
-        emojiOponente.setBounds(0, 60, 200, 200);
+        JLabel emojiOponente = new JLabel(oponente.getPokemao().getEmoji());
+        emojiOponente.setFont(font);
+        emojiOponente.setBounds(10, -50, 200, 200);
 
         JLabel treinadorOponente = new JLabel("Treinador: " + oponente.getTreinador().getNome());
         System.out.println(oponente.getTreinador().getNome());
-        treinadorOponente.setBounds(0, 120, 200, 30);
+        treinadorOponente.setBounds(10, 140, 200, 30);
 
         JLabel descOponente = new JLabel("Oponente");
-        descOponente.setBounds(0, 150, 200, 30);
+        descOponente.setBounds(10, 170, 200, 30);
 
         panelPokemaoOponente.add(nomeOponente);
         panelPokemaoOponente.add(statusOponente);
