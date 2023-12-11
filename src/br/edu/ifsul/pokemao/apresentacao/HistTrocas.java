@@ -56,11 +56,11 @@ public class HistTrocas extends JFrame {
         public ListaTrocas(TreinadorRepository treinadorRepository, ArrayList<Troca> array) {
             // configurações do painel
             this.setLayout(null);
-            int totalHeight = array.size() * 80;
+            int totalHeight = array.size() * 90;
             this.setPreferredSize(new Dimension(500, totalHeight));
-            int y = 0;
 
             // elementos do painel
+            int y = 0;
             for (Troca troca : array) {
                 JPanel panel = new JPanel();
                 panel.setLayout(null);

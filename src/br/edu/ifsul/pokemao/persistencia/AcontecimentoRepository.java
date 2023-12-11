@@ -99,7 +99,7 @@ public class AcontecimentoRepository {
             String sqlInsert = "SELECT * FROM batalha";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListBatalha(rs);
+            lista = ListaMaker.ResultSettoListBatalha(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -135,7 +135,7 @@ public class AcontecimentoRepository {
             statement.setLong(1, id);
             statement.setLong(2, id);
             ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListBatalha(rs);
+            lista = ListaMaker.ResultSettoListBatalha(rs, this.conexao);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

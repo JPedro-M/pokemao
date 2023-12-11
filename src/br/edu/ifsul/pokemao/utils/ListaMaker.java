@@ -101,7 +101,11 @@ public class ListaMaker {
             e.printStackTrace();
         }
 
-        return lista;
+        ArrayList<Troca> revertedList = new ArrayList<>();
+        for (int i = lista.size() - 1; i >= 0; i--) {
+            revertedList.add(lista.get(i));
+        }
+        return revertedList;
     }
 
     /**
@@ -110,13 +114,13 @@ public class ListaMaker {
      * @param rs O ResultSet contendo os dados da Batalha.
      * @return Uma lista de objetos Batalha.
      */
-    public static ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs) {
+    public static ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs, ConexaoMySQL conexao) {
         ArrayList<Batalha> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 Batalha batalha = new Batalha(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1"), conexao),
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"), conexao));
                 batalha.setId(rs.getLong("id_batalha"));
                 batalha.setData(rs.getTimestamp("data_batalha").toLocalDateTime());
                 if (rs.getLong("id_pokemao_vencedor") == batalha.getPokemaoInicial().getId()) {
@@ -124,14 +128,18 @@ public class ListaMaker {
                 } else {
                     batalha.setVencedor(false);
                 }
-                batalha.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1")));
-                batalha.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2")));
+                batalha.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1"), conexao));
+                batalha.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2"), conexao));
                 lista.add(batalha);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return lista;
+        ArrayList<Batalha> revertedList = new ArrayList<>();
+        for (int i = lista.size() - 1; i >= 0; i--) {
+            revertedList.add(lista.get(i));
+        }
+        return revertedList;
     }
 }

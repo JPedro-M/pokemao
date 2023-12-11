@@ -39,6 +39,9 @@ public class IniciarBatalha extends JFrame {
         JButton voltar = new JButton("<-- Voltar");
         voltar.setBounds(10, 10, 90, 30);
 
+        JButton historico = new JButton("Histórico");
+        historico.setBounds(this.getWidth() - 120, 10, 90, 30);
+
         // lista de pokemaos
         JPanel panel = new ListaPokemaos(treinadorRepository, pokemaos, "batalha");
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -48,12 +51,17 @@ public class IniciarBatalha extends JFrame {
         add(label);
         add(label2);
         add(voltar);
+        add(historico);
         add(scrollPane);
 
         // ações dos botões
         voltar.addActionListener(e -> {
             new PokemaoLobby(treinadorRepository);
             this.dispose();
+        });
+
+        historico.addActionListener(e -> {
+            new HistBatalhas(treinadorRepository);
         });
 
         // tornando a janela visível
