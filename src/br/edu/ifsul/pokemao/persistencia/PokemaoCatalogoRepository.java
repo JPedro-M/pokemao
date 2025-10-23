@@ -1,13 +1,11 @@
 package br.edu.ifsul.pokemao.persistencia;
 
 import br.edu.ifsul.pokemao.model.PokemaoCatalogo;
-import br.edu.ifsul.pokemao.utils.BDConfigs;
-import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
-import br.edu.ifsul.pokemao.utils.ListaMaker;
+import br.edu.ifsul.pokemao.utils.JsonDB;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Classe para gerenciar os pokemaos do catálogo do sistema.
@@ -23,164 +21,140 @@ public class PokemaoCatalogoRepository {
     
     // o método de exclusão também deve excluir os pokémaos de treinadores
 
-    private ConexaoMySQL conexao;
+    private final String FILE = "pokemaos.json";
 
     public PokemaoCatalogoRepository() {
-        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA, BDConfigs.NOME_BD);
     }
 
     public ArrayList<PokemaoCatalogo> listar() {
         ArrayList<PokemaoCatalogo> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao("listar, pokemaoCatalogoRepository");
-            String sqlInsert = "SELECT * FROM pokemao_catalogo";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListPokemaoCatalogo(rs);
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            for (Map<String, String> obj : list) {
+                PokemaoCatalogo p = new PokemaoCatalogo(
+                        Long.parseLong(obj.get("id")),
+                        obj.get("emoji"),
+                        obj.get("nome"),
+                        Integer.parseInt(obj.getOrDefault("ataque", "0")),
+                        Integer.parseInt(obj.getOrDefault("defesa", "0")),
+                        Integer.parseInt(obj.getOrDefault("raridade", "1")),
+                        obj.getOrDefault("foto", ""),
+                        obj.getOrDefault("descricao", ""));
+                lista.add(p);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
         }
         return lista;
     }
 
     public PokemaoCatalogo buscarPorId(long id_busca){
-        PokemaoCatalogo pokemaoCatalogo = null;
         try {
-            this.conexao.abrirConexao("buscarPorId, pokemaoCatalogoRepository");
-            pokemaoCatalogo = buscarPorId(id_busca, this.conexao);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
-        }
-        return pokemaoCatalogo;
-    }
-
-    public PokemaoCatalogo buscarPorId(long id_busca, ConexaoMySQL conexao) {
-        PokemaoCatalogo pokemaoCatalogo = null;
-        try {
-            String sqlInsert = "SELECT * FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, id_busca);
-            ResultSet rs = statement.executeQuery();
-            try {
-                if (rs.next()) {
-                    pokemaoCatalogo = 
-                        new PokemaoCatalogo(
-                            rs.getLong("id_pokemao_catalogo"),
-                            rs.getString("emoji"),
-                            rs.getString("nome"),
-                            rs.getInt("ataque"),
-                            rs.getInt("defesa"),
-                            rs.getInt("raridade"),
-                            rs.getString("foto"),
-                            rs.getString("descricao")
-                        );
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            for (Map<String, String> obj : list) {
+                if (Long.parseLong(obj.get("id")) == id_busca) {
+                    return new PokemaoCatalogo(
+                            Long.parseLong(obj.get("id")),
+                            obj.get("emoji"),
+                            obj.get("nome"),
+                            Integer.parseInt(obj.getOrDefault("ataque", "0")),
+                            Integer.parseInt(obj.getOrDefault("defesa", "0")),
+                            Integer.parseInt(obj.getOrDefault("raridade", "1")),
+                            obj.getOrDefault("foto", ""),
+                            obj.getOrDefault("descricao", "")
+                    );
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return pokemaoCatalogo;
+        return null;
     }
 
     public boolean cadastrar(PokemaoCatalogo pokemaoCatalogo) {
-        boolean retorno = false;
         try {
-            this.conexao.abrirConexao("cadastrar, pokemaoCatalogoRepository");
-            String sqlInsert = "INSERT INTO pokemao_catalogo(id_pokemao_catalogo, emoji, nome, ataque, defesa, hp,"+
-                                "raridade, descricao) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, pokemaoCatalogo.getId());
-            statement.setString(2, pokemaoCatalogo.getEmoji());
-            statement.setString(3, pokemaoCatalogo.getNome());
-            statement.setInt(4, pokemaoCatalogo.getAtaque());
-            statement.setInt(5, pokemaoCatalogo.getDefesa());
-            statement.setInt(7, pokemaoCatalogo.getRaridade());
-            statement.setString(8, pokemaoCatalogo.getDescricao());
-            int linhasAfetadas = statement.executeUpdate();
-            if (linhasAfetadas > 0) {
-                retorno = true;
-            } else {
-                retorno = false;
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            long nextId = 1;
+            for (Map<String, String> obj : list) {
+                long oid = Long.parseLong(obj.get("id"));
+                if (oid >= nextId) nextId = oid + 1;
             }
+            pokemaoCatalogo.setId(nextId);
+            Map<String, String> obj = new java.util.HashMap<>();
+            obj.put("id", String.valueOf(nextId));
+            obj.put("emoji", pokemaoCatalogo.getEmoji());
+            obj.put("nome", pokemaoCatalogo.getNome());
+            obj.put("ataque", String.valueOf(pokemaoCatalogo.getAtaque()));
+            obj.put("defesa", String.valueOf(pokemaoCatalogo.getDefesa()));
+            obj.put("raridade", String.valueOf(pokemaoCatalogo.getRaridade()));
+            obj.put("foto", pokemaoCatalogo.getFoto());
+            obj.put("descricao", pokemaoCatalogo.getDescricao());
+            list.add(obj);
+            JsonDB.write(FILE, list);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            retorno = false;
-        } finally {
-            this.conexao.fecharConexao();
+            return false;
         }
-        return retorno;
     }
 
     public boolean editar(PokemaoCatalogo pokemaoCatalogo) {
-        boolean retorno = false;
         try {
-            this.conexao.abrirConexao("editar, pokemaoCatalogoRepository");
-            String sqlInsert = "UPDATE pokemao_catalogo SET emoji=?, nome=?, ataque=?, defesa=?, hp=?,"+
-                            "raridade=?, descricao=? WHERE id_pokemao_catalogo=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setString(1, pokemaoCatalogo.getEmoji());
-            statement.setString(2, pokemaoCatalogo.getNome());
-            statement.setInt(3, pokemaoCatalogo.getAtaque());
-            statement.setInt(4, pokemaoCatalogo.getDefesa());
-            statement.setInt(6, pokemaoCatalogo.getRaridade());
-            statement.setString(7, pokemaoCatalogo.getDescricao());
-            statement.setLong(8, pokemaoCatalogo.getId());
-            int linhasAfetadas = statement.executeUpdate();
-            if (linhasAfetadas > 0) {
-                retorno = true;
-            } else {
-                retorno = false;
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            boolean found = false;
+            for (Map<String, String> obj : list) {
+                if (Long.parseLong(obj.get("id")) == pokemaoCatalogo.getId()) {
+                    obj.put("emoji", pokemaoCatalogo.getEmoji());
+                    obj.put("nome", pokemaoCatalogo.getNome());
+                    obj.put("ataque", String.valueOf(pokemaoCatalogo.getAtaque()));
+                    obj.put("defesa", String.valueOf(pokemaoCatalogo.getDefesa()));
+                    obj.put("raridade", String.valueOf(pokemaoCatalogo.getRaridade()));
+                    obj.put("descricao", pokemaoCatalogo.getDescricao());
+                    obj.put("foto", pokemaoCatalogo.getFoto());
+                    found = true;
+                    break;
+                }
             }
+            if (found) JsonDB.write(FILE, list);
+            return found;
         } catch (Exception e) {
             e.printStackTrace();
-            retorno = false;
-        } finally {
-            this.conexao.fecharConexao();
+            return false;
         }
-        return retorno;
     }
 
     public boolean deletar(int id) {
-        boolean retorno = false;
         try {
-            this.conexao.abrirConexao("deletar, pokemaoCatalogoRepository");
-            String sqlInsert = "DELETE FROM pokemao_catalogo WHERE id_pokemao_catalogo=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setInt(1, id);
-            int linhasAfetadas = statement.executeUpdate();
-            if (linhasAfetadas > 0) {
-                retorno = true;
-            } else {
-                retorno = false;
-            }
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            boolean removed = list.removeIf(obj -> Long.parseLong(obj.get("id")) == id);
+            if (removed) JsonDB.write(FILE, list);
+            return removed;
         } catch (Exception e) {
             e.printStackTrace();
-            retorno = false;
-        } finally {
-            this.conexao.fecharConexao();
+            return false;
         }
-        return retorno;
     }
 
     public ArrayList<PokemaoCatalogo> listarPorRaridade(int x) {
         ArrayList<PokemaoCatalogo> lista = new ArrayList<>();
         try {
-            this.conexao.abrirConexao("listarPorRaridade, pokemaoCatalogoRepository");
-            String sqlSelect = "SELECT * FROM pokemao_catalogo WHERE raridade = ?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlSelect);
-            statement.setInt(1, x);
-            ResultSet rs = statement.executeQuery();
-            lista = ListaMaker.ResultSettoListPokemaoCatalogo(rs);
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            for (Map<String, String> obj : list) {
+                if (Integer.parseInt(obj.getOrDefault("raridade", "1")) == x) {
+                    PokemaoCatalogo p = new PokemaoCatalogo(
+                            Long.parseLong(obj.get("id")),
+                            obj.get("emoji"),
+                            obj.get("nome"),
+                            Integer.parseInt(obj.getOrDefault("ataque", "0")),
+                            Integer.parseInt(obj.getOrDefault("defesa", "0")),
+                            Integer.parseInt(obj.getOrDefault("raridade", "1")),
+                            obj.getOrDefault("foto", ""),
+                            obj.getOrDefault("descricao", ""));
+                    lista.add(p);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
         }
         return lista;
     }

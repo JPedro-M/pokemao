@@ -2,6 +2,7 @@ package br.edu.ifsul.pokemao.apresentacao;
 
 import javax.swing.*;
 
+import br.edu.ifsul.pokemao.model.Treinador;
 import br.edu.ifsul.pokemao.persistencia.TreinadorRepository;
 
 import java.awt.Color;
@@ -100,7 +101,12 @@ public class TreinadorLogin extends JFrame {
         debug.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                treinadorRepository.login("Lazanha", "batata");
+                Treinador treinador = treinadorRepository.buscarPorID(1);
+
+                if(!treinadorRepository.login(treinador.getUser(), treinador.getSenha())) {
+                    System.out.println("Falha no login de debug.");
+                    return;
+                }
                 new PokemaoLobby(treinadorRepository);
                 dispose();
             }

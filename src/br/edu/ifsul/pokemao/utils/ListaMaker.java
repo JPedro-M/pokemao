@@ -51,16 +51,15 @@ public class ListaMaker {
      * fechada várias vezes.
      * 
      * @param rs      O ResultSet contendo os dados do PokemaoTreinador.
-     * @param conexao A conexão com o banco de dados.
      * @return Uma lista de objetos PokemaoTreinador.
      */
-    public static ArrayList<PokemaoTreinador> ResultSettoListPokemaoTreinador(ResultSet rs, ConexaoMySQL conexao) {
+    public static ArrayList<PokemaoTreinador> ResultSettoListPokemaoTreinador(ResultSet rs) {
         ArrayList<PokemaoTreinador> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 PokemaoTreinador pokemaoTreinador = new PokemaoTreinador(
-                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo"), conexao),
-                        new TreinadorRepository().buscarPorID(rs.getLong("id_treinador"), conexao),
+                        new PokemaoCatalogoRepository().buscarPorId(rs.getLong("id_pokemao_catalogo")),
+                        new TreinadorRepository().buscarPorID(rs.getLong("id_treinador")),
                         rs.getInt("velocidade_ataque"),
                         rs.getInt("ataque"),
                         rs.getInt("defesa"),
@@ -84,17 +83,17 @@ public class ListaMaker {
      * @param rs O ResultSet contendo os dados da Troca.
      * @return Uma lista de objetos Troca.
      */
-    public static ArrayList<Troca> ResultSettoListTroca(ResultSet rs, ConexaoMySQL conexao) {
+    public static ArrayList<Troca> ResultSettoListTroca(ResultSet rs) {
         ArrayList<Troca> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 Troca troca = new Troca(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1"), conexao),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"), conexao));
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
                 troca.setId(rs.getLong("id_troca"));
                 troca.setData(rs.getTimestamp("data_troca").toLocalDateTime());
-                troca.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1"), conexao));
-                troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2"), conexao));
+                troca.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1")));
+                troca.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2")));
                 lista.add(troca);
             }
         } catch (Exception e) {
@@ -114,13 +113,13 @@ public class ListaMaker {
      * @param rs O ResultSet contendo os dados da Batalha.
      * @return Uma lista de objetos Batalha.
      */
-    public static ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs, ConexaoMySQL conexao) {
+    public static ArrayList<Batalha> ResultSettoListBatalha(ResultSet rs) {
         ArrayList<Batalha> lista = new ArrayList<>();
         try {
             while (rs.next()) {
                 Batalha batalha = new Batalha(
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1"), conexao),
-                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2"), conexao));
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_1")),
+                        new PokemaoTreinadorRepository().buscarPorId(rs.getLong("id_pokemao_treinador_2")));
                 batalha.setId(rs.getLong("id_batalha"));
                 batalha.setData(rs.getTimestamp("data_batalha").toLocalDateTime());
                 if (rs.getLong("id_pokemao_vencedor") == batalha.getPokemaoInicial().getId()) {
@@ -128,8 +127,8 @@ public class ListaMaker {
                 } else {
                     batalha.setVencedor(false);
                 }
-                batalha.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1"), conexao));
-                batalha.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2"), conexao));
+                batalha.setTreinadorInicial(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_1")));
+                batalha.setTreinadorEscolhido(new TreinadorRepository().buscarPorID(rs.getLong("id_usuario_2")));
                 lista.add(batalha);
             }
         } catch (Exception e) {

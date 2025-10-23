@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "emoji": "🐭",
+    "nome": "Mouseling",
+    "ataque": 10,
+    "defesa": 5,
+    "raridade": 1,
+    "foto": "",
+    "descricao": "Rápido e curioso."
+  },
+  {
+    "id": 2,
+    "emoji": "🐤",
+    "nome": "Chicklet",
+    "ataque": 8,
+    "defesa": 6,
+    "raridade": 1,
+    "foto": "",
+    "descricao": "Pio alegre, asas velozes."
+  },
+  {
+    "id": 3,
+    "emoji": "🦎",
+    "nome": "Lizardy",
+    "ataque": 12,
+    "defesa": 7,
+    "raridade": 1,
+    "foto": "",
+    "descricao": "Gosta de banhos de sol."
+  },
+  {
+    "id": 4,
+    "emoji": "🐢",
+    "nome": "Shellby",
+    "ataque": 9,
+    "defesa": 12,
+    "raridade": 2,
+    "foto": "",
+    "descricao": "Lento, mas muito resistente."
+  },
+  {
+    "id": 5,
+    "emoji": "🦅",
+    "nome": "Eaglair",
+    "ataque": 15,
+    "defesa": 10,
+    "raridade": 2,
+    "foto": "",
+    "descricao": "Olhar afiado e voos altos."
+  },
+  {
+    "id": 6,
+    "emoji": "🦊",
+    "nome": "Furtail",
+    "ataque": 14,
+    "defesa": 9,
+    "raridade": 2,
+    "foto": "",
+    "descricao": "Astuto e escorregadio."
+  },
+  {
+    "id": 7,
+    "emoji": "🐉",
+    "nome": "Dracoon",
+    "ataque": 22,
+    "defesa": 18,
+    "raridade": 3,
+    "foto": "",
+    "descricao": "Sopro flamejante ancestral."
+  },
+  {
+    "id": 8,
+    "emoji": "🦄",
+    "nome": "Unikorn",
+    "ataque": 20,
+    "defesa": 20,
+    "raridade": 3,
+    "foto": "",
+    "descricao": "Místico e equilibrado."
+  }
+]

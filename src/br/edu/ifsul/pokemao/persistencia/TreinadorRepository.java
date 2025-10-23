@@ -1,11 +1,11 @@
 package br.edu.ifsul.pokemao.persistencia;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 import br.edu.ifsul.pokemao.model.Treinador;
-import br.edu.ifsul.pokemao.utils.BDConfigs;
-import br.edu.ifsul.pokemao.utils.ConexaoMySQL;
+import br.edu.ifsul.pokemao.utils.JsonDB;
 
 /**
  * Classe para gerenciar os treinadores (usuários) do sistema.
@@ -23,11 +23,9 @@ public class TreinadorRepository {
      */
     Treinador treinadorLogado;
 
-    private ConexaoMySQL conexao;
+    private final String FILE = "treinadores.json";
 
     public TreinadorRepository() {
-        this.conexao = new ConexaoMySQL(BDConfigs.IP, BDConfigs.PORTA, BDConfigs.USUARIO, BDConfigs.SENHA,
-                BDConfigs.NOME_BD);
     }
 
     public Treinador getTreinadorLogado() {
@@ -39,77 +37,47 @@ public class TreinadorRepository {
     }
 
     public int getLenTreinadores() {
-        int len = 0;
         try {
-            this.conexao.abrirConexao("getLenTreinadores");
-            String sqlInsert = "SELECT COUNT(*) FROM treinador";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            ResultSet rs = statement.executeQuery();
-            len = rs.getInt(1);
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            return list.size();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
+            return 0;
         }
-        return len;
     }
 
     public Treinador buscarPorUser(String user) {
-        Treinador treinador = null;
         try {
-            this.conexao.abrirConexao("buscarPorUser, treinadorRepository");
-            String sqlInsert = "SELECT * FROM treinador WHERE usuario = ?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setString(1, user);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                treinador = new Treinador(
-                        rs.getString("usuario"),
-                        rs.getString("senha"),
-                        rs.getString("nome"),
-                        rs.getTimestamp("nascimento").toLocalDateTime());
-                treinador.setId(rs.getLong("id_treinador"));
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            for (Map<String, String> obj : list) {
+                if (user.equals(obj.get("usuario"))) {
+                    Treinador t = new Treinador(obj.get("usuario"), obj.get("senha"), obj.get("nome"),
+                            LocalDateTime.parse(obj.get("nascimento")));
+                    t.setId(Long.parseLong(obj.get("id")));
+                    return t;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
         }
-        return treinador;
+        return null;
     }
 
     public Treinador buscarPorID(long id) {
-        Treinador treinador = null;
         try {
-            this.conexao.abrirConexao("buscarPorID, treinadorRepository");
-            treinador = buscarPorID(id, this.conexao);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
-        }
-        return treinador;
-    }
-
-    public Treinador buscarPorID(long id, ConexaoMySQL conexao) {
-        Treinador treinador = null;
-        try {
-            String sqlInsert = "SELECT * FROM treinador WHERE id_treinador = ?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                treinador = new Treinador(
-                        rs.getString("usuario"),
-                        rs.getString("senha"),
-                        rs.getString("nome"),
-                        rs.getTimestamp("nascimento").toLocalDateTime());
-                treinador.setId(rs.getLong("id_treinador"));
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            for (Map<String, String> obj : list) {
+                if (Long.parseLong(obj.get("id")) == id) {
+                    Treinador t = new Treinador(obj.get("usuario"), obj.get("senha"), obj.get("nome"),
+                            LocalDateTime.parse(obj.get("nascimento")));
+                    t.setId(Long.parseLong(obj.get("id")));
+                    return t;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return treinador;
+        return null;
     }
 
     public boolean login(String user, String senha) {
@@ -124,29 +92,27 @@ public class TreinadorRepository {
     }
 
     public long cadastrar(Treinador treinador) {
-        long id = -1;
         try {
-            this.conexao.abrirConexao("cadastrar, treinadorRepository");
-            String sqlInsert = "INSERT INTO treinador(id_treinador, usuario, senha, nome, nascimento) VALUES(null, ?, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert,
-                    PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(1, treinador.getUser());
-            statement.setString(2, treinador.getSenha());
-            statement.setString(3, treinador.getNome());
-            statement.setTimestamp(4, java.sql.Timestamp.valueOf(treinador.getNascimento()));
-            int linhas = statement.executeUpdate();
-            if (linhas > 0) {
-                ResultSet rs = statement.getGeneratedKeys();
-                if (rs.next()) {
-                    id = rs.getLong(1);
-                }
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            long nextId = 1;
+            for (Map<String, String> obj : list) {
+                long oid = Long.parseLong(obj.get("id"));
+                if (oid >= nextId) nextId = oid + 1;
             }
+            treinador.setId(nextId);
+            Map<String, String> obj = new java.util.HashMap<>();
+            obj.put("id", String.valueOf(nextId));
+            obj.put("usuario", treinador.getUser());
+            obj.put("senha", treinador.getSenha());
+            obj.put("nome", treinador.getNome());
+            obj.put("nascimento", treinador.getNascimento().toString());
+            list.add(obj);
+            JsonDB.write(FILE, list);
+            return nextId;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            this.conexao.fecharConexao();
+            return -1;
         }
-        return id;
     }
 
     public void logout() {
@@ -154,50 +120,38 @@ public class TreinadorRepository {
     }
 
     public boolean editar(Treinador treinador) {
-        boolean retorno = false;
         try {
-            this.conexao.abrirConexao("editar, treinadorRepository");
-            String sqlInsert = "UPDATE treinador SET usuario=?, senha=?, nome=?, nascimento=? WHERE id_treinador=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setString(1, treinador.getUser());
-            statement.setString(2, treinador.getSenha());
-            statement.setString(3, treinador.getNome());
-            statement.setTimestamp(4, java.sql.Timestamp.valueOf(treinador.getNascimento()));
-            statement.setLong(5, treinador.getId());
-            int linhasAfetadas = statement.executeUpdate();
-            if (linhasAfetadas > 0) {
-                retorno = true;
-            } else {
-                retorno = false;
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            boolean found = false;
+            for (Map<String, String> obj : list) {
+                if (Long.parseLong(obj.get("id")) == treinador.getId()) {
+                    obj.put("usuario", treinador.getUser());
+                    obj.put("senha", treinador.getSenha());
+                    obj.put("nome", treinador.getNome());
+                    obj.put("nascimento", treinador.getNascimento().toString());
+                    found = true;
+                    break;
+                }
             }
+            if (found) {
+                JsonDB.write(FILE, list);
+            }
+            return found;
         } catch (Exception e) {
             e.printStackTrace();
-            retorno = false;
-        } finally {
-            this.conexao.fecharConexao();
+            return false;
         }
-        return retorno;
     }
 
     public boolean remover(long id) {
-        boolean retorno = false;
         try {
-            this.conexao.abrirConexao("remover, treinadorRepository");
-            String sqlInsert = "DELETE FROM treinador WHERE id_treinador=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sqlInsert);
-            statement.setLong(1, id);
-            int linhasAfetadas = statement.executeUpdate();
-            if (linhasAfetadas > 0) {
-                retorno = true;
-            } else {
-                retorno = false;
-            }
+            List<Map<String, String>> list = JsonDB.read(FILE);
+            boolean removed = list.removeIf(obj -> Long.parseLong(obj.get("id")) == id);
+            if (removed) JsonDB.write(FILE, list);
+            return removed;
         } catch (Exception e) {
             e.printStackTrace();
-            retorno = false;
-        } finally {
-            this.conexao.fecharConexao();
+            return false;
         }
-        return retorno;
     }
 }
